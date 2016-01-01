@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="jumbotron">
+            <h2>
+                Remove Elements Team
+            </h2>
+
+            <div class="alert-warning">
+            </div>
+            <table class="table table-striped">
+                <th>Element</th>
+                <th>Role</th>
+                <th>Delete</th>
+                <th>Update</th>
+                {% for team in teams %}
+                    <tr>
+                        {% if team.countries is not null %}
+                            <td>{{ team.countries.fullTitle|title }}</td>
+                            <td>Description country</td>
+                            <td><a href="{{ path('country_delete_admin', {'id' : team.countries.id}) }}">
+                                    <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                       class="glyphicon glyphicon-trash"></i></a>
+                            </td>
+                            <td><a href="{{ path('country_update_admin', {'id' : team.countries.id}) }}">
+                                    <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                       class="glyphicon glyphicon-pencil"></i></a></td>
+                        {% endif %}
+                    </tr>
+                    {% for coach in team.coaches %}
+                        <tr>
+                            {% if team.coaches is not null %}
+                                <td>{{ coach.firstName|capitalize }} {{ coach.lastName|capitalize }}</td>
+                                <td>Coach</td>
+                                <td><a href="{{ path('coach_delete_admin', {'id' : coach.id}) }}">
+                                        <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                           class="glyphicon glyphicon-trash"></i></a>
+                                </td>
+                                <td><a href="{{ path('coach_update_admin', {'id' : coach.id}) }}">
+                                        <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                           class="glyphicon glyphicon-pencil"></i></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                    {% for player in team.players %}
+                        <tr>
+                            {% if team.players is not null %}
+                                <td>{{ player.firstName|capitalize }} {{ player.lastName|capitalize }}</td>
+                                <td>Player</td>
+                                <td><a href="{{ path('player_delete_admin', {'id' : player.id}) }}">
+                                        <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                           class="glyphicon glyphicon-trash"></i></a></td>
+                                <td><a href="{{ path('player_update_admin', {'id' : player.id}) }}">
+                                        <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                           class="glyphicon glyphicon-pencil"></i></a></td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+        </div>
+    </div> <!-- /container -->
+
+
+{% endblock %}
+
+

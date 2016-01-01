@@ -1,0 +1,54 @@
+AppBundle\Entity\Team:
+    team{1..20}:
+        country: <country()>
+        groups: <randomLetter()>
+        countries: @country*
+        coaches: 1x @coach*
+        players: 11x @player*
+        results: @resultGame*
+        gameTeam1: 20x @game*
+        gameTeam2: 20x @game*
+
+
+AppBundle\Entity\Coach:
+    coach{1..20}:
+        firstName: <firstNameMale()>
+        lastName: <lastName()>
+        birthDay: <dateTime()>
+        biography: <text()>
+        team (unique): @team*
+
+AppBundle\Entity\Player:
+    player{1..220}:
+        firstName: <firstNameMale()>
+        lastName: <lastName()>
+        birthDay: <dateTime()>
+        biography: <text()>
+        team: @team*
+
+AppBundle\Entity\Country:
+    country{1..20}:
+        fullTitle: <country()>
+        description: <text()>
+        team (unique): @team*
+
+
+AppBundle\Entity\Game:
+    game{1..50}:
+        team1: <country()>
+        team2: <country()>
+        goals1: <numberBetween(0,5)>
+        goals2: <numberBetween(0,5)>
+        dateGame: <dateTime()>
+        team1Id: @team*
+        team2Id: @team*
+
+AppBundle\Entity\ResultGame:
+    resultGame{1..20}:
+        countGame: <numberBetween(0,30)>
+        winGame: <numberBetween(0,15)>
+        drawGame: <numberBetween(0,15)>
+        defeatGame: <numberBetween(0,15)>
+        points: <numberBetween(0,40)>
+        team (unique): @team*
+

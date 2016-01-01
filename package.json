@@ -1,0 +1,28 @@
+{
+  "name": "euro",
+  "version": "0.0.0",
+  "description": "euro [![Build Status](https://travis-ci.org/alexgoncharcherkassy/euro.svg)](https://travis-ci.org/alexgoncharcherkassy/euro) ====",
+  "main": "index.js",
+  "dependencies": {
+    "bower": "~1.6.6",
+    "gulp": "~3.9.0",
+    "gulp-clean": "~0.3.1",
+    "gulp-concat": "~2.6.0",
+    "gulp-less": "~3.0.5",
+    "gulp-uglify": "~1.5.1",
+    "less": "~2.5.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexgoncharcherkassy/euro.git"
+  },
+  "author": "aleksandr gonchar",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/alexgoncharcherkassy/euro/issues"
+  }
+}

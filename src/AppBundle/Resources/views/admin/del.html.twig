@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="jumbotron">
+            {% for flash_message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>{{ flash_message }}</strong>
+                </div>
+            {% endfor %}
+            <h2>
+                Delete Form
+            </h2>
+
+            <div class="alert-warning">
+                Confirm the deletion
+                {{ form(form) }}
+            </div>
+
+        </div>
+    </div> <!-- /container -->
+
+
+{% endblock %}
+
+

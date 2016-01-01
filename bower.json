@@ -1,0 +1,21 @@
+{
+  "name": "euro",
+  "description": "euro [![Build Status](https://travis-ci.org/alexgoncharcherkassy/euro.svg)](https://travis-ci.org/alexgoncharcherkassy/euro) ====",
+  "main": "index.js",
+  "authors": [
+    "aleksandr gonchar"
+  ],
+  "license": "BSD-2-Clause",
+  "homepage": "https://github.com/alexgoncharcherkassy/euro",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

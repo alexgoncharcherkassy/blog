@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+
+    <div class="container">
+        <div class="jumbotron">
+            {% for flash_message in app.session.flashbag.get('notice') %}
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <strong>{{ flash_message }}</strong>
+                </div>
+            {% endfor %}
+            <h2>
+                Admin panel
+            </h2>
+
+            <div class="col" style="text-align:center">
+                <div class="span2">
+                    <div class="well well-small">
+                        <h4>
+                            <a href="javascript:;" onclick="showTooltipAdd()" class="popOver" data-placement="top"
+                               style="display:block; text-decoration:none" id="add">
+                                <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                   class="glyphicon glyphicon-plus"></i>
+                                <span><br/>Add</span>
+                            </a>
+                        </h4>
+                        <a href="#">
+                            <small>view details</small>
+                        </a>
+                    </div>
+                </div>
+                <div id="tooltip" style="display: none;">
+                    <a class="btn btn-large btn-primary" style="margin-right: 40px; margin-bottom: 40px" href="{{ path('team_insert_admin') }}">Add team</a>
+                    <a class="btn btn-large btn-primary" style="margin-right: 40px; margin-bottom: 40px" href="{{ path('country_insert_admin') }}">Add country</a>
+                    <a class="btn btn-large btn-primary" style="margin-right: 40px; margin-bottom: 40px" href="{{ path('coach_insert_admin') }}">Add coach</a>
+                    <a class="btn btn-large btn-primary" style="margin-right: 40px; margin-bottom: 40px" href="{{ path('player_insert_admin') }}">Add player</a>
+                </div>
+
+                <div class="span2">
+                    <div class="well well-small">
+                        <h4>
+                            <a href="javascript:;" onclick="showTooltipRemoveUpd()" class="popOver" data-placement="top"
+                               style="display:block; text-decoration:none" id="remove">
+                                <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                   class="glyphicon glyphicon-trash"></i>
+                                <i style="width:auto; font-size:2em; line-height:1em; height:auto"
+                                   class="glyphicon glyphicon-pencil"></i>
+                                <span><br/>Delete and Update</span>
+                            </a>
+                        </h4>
+                        <a href="#">
+                            <small>view details</small>
+                        </a>
+                    </div>
+                </div>
+                <div id="tooltipremove" style="display: none;">
+                    <a class="btn btn-large btn-primary" style="margin-bottom: 40px" href="{{ path('team_delete_admin') }}">Remove and Update</a>
+                </div>
+            </div>
+        </div>
+    </div> <!-- /container -->
+
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script>
+
+function showTooltipAdd()
+{
+var myDiv = document.getElementById('tooltip');
+var myLink = document.getElementById('add');
+if(myDiv.style.display == 'none'){
+myDiv.style.display = 'block';
+} else {
+myDiv.style.display = 'none';
+}
+return false;
+}
+
+function showTooltipRemoveUpd()
+{
+    var myDiv = document.getElementById('tooltipremove');
+    var myLink = document.getElementById('remove');
+    if(myDiv.style.display == 'none'){
+        myDiv.style.display = 'block';
+    } else {
+        myDiv.style.display = 'none';
+    }
+    return false;
+}
+
+</script>
+
+{% endblock %}
+
+

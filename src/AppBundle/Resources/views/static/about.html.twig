@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>About me</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        img {
+            float: left;
+            width: 15%;
+        }
+        .navbar-fixed-bottom {
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="site-wrapper">
+
+    <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+            <img src="{{ asset('images/14754715.jpeg') }}" class="img-circle" alt="me">
+
+            <div class="inner cover">
+                <h1 class="cover-heading">About me</h1>
+
+                <p class="lead">My name is Aleksandr. I live in Ukraine. Now I'm learning programming</p>
+
+                <p class="lead">
+                    <a href="{{ path('homepage') }}" class="btn btn-lg btn-default">Home Page</a>
+                </p>
+            </div>
+
+            <div class="navbar-fixed-bottom">
+                <div class="inner">
+                    <p>Cover template for <a href="http://getbootstrap.com">Bootstrap</a>, by <a
+                                href="http://geekhub.com.ua/">GeekHub</a>.</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{{ asset('js/app.js') }}"></script>
+</body>
+</html>
