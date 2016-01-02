@@ -265,7 +265,7 @@ author: bootply.com
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="#">Posts</a></li>
+                    <li class="active"><a href="{{ path('homepage') }}">Posts</a></li>
                     <li><a href="#loginModal" role="button" data-toggle="modal">Login</a></li>
                     <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
                 </ul>
@@ -274,6 +274,7 @@ author: bootply.com
     </div>
 
     <!--main-->
+{% block content %}
     <div class="container" id="main">
         <div class="row">
 
@@ -281,15 +282,14 @@ author: bootply.com
                 {% block panel %}
                 {% endblock %}
             </div>
-
+{% endblock %}
             <div class="col-md-3 pull-right">
-                    {% block sidebar1 %}
-                    {% endblock %}
-                    {% block sidebar2 %}
-                    {% endblock %}
-                    {% block sidebar3 %}
-                    {% endblock %}
-                </div>
+                {% block sidebar1 %}
+                {% endblock %}
+                {% block sidebar2 %}
+                {% endblock %}
+                {% block sidebar3 %}
+                {% endblock %}
             </div>
         </div><!--/row-->
     </div><!--/main-->

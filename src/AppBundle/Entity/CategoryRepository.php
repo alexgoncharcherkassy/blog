@@ -10,4 +10,15 @@ namespace AppBundle\Entity;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function showCategory($slug)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c, p')
+            ->join('c.posts', 'p')
+            ->where('c.slug = :slug')
+            ->orderBy('p.createdAt')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
+    }
 }

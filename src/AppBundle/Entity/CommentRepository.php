@@ -10,4 +10,14 @@ namespace AppBundle\Entity;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function showLastFiveComment()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('c, p')
+            ->leftJoin('c.post', 'p')
+            ->orderBy('c.createdAt')
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
+    }
 }

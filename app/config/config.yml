@@ -78,3 +78,15 @@ stof_doctrine_extensions:
             timestampable: true
             sluggable: true
             softdeleteable: true
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        blog_show:
+            quality: 75
+            filters:
+                relative_resize: { widen: 60 }

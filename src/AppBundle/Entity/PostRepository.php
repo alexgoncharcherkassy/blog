@@ -22,14 +22,57 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function showPost($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, c, t, i, cm')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
+            ->leftJoin('p.images', 'i')
+            ->leftJoin('p.comments', 'cm')
+            ->where('p.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
+
+    }
+
+    public function showCategoryPost($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, c, t')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
+            ->where('c.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+    }
+
+    public function showTagsPost($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, c, t')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
+            ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+    }
+
     public function showMostPopularPost()
     {
         return $this->createQueryBuilder('p')
             ->select('p')
             ->orderBy('p.createdAt')
-            ->setFirstResult(1)
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
     }
+
 }

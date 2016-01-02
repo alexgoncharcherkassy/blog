@@ -1,0 +1,78 @@
+{% extends '::base.html.twig' %}
+
+    {% block panel %}
+        {% for post in posts %}
+            <div class="panel panel-default">
+                <div class="panel-heading" style="margin-bottom: 0">
+                    <a href="{{ path('show_category', {'slug': post.category.slug}) }}" class="pull-right">Category: {{ post.category.categoryName }}</a>
+                    <h4>{{ post.titlePost }}</h4>
+                </div>
+
+                <div class="panel-body">
+                    <p>
+                        <small>Published {{ post.createdAt|date('d.m.Y h:m') }} by Anonymous</small>
+                        {% if post.createdAt < post.updateAt %}
+                            <small>Updated {{ post.updateAt|date('d.m.Y h:m') }} by Anonymous</small>
+                        {% endif %}
+
+                        {% for tag in post.tags %}
+                                <a href="{{ path('show_tags', {'slug': tag.slug}) }}" class="pull-right">| {{ tag.tagName }} |</a>
+                        {% endfor %}
+                    </p>
+                    <p>{{ post.textPost|nl2br }}</p>
+                    {% for img in post.images %}
+                        <div>
+                            <img src="{{ img.pathImage|imagine_filter('blog_show') }}" class="thumbnail" alt="{{ img.nameImage }}">
+                        </div>
+                    {% endfor %}
+                    <strong>Comments</strong>
+                    {% for comment in post.comments %}
+                        <ul class="thumbnail" style="width: 65%; margin-left: 20px">
+                                <small>Published {{ comment.createdAt|date('d.m.Y h:m') }} by Anonymous</small>
+                            <li class="span5" style="list-style: none">
+                                <div class="thumbnail">
+                                   {{ comment.textComment }}
+                                </div>
+                                </li>
+                            </ul>
+                    {% endfor %}
+
+                </div>
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+    {% block sidebar1 %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>Most Popular</h4>
+                {{ render(controller('AppBundle:Blog:showMostPopular')) }}
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block sidebar2 %}
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>Last comments</h4>
+                {{ render(controller('AppBundle:Blog:showLastComment')) }}
+            </div>
+        </div>
+    {% endblock %}
+
+        {% block sidebar3 %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Tags cloud</h4>
+
+                    <p>
+                        Migrating from Bootstrap 2.x to 3 is not a simple matter of swapping out the JS and CSS
+                        files.
+                        Bootstrap 3 is a major overhaul, and there are a lot of changes from Bootstrap 2.x.
+                        <a href="http://bootply.com/bootstrap-3-migration-guide">This guidance</a> is
+                        intended
+                        to help 2.x developers transition to 3.
+                    </p>
+                </div>
+            </div>
+        {% endblock %}
