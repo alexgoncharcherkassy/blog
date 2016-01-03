@@ -16,7 +16,7 @@ class CategoryRepository extends \Doctrine\ORM\EntityRepository
             ->select('c, p')
             ->join('c.posts', 'p')
             ->where('c.slug = :slug')
-            ->orderBy('p.createdAt')
+            ->orderBy('p.createdAt', 'DESC')
             ->setParameter('slug', $slug)
             ->getQuery()
             ->getResult();

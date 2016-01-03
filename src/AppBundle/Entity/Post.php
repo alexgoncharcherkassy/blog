@@ -81,6 +81,13 @@ class Post
     private $newCategory;
 
     /**
+     * @var float
+     *
+     * @ORM\Column(name="rating", type="float")
+     */
+    private $rating;
+
+    /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
      */
     private $comments;
@@ -394,4 +401,22 @@ class Post
     {
         return $this->newCategory;
     }
+
+    /**
+     * @return float
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param float $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+
 }

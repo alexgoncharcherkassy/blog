@@ -6,6 +6,8 @@
                 <div class="panel-heading" style="margin-bottom: 0">
                     <a href="{{ path('show_category', {'slug': post.category.slug}) }}" class="pull-right">Category: {{ post.category.categoryName }}</a>
                     <h4>{{ post.titlePost }}</h4>
+                    <small>Rating post</small>
+                    <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
                 </div>
 
                 <div class="panel-body">
@@ -25,10 +27,21 @@
                             <img src="{{ img.pathImage|imagine_filter('blog_show') }}" class="thumbnail" alt="{{ img.nameImage }}">
                         </div>
                     {% endfor %}
+                    <div class="thumbnail">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <br/>
+                        <input type="submit" value="Send" class="btn btn-large btn-primary">
+                        {{ form_end(form) }}
+                    </div>
                     <strong>Comments</strong>
                     {% for comment in post.comments %}
                         <ul class="thumbnail" style="width: 65%; margin-left: 20px">
-                                <small>Published {{ comment.createdAt|date('d.m.Y h:m') }} by Anonymous</small>
+                                <small>Published {{ comment.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
+                            <div class="col-md-6 text-left">
+                                Rating
+                                <span class="badge badge-info">{{ comment.rating }}</span>
+                            </div>
                             <li class="span5" style="list-style: none">
                                 <div class="thumbnail">
                                    {{ comment.textComment }}

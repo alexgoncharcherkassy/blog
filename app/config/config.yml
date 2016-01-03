@@ -72,7 +72,7 @@ swiftmailer:
     spool:     { type: memory }
 
 stof_doctrine_extensions:
-    default_locale: en
+    default_locale: en_US
     orm:
         default:
             timestampable: true

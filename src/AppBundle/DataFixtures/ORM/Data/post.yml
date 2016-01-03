@@ -14,6 +14,7 @@ AppBundle\Entity\Post:
         textPost: <text(2000)>
         newTags: <word()>
         newCategory: <word()>
+        rating: <randomFloat(1, 0, 5)>
         comments: 2x @comment*
         images: 1x @image*
         tags: 3x @tags*

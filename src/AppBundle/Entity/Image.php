@@ -3,8 +3,10 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Image
@@ -70,11 +72,9 @@ class Image
      *
      * @return Image
      */
-    public function setBlogImage($blogImage)
+    public function setBlogImage(UploadedFile $file = null)
     {
-        $this->blogImage = $blogImage;
-
-        return $this;
+        $this->blogImage = $file;
     }
 
     /**
@@ -149,5 +149,45 @@ class Image
     public function setPost(Post $post = null)
     {
         $this->post = $post;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadRootDir().'/'.$this->pathImage;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadDir().'/'.$this->pathImage;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'img/blog';
+    }
+
+    public function uploadImage()
+    {
+        if (null === $this->getBlogImage()) {
+            return;
+        }
+
+        $this->getBlogImage()->move(
+            $this->getUploadRootDir(),
+            $this->getBlogImage()->getClientOriginalName()
+        );
+
+        $this->pathImage = $this->getBlogImage()->getClientOriginalName();
+
+        $this->blogImage = null;
     }
 }
