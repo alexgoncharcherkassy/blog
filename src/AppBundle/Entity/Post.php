@@ -69,14 +69,14 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="newTags", type="string", length=255)
+     * @ORM\Column(name="newTags", type="string", length=255, nullable=true)
      */
     private $newTags;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="newCategory", type="string", length=255)
+     * @ORM\Column(name="newCategory", type="string", length=255, nullable=true)
      */
     private $newCategory;
 
@@ -147,7 +147,7 @@ class Post
      */
     public function addImage(Image $image)
     {
-     //   $image->setPost($this);
+      //  $image->setPost($this);
         $this->images[] = $image;
 
         return $this;
@@ -196,17 +196,29 @@ class Post
     }
 
     /**
+     * @param mixed $tags
+     */
+    public function setTags(ArrayCollection $tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
      *
      */
     /*public function setTags(ArrayCollection $tags)
     {
-        $this->tags[] = $tags;
+        $this->tags = $tags;
         $tags->forAll(function ($key, $element) {
             $element->addPost($this);
             return true;
         });
         return $this;
     }*/
+
+
 
     /**
      * @return mixed

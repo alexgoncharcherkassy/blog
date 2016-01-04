@@ -39,7 +39,7 @@ class CommentType extends AbstractType
         ]);
     }
 
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'app_bundle_comment_type';
     }
