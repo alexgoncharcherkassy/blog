@@ -51,7 +51,7 @@ class AdminController extends Controller
                     $post->setCategory($category);
                 }
 
-          //      $post->uploadImage('new');
+                $post->uploadImage();
                 $post->setNewTags(null);
                 $post->setNewCategory(null);
                 $post->setRating(0);

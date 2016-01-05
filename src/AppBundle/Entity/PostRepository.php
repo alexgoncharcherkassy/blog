@@ -25,10 +25,9 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     public function showPost($slug)
     {
         return $this->createQueryBuilder('p')
-            ->select('p, c, t, i, cm')
+            ->select('p, c, t, cm')
             ->leftJoin('p.category', 'c')
             ->leftJoin('p.tags', 't')
-            ->leftJoin('p.images', 'i')
             ->leftJoin('p.comments', 'cm')
             ->where('p.slug = :slug')
             ->setParameter('slug', $slug)

@@ -15,8 +15,9 @@ AppBundle\Entity\Post:
         newTags: <word()>
         newCategory: <word()>
         rating: <randomFloat(1, 0, 5)>
+        nameImage: <word()>
+        pathImage: <url()>
         comments: 2x @comment*
-        images: 1x @image*
         tags: 3x @tags*
         category: @category*
 
@@ -26,11 +27,6 @@ AppBundle\Entity\Comment:
         rating: <numberBetween(1, 5)>
         post: @post*
 
-AppBundle\Entity\Image:
-    image{1..40}:
-        nameImage: <word()>
-        pathImage: <url()>
-        post: @post*
 
 
 

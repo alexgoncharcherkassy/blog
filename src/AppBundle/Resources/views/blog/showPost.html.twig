@@ -22,11 +22,9 @@
                         {% endfor %}
                     </p>
                     <p>{{ post.textPost|nl2br }}</p>
-                    {% for img in post.images %}
-                        <div>
-                            <img src="{{ img.pathImage|imagine_filter('blog_show') }}" class="thumbnail" alt="{{ img.nameImage }}">
-                        </div>
-                    {% endfor %}
+                    {% if post.pathImage and post.nameImage %}
+                            <img src="{{ post.pathImage|imagine_filter('blog_show') }}" class="thumbnail" alt="{{ post.nameImage }}">
+                        {% endif %}
                     <div class="thumbnail">
                         {{ form_start(form) }}
                         {{ form_widget(form) }}

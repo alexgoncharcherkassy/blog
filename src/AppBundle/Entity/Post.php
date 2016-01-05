@@ -88,17 +88,34 @@ class Post
      */
     private $rating;
 
+    /**
+     * @var string
+     * @Assert\File(
+     *              maxSize = "3M",
+     *              mimeTypes = {"image/*"}
+     *              )
+     */
+    private $blogImage;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nameImage", type="string", length=255, nullable=true)
+     */
+    private $nameImage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pathImage", type="string", length=255, nullable=true)
+     */
+    private $pathImage;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
      */
     private $comments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="post")
-     */
-    private $images;
 
     /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tags", inversedBy="posts")
@@ -113,7 +130,6 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->images = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -436,6 +452,112 @@ class Post
 
 
 
+    /**
+     * Set blogImage
+     *
+     * @param string $blogImage
+     *
+     * @return Image
+     */
+    public function setBlogImage(UploadedFile $file = null)
+    {
+        $this->blogImage = $file;
+    }
 
+    /**
+     * Get blogImage
+     *
+     * @return string
+     */
+    public function getBlogImage()
+    {
+        return $this->blogImage;
+    }
+
+    /**
+     * Set nameImage
+     *
+     * @param string $nameImage
+     *
+     * @return Image
+     */
+    public function setNameImage($nameImage)
+    {
+        $this->nameImage = $nameImage;
+
+        return $this;
+    }
+
+    /**
+     * Get nameImage
+     *
+     * @return string
+     */
+    public function getNameImage()
+    {
+        return $this->nameImage;
+    }
+
+    /**
+     * Set pathImage
+     *
+     * @param string $pathImage
+     *
+     * @return Image
+     */
+    public function setPathImage($pathImage)
+    {
+        $this->pathImage = $pathImage;
+
+        return $this;
+    }
+
+    /**
+     * Get pathImage
+     *
+     * @return string
+     */
+    public function getPathImage()
+    {
+        return $this->pathImage;
+    }
+    public function getAbsolutePath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadRootDir().'/'.$this->pathImage;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadDir().'/'.$this->pathImage;
+    }
+
+    protected function getUploadRootDir()
+    {
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'img/blog';
+    }
+
+    public function uploadImage()
+    {
+        if (null === $this->getBlogImage()) {
+            return;
+        }
+        $randPrefix = mt_rand(1, 9999);
+        $this->getBlogImage()->move(
+            $this->getUploadRootDir(),
+            $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName()
+        );
+        $this->pathImage = $this->getUploadDir().'/'.$randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
+        $this->nameImage = $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
+        $this->blogImage = null;
+    }
 
 }
