@@ -21,6 +21,7 @@ class CommentType extends AbstractType
                     '4' => 4,
                     '5' => 5
                 ],
+                'expanded' => true
 
             ])
             ->add('textComment', TextareaType::class, [

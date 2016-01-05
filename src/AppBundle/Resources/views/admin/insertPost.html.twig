@@ -3,7 +3,6 @@
 
 {% block panel %}
 
-    {{ dump(form) }}
         <div class="panel panel-default">
             <div class="panel-heading" style="margin-bottom: 0">
                 <h4>Add post</h4>
@@ -14,9 +13,12 @@
                 {{ form_start(form) }}
                 {{ form_widget(form) }}
                 {{ form_rest(form) }}
+               {# <input type="submit" value="Add file" class="jslink">
+                <br/>#}
+                <br/>
                 <input type="submit" VALUE="Save" class="btn btn-large btn-primary">
                 {{ form_end(form) }}
-
+                <div id="del"></div>
             </div>
         </div>
 {% endblock %}
@@ -56,6 +58,28 @@
     </div>
 {% endblock %}
 
+{% block javascripts %}
+{{ parent() }}
+<script>
+    function add() {
+    var collectionHolder = $('#app_bundle_post_type_images');
+    var prototype = collectionHolder.attr('data-prototype');
+    // Sustituye __name__ con el número de hijos que tiene el div #nencargo_attachments, es decir, la cantidad de archivos adjuntos que hay.
+    var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+    $(form).filter('div').first().html($(form).html() +'<a class="delete_link" href="#">Remove</a>');
+    collectionHolder.append(form);
+    }
+
+    $('input.jslink').click(function(event){
+    event.preventDefault();
+    add();
+    });
+
+    $(document).on('click', 'a.delete_link',function(event){
+    $(event.currentTarget).parent().remove();
+    });
+</script>
+{% endblock %}
 
 
 

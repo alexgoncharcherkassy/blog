@@ -175,19 +175,28 @@ class Image
         return 'img/blog';
     }
 
-    public function uploadImage()
+    public function uploadImage($role)
     {
-        if (null === $this->getBlogImage()) {
-            return;
+        if ($role == 'new') {
+            if (null === $this->getBlogImage()) {
+                $this->pathImage = $this->getUploadDir().'/default.jpg';
+                $this->nameImage = 'default.jpg';
+                return;
+            }
         }
-
+        if ($role == 'edit') {
+            if (null === $this->getBlogImage()) {
+                return;
+            }
+        }
+        $randPrefix = mt_rand(1, 9999);
         $this->getBlogImage()->move(
             $this->getUploadRootDir(),
-            $this->getBlogImage()->getClientOriginalName()
+            $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName()
         );
-
-        $this->pathImage = $this->getBlogImage()->getClientOriginalName();
-
+        $this->pathImage = $this->getUploadDir().'/'.$randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
+        $this->nameImage = $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
         $this->blogImage = null;
     }
+
 }

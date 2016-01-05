@@ -24,33 +24,48 @@ class PostType extends AbstractType
             ->add('textPost', TextareaType::class,[
                 'attr' => [
                     'placeholder' => 'Add text post',
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'rows' => 10
                 ]
             ])
             ->add('newTags', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Add tags through a comma'
+                ],
                 'required' => false
             ])
             ->add('tags', EntityType::class, [
                 'class' => 'AppBundle\Entity\Tags',
                 'choice_label' => 'tagName',
+                'multiple' => true,
                 'attr' => [
-                    'class' => 'form-control',
-                    'required' => false
-                ]
+                    'class' => 'form-control'
+                ],
+                'required' => false
             ])
             ->add('newCategory', TextType::class, [
+                'attr' => [
+                  'class' => 'form-control',
+                  'placeholder' => 'Add only one category or select'
+                ],
                 'required' => false
             ])
             ->add('category', EntityType::class, [
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'categoryName',
                 'attr' => [
-                    'class' => 'form-control',
-                    'required' => false
-                ]
+                    'class' => 'form-control'
+                ],
+                'placeholder' => 'Select category',
+                'required' => false
             ])
             ->add('images', CollectionType::class, [
-                'entry_type' => ImageType::class
+                'entry_type' => ImageType::class,
+                'allow_add' => true,
+                'prototype' => true,
+                'by_reference' => false,
+                'required' => false
             ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -86,6 +87,8 @@ class Post
      * @ORM\Column(name="rating", type="float")
      */
     private $rating;
+
+
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
@@ -196,9 +199,9 @@ class Post
     }
 
     /**
-     * @param mixed $tags
+     * @param Tags $tags
      */
-    public function setTags(ArrayCollection $tags)
+    public function setTags(Tags $tags = null)
     {
         $this->tags = $tags;
 
@@ -429,6 +432,10 @@ class Post
     {
         $this->rating = $rating;
     }
+
+
+
+
 
 
 }

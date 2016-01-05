@@ -6,6 +6,7 @@ use AppBundle\Entity\Image;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Tags;
 use AppBundle\Form\ImageType;
+use AppBundle\Entity\Category;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -21,12 +22,36 @@ class AdminController extends Controller
     public function insertPost(Request $request)
     {
         $post = new Post();
+
         $em = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(PostType::class, $post);
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
             if ($form->isValid()) {
+
+                $newTags = $post->getNewTags();
+
+                if (null !== $newTags) {
+                    $newTags = explode(',', trim($newTags));
+                    foreach ($newTags as $item) {
+                        $tag = new Tags();
+                        $tag->setTagName($item);
+                        $em->persist($tag);
+                        $post->addTag($tag);
+                    }
+                }
+
+                $newCategory = $post->getNewCategory();
+
+                if (null !== $newCategory) {
+                    $category = new Category();
+                    $category->setCategoryName(trim($newCategory));
+                    $em->persist($category);
+                    $post->setCategory($category);
+                }
+
+          //      $post->uploadImage('new');
                 $post->setNewTags(null);
                 $post->setNewCategory(null);
                 $post->setRating(0);

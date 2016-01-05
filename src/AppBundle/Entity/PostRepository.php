@@ -69,7 +69,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p')
-            ->orderBy('p.createdAt')
+            ->orderBy('p.rating', 'DESC')
             ->setMaxResults(5)
             ->getQuery()
             ->getResult();
