@@ -28,7 +28,7 @@ class Post
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="1", minMessage="This field can not be less than 5 characters")
+     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
      *
      * @ORM\Column(name="titlePost", type="string", length=255)
      */
@@ -92,7 +92,9 @@ class Post
      * @var string
      * @Assert\File(
      *              maxSize = "3M",
-     *              mimeTypes = {"image/*"}
+     *              mimeTypes = {"image/*"},
+     *              maxSizeMessage = "The file is too large ({{ size }}).Allowed maximum size is {{ limit }}",
+     *              mimeTypesMessage = "The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}"
      *              )
      */
     private $blogImage;
@@ -127,6 +129,9 @@ class Post
      */
     private $category;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -162,33 +167,6 @@ class Post
     }
 
     /**
-     * @param Image $image
-     */
-    public function addImage(Image $image)
-    {
-      //  $image->setPost($this);
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * @param Image $image
-     */
-    public function removeImage(Image $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
      * @param Tags $tags
      */
     public function addTag(Tags $tags)
@@ -208,7 +186,9 @@ class Post
     }
 
 
-
+    /**
+     * @return ArrayCollection
+     */
     public function getTags()
     {
         return $this->tags;
@@ -225,25 +205,15 @@ class Post
     }
 
     /**
-     *
-     */
-    /*public function setTags(ArrayCollection $tags)
-    {
-        $this->tags = $tags;
-        $tags->forAll(function ($key, $element) {
-            $element->addPost($this);
-            return true;
-        });
-        return $this;
-    }*/
-
-
-
-    /**
      * @return mixed
      */
     public function getCategory()
     {
+        if ($this->category === null) {
+            $this->category = array('slug' => '#', 'categoryName' => 'Without category');
+
+            return $this->category;
+        }
         return $this->category;
     }
 
@@ -457,7 +427,6 @@ class Post
      *
      * @param string $blogImage
      *
-     * @return Image
      */
     public function setBlogImage(UploadedFile $file = null)
     {
@@ -479,7 +448,6 @@ class Post
      *
      * @param string $nameImage
      *
-     * @return Image
      */
     public function setNameImage($nameImage)
     {
@@ -503,7 +471,6 @@ class Post
      *
      * @param string $pathImage
      *
-     * @return Image
      */
     public function setPathImage($pathImage)
     {
@@ -521,6 +488,10 @@ class Post
     {
         return $this->pathImage;
     }
+
+    /**
+     * @return null|string
+     */
     public function getAbsolutePath()
     {
         return null === $this->pathImage
@@ -528,6 +499,9 @@ class Post
             : $this->getUploadRootDir().'/'.$this->pathImage;
     }
 
+    /**
+     * @return null|string
+     */
     public function getWebPath()
     {
         return null === $this->pathImage
@@ -535,16 +509,25 @@ class Post
             : $this->getUploadDir().'/'.$this->pathImage;
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__.'/../../../web/'.$this->getUploadDir();
     }
 
+    /**
+     * @return string
+     */
     protected function getUploadDir()
     {
         return 'img/blog';
     }
 
+    /**
+     *
+     */
     public function uploadImage()
     {
         if (null === $this->getBlogImage()) {

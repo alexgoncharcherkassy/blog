@@ -26,6 +26,8 @@ class Category
 
     /**
      * @var string
+     * @Assert\NotBlank(message="This field can not be empty")
+     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
      *
      * @ORM\Column(name="categoryName", type="string", length=255)
      */
@@ -45,6 +47,9 @@ class Category
     private $posts;
 
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();

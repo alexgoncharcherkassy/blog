@@ -89,4 +89,9 @@ liip_imagine:
         blog_show:
             quality: 75
             filters:
-                relative_resize: { widen: 60 }
+                relative_resize: { widen: 460 }
+
+        posts_show:
+                    quality: 75
+                    filters:
+                        relative_resize: { widen: 130 }

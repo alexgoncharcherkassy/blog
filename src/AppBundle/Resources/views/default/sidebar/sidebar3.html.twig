@@ -1,0 +1,25 @@
+{% for key, tag in tags %}
+
+        <a href="{{ path('show_tags', {'slug': tag.slug}) }}" id="tags{{ key }}">{{ tag.tagName }}</a>
+
+{% endfor %}
+<script>
+
+    window.onload = function() {
+        for  (i = 0; i < 25; i++) {
+
+            var size = document.getElementById('tags'+i).style.fontSize = (30 - i)+'px';
+            var style = document.getElementById('tags'+i).style.color = getRandomColor();
+        }
+
+    };
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+</script>

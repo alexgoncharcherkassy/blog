@@ -1,5 +1,5 @@
 {% for post in posts %}
     <p>
-        <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost }}</a>
+        <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost }}</a> [ {{ post.rating }} ]
     </p>
 {% endfor %}

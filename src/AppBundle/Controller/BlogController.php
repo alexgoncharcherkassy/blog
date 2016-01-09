@@ -9,10 +9,12 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\CommentType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -47,9 +49,21 @@ class BlogController extends Controller
         $comments = $em->getRepository('AppBundle:Comment')
             ->showLastFiveComment();
 
-        $c = $comments;
-
         return ['comments' => $comments];
+    }
+
+    /**
+     * @Route("/show/tagscloud", name="tags_cloud")
+     * @Template("@App/default/sidebar/sidebar3.html.twig")
+     */
+    public function TagsCloudAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tags = $em->getRepository('AppBundle:Tags')
+            ->showNotNullTags();
+
+        return ['tags' => $tags];
     }
 
     /**
@@ -78,8 +92,21 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showPost($slug);
-
-        return ['posts' => $posts, 'form' => $form->createView()];
+        /**
+         * @var \AppBundle\Entity\Post $items
+         * @var \AppBundle\Entity\Comment $item
+         */
+        $form_delete_comment = [];
+        foreach ($posts as $items) {
+            foreach ($items->getComments() as $item)
+                $form_delete_comment[$item->getId()] =
+                    $this->createFormDeleteComment($item->getId(), $slug)->createView();
+        }
+        return [
+            'posts' => $posts,
+            'form' => $form->createView(),
+            'formDeleteComment' => $form_delete_comment,
+        ];
     }
 
     /**
@@ -89,6 +116,13 @@ class BlogController extends Controller
     public function showCategoryAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
+
+        if ($slug === '#') {
+            $posts = $em->getRepository('AppBundle:Post')
+                ->showPostWithoutCategory();
+
+            return ['posts' => $posts];
+        }
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showCategoryPost($slug);
@@ -110,6 +144,9 @@ class BlogController extends Controller
         return ['posts' => $posts];
     }
 
+    /**
+     * @param $slug
+     */
     private function changeRating($slug)
     {
         $em = $this->getDoctrine()->getManager();
@@ -125,6 +162,11 @@ class BlogController extends Controller
         foreach ($comments as $comment) {
             $summ += $comment->getRating();
         }
+        if ($summ == 0 || $count == 0) {
+            $post->setRating(0);
+            $em->flush();
+            return;
+        }
         $rating = $summ / $count;
 
         $post->setRating($rating);
@@ -132,4 +174,46 @@ class BlogController extends Controller
 
         return;
     }
+
+    /**
+     * @param $slug
+     * @Route("/remove/comment/{id}/{slug}", name="remove_comment")
+     * @Method("DELETE")
+     */
+    public function removeCommentAction($id, $slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $comment = $em->getRepository('AppBundle:Comment')
+            ->find($id);
+
+        $em->remove($comment);
+        $em->flush();
+
+        $this->changeRating($slug);
+
+        return $this->redirectToRoute('show_post', ['slug' => $slug]);
+
+    }
+
+    /**
+     * @param $id
+     * @param $slug
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createFormDeleteComment($id, $slug)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('remove_comment', ['id' => $id, 'slug' => $slug]))
+            ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => ' ',
+                'attr' => [
+                    'class' => 'glyphicon glyphicon-trash btn-link'
+                ]
+            ])
+            ->getForm();
+    }
+
+
 }

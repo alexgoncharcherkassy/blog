@@ -2,24 +2,28 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Tags;
-use AppBundle\Form\ImageType;
 use AppBundle\Entity\Category;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\PostType;
 
+/**
+ * Class AdminController
+ * @package AppBundle\Controller
+ */
 class AdminController extends Controller
 {
     /**
      * @Route("admin/insert/post", name="insert_post")
      * @Template("@App/admin/insertPost.html.twig")
      */
-    public function insertPost(Request $request)
+    public function insertPostAction(Request $request)
     {
         $post = new Post();
 
@@ -58,6 +62,9 @@ class AdminController extends Controller
                 $em->persist($post);
                 $em->flush();
 
+                $this->checkPath();
+                $this->updateTagsClud();
+
                 return $this->redirectToRoute('homepage');
             }
         }
@@ -66,25 +73,236 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/insert/image", name="insert_image")
-     * @Template("@App/admin/insertPost.html.twig")
+     * @Route("admin/show/", name="admin_show")
+     * @Template("@App/admin/adminShow.html.twig")
      */
-    public function insertImage(Request $request)
+    public function showPostAction()
     {
-        $post = new Image();
         $em = $this->getDoctrine()->getManager();
 
-        $form = $this->createForm(ImageType::class, $post);
-        if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $em->persist($post);
-                $em->flush();
+        $posts = $em->getRepository('AppBundle:Post')
+            ->showAllPost();
 
-                return $this->redirectToRoute('homepage');
-            }
+        $form_edit = [];
+        $form_delete = [];
+        /**
+         * @var \AppBundle\Entity\Post $item
+         */
+        foreach ($posts as $item) {
+            $form_edit[$item->getSlug()] = $this->createFormEdit($item->getSlug())->createView();
+            $form_delete[$item->getSlug()] = $this->createFormDelete($item->getSlug())->createView();
         }
 
-        return ['form' => $form->createView()];
+        return ['posts' => $posts, 'form_edit' => $form_edit, 'form_delete' => $form_delete];
     }
+
+    /**
+     * @Route("admin/remove/post/{slug}", name="remove_post")
+     * @Method("DELETE")
+     */
+    public function removePostAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em->getRepository('AppBundle:Post')
+            ->findOneBy(array('slug' => $slug));
+        $comments = $em->getRepository('AppBundle:Comment')
+            ->findBy(array('post' => $post->getId()));
+
+        if (!$post) {
+            throw $this->createNotFoundException();
+        }
+
+        foreach ($comments as $comment) {
+            $em->remove($comment);
+        }
+
+        $em->remove($post);
+        $em->flush();
+
+        return $this->redirectToRoute('admin_show');
+    }
+
+    /**
+     * @Route("admin/edit/post/{slug}", name="edit_post")
+     * @Template("@App/admin/editPost.html.twig")
+     */
+    public function editPostAction(Request $request, $slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em->getRepository('AppBundle:Post')
+            ->findOneBy(array('slug' => $slug));
+        $oldImage = $post->getPathImage();
+        $form = $this->createForm(PostType::class, $post);
+
+        $form_delete_image[$post->getSlug()] = $this->createFormDeleteImage($post->getSlug())->createView();
+
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $newTags = $post->getNewTags();
+
+            if (null !== $newTags) {
+                $newTags = explode(',', trim($newTags));
+                foreach ($newTags as $item) {
+                    $tag = new Tags();
+                    $tag->setTagName($item);
+                    $em->persist($tag);
+                    $post->addTag($tag);
+                }
+            }
+
+            $newCategory = $post->getNewCategory();
+
+            if (null !== $newCategory) {
+                $category = new Category();
+                $category->setCategoryName(trim($newCategory));
+                $em->persist($category);
+                $post->setCategory($category);
+            }
+
+            $post->uploadImage();
+            $post->setNewTags(null);
+            $post->setNewCategory(null);
+
+            $em->flush();
+            $this->checkPath();
+            $this->updateTagsClud();
+
+            return $this->redirectToRoute('admin_show');
+        }
+
+        return ['form' => $form->createView(), 'oldImage' => $oldImage, 'formDeleteImage' => $form_delete_image, 'slug' => $post->getSlug()];
+
+    }
+
+    /**
+     * @param $slug
+     * @Route("admin/remove/image/{slug}", name="remove_image")
+     * @Method("PUT")
+     */
+    public function removeImage($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $post = $em->getRepository('AppBundle:Post')
+            ->findOneBy(array('slug' => $slug));
+
+        $post->setPathImage(null);
+        $post->setNameImage(null);
+        $em->flush();
+
+        return $this->redirectToRoute('edit_post', ['slug' => $slug]);
+
+    }
+
+    /**
+     * @param $slug
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createFormDelete($slug)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('remove_post', ['slug' => $slug]))
+            ->setMethod('DELETE')
+            ->add('submit', SubmitType::class, [
+                'label' => ' ',
+                'attr' => [
+                    'class' => 'glyphicon glyphicon-trash btn-link',
+                    'onclick' => 'return confirm("Are you sure?")'
+                ]
+            ])
+            ->getForm();
+    }
+
+    /**
+     * @param $slug
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createFormEdit($slug)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('edit_post', ['slug' => $slug]))
+            ->setMethod('PUT')
+            ->add('submit', SubmitType::class, [
+                'label' => ' ',
+                'attr' => [
+                    'class' => 'glyphicon glyphicon-pencil btn-link'
+                ]
+            ])
+            ->getForm();
+    }
+
+    /**
+     * @param $slug
+     * @return \Symfony\Component\Form\Form
+     */
+    private function createFormDeleteImage($slug)
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('remove_image', ['slug' => $slug]))
+            ->setMethod('PUT')
+            ->add('submit', SubmitType::class, [
+                'label' => ' ',
+                'attr' => [
+                    'class' => 'glyphicon glyphicon-trash btn-link',
+                    'onclick' => 'return confirm("Are you sure?")'
+                ]
+            ])
+            ->getForm();
+    }
+
+    /**
+     * @return array
+     */
+    private function updateTagsClud()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $tags = $em->getRepository('AppBundle:Tags')
+            ->countTags();
+
+        /**
+         * @var \AppBundle\Entity\Tags $tag
+         */
+        foreach ($tags as $tag) {
+            $countPosts = 0;
+            foreach ($tag->getPosts() as $item) {
+                $countPosts++;
+            }
+            $tag->setWeightTag($countPosts);
+        }
+        $em->flush();
+
+        return;
+    }
+
+    /**
+     * @Route("admin/checkpath", name="check_path")
+     */
+    private function checkPath()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AppBundle:Post')
+            ->findAll();
+        $needle = 'web/';
+
+        /**
+         * \AppBundle\Entity\Post $post
+         */
+        foreach ($posts as $post) {
+            $path = $post->getPathImage();
+
+            if (false !== $offset = mb_strpos($path, $needle)) {
+                $newPath = substr($path, 4);
+                $post->setPathImage($newPath);
+            }
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('homepage');
+    }
+
+
 }

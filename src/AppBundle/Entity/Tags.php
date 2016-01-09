@@ -26,6 +26,8 @@ class Tags
 
     /**
      * @var string
+     * @Assert\NotBlank(message="This field can not be empty")
+     * @Assert\Length(min="3", minMessage="This field can not be less than 30 characters")
      *
      * @ORM\Column(name="tagName", type="string", length=255)
      */
@@ -39,12 +41,20 @@ class Tags
     private $slug;
 
     /**
+     *
+     * @ORM\Column(name="wieghtTag" , type="integer", nullable=true)
+     */
+    private $weightTag;
+
+    /**
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", mappedBy="tags")
      */
     private $posts;
 
 
-
+    /**
+     *
+     */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -130,9 +140,28 @@ class Tags
         $this->posts->removeElement($posts);
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWeightTag()
+    {
+        return $this->weightTag;
+    }
+
+    /**
+     * @param mixed $weightTag
+     */
+    public function setWeightTag($weightTag)
+    {
+        $this->weightTag = $weightTag;
     }
 
 

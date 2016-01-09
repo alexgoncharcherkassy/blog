@@ -1,0 +1,91 @@
+{% extends '::base.html.twig' %}
+
+
+{% block panel %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-bottom: 0">
+            <h4>Edit post</h4>
+        </div>
+
+        <div class="panel-body">
+            {% if oldImage is not null %}
+
+                <img src="{{ oldImage | imagine_filter('blog_show') }}" class="img-thumbnail pull-left">
+                {{ form(formDeleteImage[slug], {'attr' : {'style' : 'float:left'}}) }}
+            {% endif %}
+            {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
+            {{ form_widget(form) }}
+            {{ form_rest(form) }}
+
+            {# <input type="submit" value="Add file" class="jslink">
+             <br/>#}
+            <br/>
+            <input type="submit" VALUE="Save" class="btn btn-large btn-primary">
+            {{ form_end(form) }}
+            <div id="del"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar1 %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Most Popular</h4>
+            {{ render(controller('AppBundle:Blog:showMostPopular')) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar2 %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Last comments</h4>
+            {{ render(controller('AppBundle:Blog:showLastComment')) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar3 %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Tags cloud</h4>
+
+            <p>
+                Migrating from Bootstrap 2.x to 3 is not a simple matter of swapping out the JS and CSS
+                files.
+                Bootstrap 3 is a major overhaul, and there are a lot of changes from Bootstrap 2.x.
+                <a href="http://bootply.com/bootstrap-3-migration-guide">This guidance</a> is
+                intended
+                to help 2.x developers transition to 3.
+            </p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function add() {
+            var collectionHolder = $('#app_bundle_post_type_images');
+            var prototype = collectionHolder.attr('data-prototype');
+            // Sustituye __name__ con el número de hijos que tiene el div #nencargo_attachments, es decir, la cantidad de archivos adjuntos que hay.
+            var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+            $(form).filter('div').first().html($(form).html() +'<a class="delete_link" href="#">Remove</a>');
+            collectionHolder.append(form);
+        }
+
+        $('input.jslink').click(function(event){
+            event.preventDefault();
+            add();
+        });
+
+        $(document).on('click', 'a.delete_link',function(event){
+            $(event.currentTarget).parent().remove();
+        });
+    </script>
+{% endblock %}
+
+
+
+

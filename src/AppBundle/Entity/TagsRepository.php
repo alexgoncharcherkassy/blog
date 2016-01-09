@@ -10,4 +10,23 @@ namespace AppBundle\Entity;
  */
 class TagsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function countTags()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t, p')
+            ->join('t.posts', 'p')
+            ->orderBy('t.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function showNotNullTags()
+    {
+        return $this->createQueryBuilder('t')
+            ->select('t')
+            ->where('t.weightTag is NOT NULL')
+            ->orderBy('t.weightTag', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
 }

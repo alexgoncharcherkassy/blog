@@ -22,6 +22,20 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 
     }
 
+    public function showPostWithoutCategory()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, c, t')
+            ->leftJoin('p.category', 'c')
+            ->leftJoin('p.tags', 't')
+            ->where('p.category is NULL ')
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+    }
+
+
     public function showPost($slug)
     {
         return $this->createQueryBuilder('p')
