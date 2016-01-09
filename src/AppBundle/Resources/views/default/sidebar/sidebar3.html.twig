@@ -4,12 +4,18 @@
 
 {% endfor %}
 <script>
+    var tags = {{ tags|length }};
 
     window.onload = function() {
-        for  (i = 0; i < 25; i++) {
+        for  (i = 0; i < tags; i++) {
+            if (i < 18) {
+                var size = document.getElementById('tags'+i).style.fontSize = (30 - i)+'px';
+                var style = document.getElementById('tags'+i).style.color = getRandomColor();
+            } else {
+                var size = document.getElementById('tags'+i).style.fontSize = (30 - 17)+'px';
+                var style = document.getElementById('tags'+i).style.color = getRandomColor();
+            }
 
-            var size = document.getElementById('tags'+i).style.fontSize = (30 - i)+'px';
-            var style = document.getElementById('tags'+i).style.color = getRandomColor();
         }
 
     };
