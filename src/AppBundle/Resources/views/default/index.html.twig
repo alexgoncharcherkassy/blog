@@ -64,7 +64,33 @@
 {% endblock %}
 
 
-
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        var page = 2;
+        $(document).ready(function() {
+            $('#ajax').click(function () {
+                $.ajax({
+                    type: "POST",
+                    dataType: 'html',
+                    data: {
+                        page: page
+                    },
+                    url: "{{ path('ajax_homepage') }}"
+                })
+                        .success(function (response) {
+                            page++;
+                            console.log(response);
+                            template = response;
+                            $('#ajax_load').html(template);
+                        })
+                        .fail(function (jqXHR, textStatus, errorThrown) {
+                            alert('Error : ' + errorThrown);
+                        });
+            });
+        })
+    </script>
+{% endblock %}
 
 
 
