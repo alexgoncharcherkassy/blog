@@ -31,7 +31,7 @@
                     <div class="thumbnail">
                         <p>{{ post.textPost|nl2br }}</p>
                         <br/><br/>
-                        {{ form_start(form) }}
+                        {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
                         {{ form_widget(form) }}
                         <br/>
                         <input type="submit" value="Send" class="btn btn-large btn-primary">

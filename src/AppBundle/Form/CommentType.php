@@ -21,6 +21,7 @@ class CommentType extends AbstractType
                     '4' => 4,
                     '5' => 5
                 ],
+                'choices_as_values' => true,
                 'expanded' => true
 
             ])

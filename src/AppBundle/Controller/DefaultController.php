@@ -18,31 +18,25 @@ class DefaultController extends Controller
      * @Route("/", name="homepage")
      * @Template("@App/default/index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository('AppBundle:Post')
-            ->showAllPost();
-
-        return ['posts' => $posts];
-    }
-
-    /**
-     * @Route("/ajax/", name="ajax_homepage")
-     */
-    public function indexAjaxAction(Request $request)
-    {
-        $page = $request->request->get('page');
+        $page = $request->request->get('page', 1);
         $limit = 5;
         $start = $page * $limit - $limit;
-        $template = $this->forward('AppBundle:Default:showAjax',
-            array('start' => $start, 'limit' => $limit))
-            ->getContent();
+        if ($page > 1) {
+            $template = $this->forward('AppBundle:Default:showAjax',
+                array('start' => $start, 'limit' => $limit))
+                ->getContent();
 
-        $response = new Response($template, 200);
+            $response = new Response($template, 200);
 
-        return $response;
+            return $response;
+        }
+        $posts = $em->getRepository('AppBundle:Post')
+            ->show($start, $limit);
+
+        return ['posts' => $posts];
     }
 
     /**
@@ -56,7 +50,7 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')
-            ->showAjax($start, $limit);
+            ->show($start, $limit);
 
         return ['posts' => $posts];
     }

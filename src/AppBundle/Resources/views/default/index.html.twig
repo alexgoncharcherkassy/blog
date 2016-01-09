@@ -35,6 +35,9 @@
         </div>
     {% endfor %}
     <div id="ajax_load"></div>
+    <br/>
+    <p id="loading" style="display:none"><img src="{{ asset('bundles/framework/images/loading.png') }}" alt="" /></p>
+    <br/>
     <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax">
 {% endblock %}
 
@@ -70,21 +73,27 @@
     {{ parent() }}
     <script>
         var page = 2;
+
         $(document).ready(function() {
             $('#ajax').click(function () {
+                $('#loading').show();
                 $.ajax({
                     type: "POST",
                     dataType: 'html',
                     data: {
                         page: page
                     },
-                    url: "{{ path('ajax_homepage') }}"
+                    url: "{{ path('homepage') }}"
                 })
                         .success(function (response) {
+                            if (response == '') {
+                                $('#ajax').attr('disabled',true);
+                                $('#loading').hide();
+                            }
                             page++;
-                            console.log(response);
                             template = response;
-                            $('#ajax_load').html(template);
+                            $('#loading').hide();
+                            $('#ajax_load').append(template);
                         })
                         .fail(function (jqXHR, textStatus, errorThrown) {
                             alert('Error : ' + errorThrown);

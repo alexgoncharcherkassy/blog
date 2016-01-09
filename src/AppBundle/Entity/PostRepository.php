@@ -88,4 +88,15 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function show($start, $limit)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->orderBy('p.createdAt', 'DESC')
+            ->setFirstResult($start)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
 }
