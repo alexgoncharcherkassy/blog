@@ -1,0 +1,32 @@
+{% for post in posts %}
+    <div class="panel panel-default">
+        <div class="panel-heading" style="margin-bottom: 0">
+
+            <a href="{{ path('show_category', {'slug': post.category.slug}) }}" class="pull-right">Category: {{ post.category.categoryName }}</a>
+            <h4>{{ post.titlePost }}</h4>
+            <small>Rating post</small>
+            <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
+            {% if post.pathImage and post.nameImage %}
+                <img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
+                     alt="{{ post.nameImage }}">
+            {% endif %}
+        </div>
+
+        <div class="panel-body">
+
+            <p>{{ post.textPost|slice(0, 250) }}</p>
+            <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
+            <small>Published {{ post.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
+            {% if post.createdAt < post.updateAt %}
+                <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
+            {% endif %}
+
+            {% for tag in post.tags %}
+                <div class="pull-right">
+                    <a href="{{ path('show_tags', {'slug': tag.slug}) }}">| {{ tag.tagName }} |</a>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endfor %}
