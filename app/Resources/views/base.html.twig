@@ -192,6 +192,24 @@ author: bootply.com
         #main {
             padding-top: 120px;
         }
+
+        .search_content {
+            display: inline;
+            position: fixed;
+            top: 50px;
+            left: 90px;
+            z-index: 100;
+            background-color: #a4eeeb;
+        }
+
+        .search_content ul {
+            padding: 5px;
+            margin: 0;
+        }
+
+        .search_content li {
+            list-style-type: none;
+        }
     </style>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
@@ -209,7 +227,7 @@ author: bootply.com
 
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse1">
-                <form class="navbar-form pull-left" method="post">
+                <form class="navbar-form pull-left" method="post" id="formSearch" action="{{ path('search_all') }}">
                     <div class="input-group" style="max-width:470px;">
                         <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
 
@@ -275,7 +293,7 @@ author: bootply.com
             </div>
         </div>
     </div>
-    <div id="search" class=""></div>
+    <div id="search" class="search_content"></div>
     <!--main-->
 {% block content %}
     <div class="container" id="main">
@@ -365,7 +383,10 @@ author: bootply.com
 
                 var enterData = $('#srch-term').val();
                 var count = enterData.length;
-                if (count > 2) {
+                if (count <= 2) {
+                    $('#search').hide();
+                } else if (count > 2) {
+                    $('#search').show();
                     $.ajax({
                         type: "POST",
                         dataType: 'html',
@@ -382,8 +403,9 @@ author: bootply.com
                             .fail(function (jqXHR, textStatus, errorThrown) {
                                 alert('Error : ' + errorThrown);
                             });
-                } else if (count == 0) {
-                    $('#search').html('');
+                } else if (count >= 7) {
+                    $('#search').show();
+                    $('#search').html('Not found');
                 }
             });
         })

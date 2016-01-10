@@ -223,7 +223,7 @@ class BlogController extends Controller
      */
     public function searchShowAction(Request $request)
     {
-        $data = $request->request->get('srch-term');
+        $data = $request->request->get('dataSearch');
 
         $template = $this->forward('AppBundle:Blog:search',
             array('data' => $data))
@@ -236,11 +236,26 @@ class BlogController extends Controller
 
     /**
      * @Route("/search/ajax", name="search_ajax")
-     * @Template("@App/default/serachData.html.twig")
+     * @Template("@App/default/searchData.html.twig")
      */
     public function searchAction($data)
     {
         $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AppBundle:Post')
+            ->search($data);
+
+        return ['posts' => $posts];
+    }
+
+    /**
+     * @Route("/search/all", name="search_all")
+     * @Template("@App/default/searchAllData.html.twig")
+     */
+    public function searchAllAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $data = $request->request->get('srch-term');
 
         $posts = $em->getRepository('AppBundle:Post')
             ->search($data);
