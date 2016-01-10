@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -213,6 +214,38 @@ class BlogController extends Controller
                 ]
             ])
             ->getForm();
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/search", name="search_show")
+     */
+    public function searchShowAction(Request $request)
+    {
+        $data = $request->request->get('srch-term');
+
+        $template = $this->forward('AppBundle:Blog:search',
+            array('data' => $data))
+            ->getContent();
+
+        $response = new Response($template, 200);
+
+        return $response;
+    }
+
+    /**
+     * @Route("/search/ajax", name="search_ajax")
+     * @Template("@App/default/serachData.html.twig")
+     */
+    public function searchAction($data)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AppBundle:Post')
+            ->search($data);
+
+        return ['posts' => $posts];
     }
 
 

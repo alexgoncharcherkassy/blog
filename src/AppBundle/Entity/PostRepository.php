@@ -99,4 +99,16 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function search($data)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->where('p.titlePost LIKE :data')
+            ->orWhere('p.textPost LIKE :data')
+            ->setParameter('data', '%'.$data.'%')
+            ->orderBy('p.rating')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

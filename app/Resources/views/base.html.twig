@@ -193,6 +193,7 @@ author: bootply.com
             padding-top: 120px;
         }
     </style>
+
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
 <body>
@@ -208,16 +209,18 @@ author: bootply.com
 
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse1">
-                <form class="navbar-form pull-left">
+                <form class="navbar-form pull-left" method="post">
                     <div class="input-group" style="max-width:470px;">
                         <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
 
                         <div class="input-group-btn">
-                            <button class="btn btn-default btn-primary" type="submit"><i
-                                        class="glyphicon glyphicon-search"></i></button>
+                            <button class="btn btn-default btn-primary" type="submit" id="searchData"><i
+                                        class="glyphicon glyphicon-search" ></i></button>
                         </div>
+
                     </div>
                 </form>
+
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="http://www.bootply.com" target="_ext">Bootply+</a></li>
                     <li>
@@ -272,7 +275,7 @@ author: bootply.com
             </div>
         </div>
     </div>
-
+    <div id="search" class=""></div>
     <!--main-->
 {% block content %}
     <div class="container" id="main">
@@ -355,6 +358,36 @@ author: bootply.com
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/app.js') }}"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#srch-term').keyup(function(){
+
+                var enterData = $('#srch-term').val();
+                var count = enterData.length;
+                if (count > 2) {
+                    $.ajax({
+                        type: "POST",
+                        dataType: 'html',
+                        data: {
+                            dataSearch: enterData
+                        },
+                        url: "{{ path('search_show') }}"
+                    })
+                            .success(function (response) {
+
+                                template = response;
+                                $('#search').html(template);
+                            })
+                            .fail(function (jqXHR, textStatus, errorThrown) {
+                                alert('Error : ' + errorThrown);
+                            });
+                } else if (count == 0) {
+                    $('#search').html('');
+                }
+            });
+        })
+    </script>
 {% endblock %}
 </body>
 </html>
