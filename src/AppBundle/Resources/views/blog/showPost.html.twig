@@ -55,8 +55,10 @@
                             {{ form(formDeleteComment[comment.id], {'attr' : {'style' : 'text-align : right'}}) }}
                             <small>Published {{ comment.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
                             <div class="col-md-6 text-left">
+                                {% if comment.rating %}
                                 Rating
                                 <span class="badge badge-success">{{ comment.rating }}</span>
+                                {% endif %}
                             </div>
                             <li class="span5" style="list-style: none">
                                 <div class="thumbnail">

@@ -27,7 +27,7 @@ class Tags
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="3", minMessage="This field can not be less than 30 characters")
+     * @Assert\Length(min="3", minMessage="This field can not be less than 3 characters")
      *
      * @ORM\Column(name="tagName", type="string", length=255)
      */

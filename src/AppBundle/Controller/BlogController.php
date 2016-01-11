@@ -140,11 +140,14 @@ class BlogController extends BaseController
         $comments = $em->getRepository('AppBundle:Comment')
             ->findBy(array('post' => $post));
 
-        $count = count($comments);
+        $count = 0;
         $summ = 0;
 
         foreach ($comments as $comment) {
-            $summ += $comment->getRating();
+            if ($comment->getRating() !== null) {
+                $summ += $comment->getRating();
+                $count++;
+            }
         }
         if ($summ == 0 || $count == 0) {
             $post->setRating(0);
