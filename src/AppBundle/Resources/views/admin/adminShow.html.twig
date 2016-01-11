@@ -1,9 +1,9 @@
-{% extends '::base.html.twig' %}
+{% extends '@App/layoutAdmin.html.twig' %}
 
 
 {% block panel %}
     {% for post in posts %}
-        <div class="panel panel-default">
+        <div class="panel panel-success">
             <div class="alert alert-info text-right">
             {{ form(form_edit[post.slug]) }}
             {{ form(form_delete[post.slug]) }}
@@ -39,40 +39,7 @@
     {% endfor %}
 {% endblock %}
 
-{% block sidebar1 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Most Popular</h4>
-            {{ render(controller('AppBundle:Blog:showMostPopular')) }}
-        </div>
-    </div>
-{% endblock %}
 
-{% block sidebar2 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Last comments</h4>
-            {{ render(controller('AppBundle:Blog:showLastComment')) }}
-        </div>
-    </div>
-{% endblock %}
-
-{% block sidebar3 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Tags cloud</h4>
-
-            <p>
-                Migrating from Bootstrap 2.x to 3 is not a simple matter of swapping out the JS and CSS
-                files.
-                Bootstrap 3 is a major overhaul, and there are a lot of changes from Bootstrap 2.x.
-                <a href="http://bootply.com/bootstrap-3-migration-guide">This guidance</a> is
-                intended
-                to help 2.x developers transition to 3.
-            </p>
-        </div>
-    </div>
-{% endblock %}
 
 
 

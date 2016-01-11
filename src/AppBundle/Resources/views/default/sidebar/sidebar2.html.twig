@@ -1,5 +1,0 @@
-{% for comment in comments %}
-    <p>
-        <a href="{{ path('show_post', {'slug': comment.post.slug}) }}">{{ comment.post.titlePost }}</a>
-    </p>
-{% endfor %}

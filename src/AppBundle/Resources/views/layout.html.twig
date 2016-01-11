@@ -1,0 +1,19 @@
+{% extends '::base.html.twig' %}
+
+{% block layout %}
+
+            <div class="col-md-9 pull-left">
+                {% block panel %}
+                {% endblock %}
+            </div>
+
+            <div class="col-md-3 pull-right">
+                {% block sidebar1 %}
+                {% endblock %}
+                {% block sidebar2 %}
+                {% endblock %}
+                {% block sidebar3 %}
+                {% endblock %}
+            </div>
+
+{% endblock %}

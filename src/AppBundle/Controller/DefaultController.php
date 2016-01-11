@@ -3,7 +3,6 @@
 namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class DefaultController
  * @package AppBundle\Controller
  */
-class DefaultController extends Controller
+class DefaultController extends BaseController
 {
     /**
      * @Route("/", name="homepage")
@@ -35,8 +34,15 @@ class DefaultController extends Controller
         }
         $posts = $em->getRepository('AppBundle:Post')
             ->show($start, $limit);
+        $sidebar1 = $this->showMostPopular();
+        $sidebar2 = $this->showLastComment();
+        $sidebar3 = $this->tagsCloud();
 
-        return ['posts' => $posts];
+        return ['posts' => $posts,
+                'sidebar1' => $sidebar1,
+                'sidebar2' => $sidebar2,
+                'sidebar3' => $sidebar3
+        ];
     }
 
     /**

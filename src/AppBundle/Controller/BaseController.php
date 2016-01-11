@@ -10,34 +10,43 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
  */
 class BaseController extends Controller
 {
-    protected function showMostPopularAction()
+    /**
+     * @return array
+     */
+    protected function showMostPopular()
     {
         $em = $this->getDoctrine()->getManager();
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showMostPopularPost();
 
-        return ['posts' => $posts];
+        return $posts;
     }
 
-    protected function showLastCommentAction()
+    /**
+     * @return array
+     */
+    protected function showLastComment()
     {
         $em = $this->getDoctrine()->getManager();
 
         $comments = $em->getRepository('AppBundle:Comment')
             ->showLastFiveComment();
 
-        return ['comments' => $comments];
+        return $comments;
     }
 
-    protected function TagsCloudAction()
+    /**
+     * @return array
+     */
+    protected function tagsCloud()
     {
         $em = $this->getDoctrine()->getManager();
 
         $tags = $em->getRepository('AppBundle:Tags')
             ->showNotNullTags();
 
-        return ['tags' => $tags];
+        return $tags;
     }
 
 }

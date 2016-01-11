@@ -11,7 +11,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Comment;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\CommentType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -23,49 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
  * Class BlogController
  * @package AppBundle\Controller
  */
-class BlogController extends Controller
+class BlogController extends BaseController
 {
-    /**
-     * @Route("/show/mostpopular", name="most_popular")
-     * @Template("@App/default/sidebar/sidebar1.html.twig")
-     */
-    public function showMostPopularAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository('AppBundle:Post')
-            ->showMostPopularPost();
-
-        return ['posts' => $posts];
-    }
-
-    /**
-     * @Route("/show/lastcomment", name="last_comment")
-     * @Template("@App/default/sidebar/sidebar2.html.twig")
-     */
-    public function showLastCommentAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $comments = $em->getRepository('AppBundle:Comment')
-            ->showLastFiveComment();
-
-        return ['comments' => $comments];
-    }
-
-    /**
-     * @Route("/show/tagscloud", name="tags_cloud")
-     * @Template("@App/default/sidebar/sidebar3.html.twig")
-     */
-    public function TagsCloudAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $tags = $em->getRepository('AppBundle:Tags')
-            ->showNotNullTags();
-
-        return ['tags' => $tags];
-    }
 
     /**
      * @Route("/show/{slug}", name="show_post")
@@ -93,6 +51,9 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showPost($slug);
+        $sidebar1 = $this->showMostPopular();
+        $sidebar2 = $this->showLastComment();
+        $sidebar3 = $this->tagsCloud();
         /**
          * @var \AppBundle\Entity\Post $items
          * @var \AppBundle\Entity\Comment $item
@@ -105,6 +66,9 @@ class BlogController extends Controller
         }
         return [
             'posts' => $posts,
+            'sidebar1' => $sidebar1,
+            'sidebar2' => $sidebar2,
+            'sidebar3' => $sidebar3,
             'form' => $form->createView(),
             'formDeleteComment' => $form_delete_comment,
         ];
@@ -117,18 +81,30 @@ class BlogController extends Controller
     public function showCategoryAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
+        $sidebar1 = $this->showMostPopular();
+        $sidebar2 = $this->showLastComment();
+        $sidebar3 = $this->tagsCloud();
 
         if ($slug === '#') {
             $posts = $em->getRepository('AppBundle:Post')
                 ->showPostWithoutCategory();
 
-            return ['posts' => $posts];
+            return ['posts' => $posts,
+                    'sidebar1' => $sidebar1,
+                    'sidebar2' => $sidebar2,
+                    'sidebar3' => $sidebar3
+            ];
         }
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showCategoryPost($slug);
 
-        return ['posts' => $posts];
+
+        return ['posts' => $posts,
+                'sidebar1' => $sidebar1,
+                'sidebar2' => $sidebar2,
+                'sidebar3' => $sidebar3
+        ];
     }
 
     /**
@@ -141,8 +117,15 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showTagsPost($slug);
+        $sidebar1 = $this->showMostPopular();
+        $sidebar2 = $this->showLastComment();
+        $sidebar3 = $this->tagsCloud();
 
-        return ['posts' => $posts];
+        return ['posts' => $posts,
+                'sidebar1' => $sidebar1,
+                'sidebar2' => $sidebar2,
+                'sidebar3' => $sidebar3
+        ];
     }
 
     /**
@@ -259,8 +242,15 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->search($data);
+        $sidebar1 = $this->showMostPopular();
+        $sidebar2 = $this->showLastComment();
+        $sidebar3 = $this->tagsCloud();
 
-        return ['posts' => $posts];
+        return ['posts' => $posts,
+                'sidebar1' => $sidebar1,
+                'sidebar2' => $sidebar2,
+                'sidebar3' => $sidebar3
+        ];
     }
 
 

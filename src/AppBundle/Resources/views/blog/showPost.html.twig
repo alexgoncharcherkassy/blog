@@ -1,8 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends '@App/layout.html.twig' %}
 
     {% block panel %}
         {% for post in posts %}
-            <div class="panel panel-default">
+            <div class="panel panel-success">
                 <div class="panel-heading" style="margin-bottom: 0">
                     <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
                        class="pull-right">Category: {{ post.category.categoryName }}</a>
@@ -56,7 +56,7 @@
                             <small>Published {{ comment.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
                             <div class="col-md-6 text-left">
                                 Rating
-                                <span class="badge badge-info">{{ comment.rating }}</span>
+                                <span class="badge badge-success">{{ comment.rating }}</span>
                             </div>
                             <li class="span5" style="list-style: none">
                                 <div class="thumbnail">
@@ -75,28 +75,41 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <h4>Most Popular</h4>
-                {{ render(controller('AppBundle:Blog:showMostPopular')) }}
+                {% for post in sidebar1 %}
+                    <p>
+                        <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost }}</a>
+                        <small> [ {{ post.rating }} ] </small>
+                    </p>
+                {% endfor %}
             </div>
         </div>
     {% endblock %}
 
-    {% block sidebar2 %}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <h4>Last comments</h4>
-                {{ render(controller('AppBundle:Blog:showLastComment')) }}
-            </div>
+{% block sidebar2 %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Last comments</h4>
+            {% for comment in sidebar2 %}
+                <p>
+                    <a href="{{ path('show_post', {'slug': comment.post.slug}) }}">{{ comment.post.titlePost }}</a>
+                </p>
+            {% endfor %}
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
 
-        {% block sidebar3 %}
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <h4>Tags cloud</h4>
-                    {{ render(controller('AppBundle:Blog:TagsCloud')) }}
-                </div>
-            </div>
-        {% endblock %}
+{% block sidebar3 %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h4>Tags cloud</h4>
+            {% for key, tag in sidebar3 %}
+
+                <a href="{{ path('show_tags', {'slug': tag.slug}) }}" id="tags{{ key }}">{{ tag.tagName }}</a>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
 
 {% block javascripts %}
 {{ parent() }}
@@ -180,5 +193,28 @@
                 return rateContainer.find('li');
             }
         });
+        var tags = {{ sidebar3|length }};
+
+        window.onload = function () {
+            for (i = 0; i < tags; i++) {
+                if (i < 18) {
+                    var size = document.getElementById('tags' + i).style.fontSize = (30 - i) + 'px';
+                    var style = document.getElementById('tags' + i).style.color = getRandomColor();
+                } else {
+                    var size = document.getElementById('tags' + i).style.fontSize = (30 - 17) + 'px';
+                    var style = document.getElementById('tags' + i).style.color = getRandomColor();
+                }
+
+            }
+
+        };
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
     </script>
 {% endblock %}

@@ -227,19 +227,19 @@ author: bootply.com
             cursor:pointer;
         }
         .defaultRating {
-            background-image:url('/star-white.png');
+            background-image: url('/star-white.png');
             background-repeat:no-repeat;
         }
         .badRating {
-            background-image:url('/star-red.png');
+            background-image: url('/star-red.png');
             background-repeat:no-repeat;
         }
         .rating {
-            background: url("/star-yellow.png");
+            background-image: url("/star-yellow.png");
             background-repeat:no-repeat;
         }
         .coolRating {
-            background-image:url("/star-green.png");
+            background-image: url("/star-green.png");
             background-repeat:no-repeat;
         }
     </style>
@@ -328,25 +328,15 @@ author: bootply.com
     <div id="search" class="search_content"></div>
     <!--main-->
 {% block content %}
-    <div class="container" id="main">
-        <div class="row">
-
-            <div class="col-md-9 pull-left">
-                {% block panel %}
-                {% endblock %}
-            </div>
+<div class="container" id="main">
+    <div class="row">
+        {% block layout %}
+        {% endblock %}
+        {% block layoutAdmin %}
+        {% endblock %}
+    </div><!--/row-->
+</div><!--/main-->
 {% endblock %}
-            <div class="col-md-3 pull-right">
-                {% block sidebar1 %}
-                {% endblock %}
-                {% block sidebar2 %}
-                {% endblock %}
-                {% block sidebar3 %}
-                {% endblock %}
-            </div>
-        </div><!--/row-->
-    </div><!--/main-->
-
  <!--login modal-->
     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
