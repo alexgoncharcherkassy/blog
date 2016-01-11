@@ -116,7 +116,9 @@ class AdminController extends Controller
         foreach ($comments as $comment) {
             $em->remove($comment);
         }
-
+        if ($post->getPathImage() !== null) {
+            unlink($post->getPathImage());
+        }
         $em->remove($post);
         $em->flush();
 
@@ -187,7 +189,9 @@ class AdminController extends Controller
 
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
-
+        if ($post->getPathImage() !== null) {
+            unlink($post->getPathImage());
+        }
         $post->setPathImage(null);
         $post->setNameImage(null);
         $em->flush();

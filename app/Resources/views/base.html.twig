@@ -7,16 +7,7 @@
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     {% endblock %}
     <style type="text/css">
-        /*
-A custom Bootstrap 3.2 'Google Plus style' theme
-from http://bootply.com
 
-This CSS code should follow the 'bootstrap.css'
-in your HTML file.
-
-license: MIT
-author: bootply.com
-*/
         @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 
         body {
@@ -272,17 +263,11 @@ author: bootply.com
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="http://www.bootply.com" target="_ext">Bootply+</a></li>
+                    <li><a href="http://geekhub.ck.ua/" target="_ext">GeekHub</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
                                     class="glyphicon glyphicon-bell"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#"><span class="badge pull-right">40</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">2</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">0</span>Link</a></li>
-                            <li><a href="#"><span class="label label-info pull-right">1</span>Link</a></li>
-                            <li><a href="#"><span class="badge pull-right">13</span>Link</a></li>
-                        </ul>
+
                     </li>
                     <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
                 </ul>
@@ -294,7 +279,7 @@ author: bootply.com
             <div class="navbar-header">
 
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle"
-                   data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Home
+                   data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Admin
                     <small><i class="glyphicon glyphicon-chevron-down"></i></small>
                 </a>
                 <ul class="nav dropdown-menu">
@@ -328,14 +313,14 @@ author: bootply.com
     <div id="search" class="search_content"></div>
     <!--main-->
 {% block content %}
-<div class="container" id="main">
-    <div class="row">
-        {% block layout %}
-        {% endblock %}
-        {% block layoutAdmin %}
-        {% endblock %}
-    </div><!--/row-->
-</div><!--/main-->
+    <div class="container" id="main">
+        <div class="row">
+            {% block layout %}
+            {% endblock %}
+            {% block layoutAdmin %}
+            {% endblock %}
+        </div><!--/row-->
+    </div><!--/main-->
 {% endblock %}
  <!--login modal-->
     <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
@@ -382,11 +367,10 @@ author: bootply.com
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 text-center">
-                        <a href="http://www.bootply.com/DwnjTNuvVt">This Bootstrap Template</a><br>was made with <i
-                                class="glyphicon glyphicon-heart"></i> by <a
-                                href="http://bootply.com/templates">Bootply</a>
+                        Gonchar Aleksandr<br/>
+                        Ukraine, Cherkassy
                         <br><br>
-                        <a href="https://github.com/iatek/bootstrap-google-plus">GitHub Fork</a>
+                        <a href="https://github.com/alexgoncharcherkassy/blog">GitHub Fork</a>
                     </div>
                 </div>
                 <div class="modal-footer">
