@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -13,7 +14,7 @@ class CommentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('rating', ChoiceType::class, [
+           /* ->add('rating', ChoiceType::class, [
                 'choices' => [
                     '1' => 1,
                     '2' => 2,
@@ -24,7 +25,8 @@ class CommentType extends AbstractType
                 'choices_as_values' => true,
                 'expanded' => true
 
-            ])
+            ])*/
+            ->add('rating', HiddenType::class)
             ->add('textComment', TextareaType::class, [
                 'required' => false,
                 'label' => 'Add comment',

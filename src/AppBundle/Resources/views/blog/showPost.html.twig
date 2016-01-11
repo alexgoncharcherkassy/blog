@@ -32,6 +32,18 @@
                         <p>{{ post.textPost|nl2br }}</p>
                         <br/><br/>
                         {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
+                        <div>
+
+                            <ul id = "rates"
+                                data-min-rating = "1"
+                                data-max-rating = "5"
+                                data-step = "1"
+                                data-transfer-element-selector = "#app_bundle_comment_type_rating">
+
+                                <li class="defaultRating" id="prototype-star"></li>
+                            </ul>
+
+                        </div>
                         {{ form_widget(form) }}
                         <br/>
                         <input type="submit" value="Send" class="btn btn-large btn-primary">
@@ -85,3 +97,88 @@
                 </div>
             </div>
         {% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+    <script>
+        jQuery(function($){
+            var rateContainer = $("#rates"),
+                    minRating = rateContainer.data('min-rating'),
+                    maxRating = rateContainer.data('max-rating'),
+                    rateStep = rateContainer.data('step'),
+                    transferElementSelector = rateContainer.data('transfer-element-selector'),
+                    ratingSpan = $('#rating').detach(),
+                    prototypeStar = $("#prototype-star").detach().prop("id", ""),
+                    memoryStarIndex = 0,
+                    rated = false,
+                    rateStars = createRatingStars(rateContainer, prototypeStar,minRating, maxRating, rateStep),
+                    rating;
+            rateContainer.on('mouseover', 'li', function(){
+                var indexOfRate = $(this).index();
+                ratingSpan.html(this.rating);
+                setRatesStars(indexOfRate);
+            });
+            rateContainer.on('mouseout', 'li', function(){
+                if(rated){
+                    setRatesStars(memoryStarIndex);
+                    ratingSpan.html(rating);
+                }
+                else{
+                    clearRates();
+                    ratingSpan.html("");
+                }
+            });
+            rateContainer.on('click', 'li', function(){
+                memoryStarIndex = $(this).index();
+                rating = this.rating;
+                rated = true;
+                ratingSpan.html(rating);
+                setRatesStars(memoryStarIndex);
+                $(transferElementSelector).prop({"value" : rating });
+            });
+//region==================== Utils ========================
+            function setRatesStars(starIndex){
+                var
+                        countStars = rateStars.length,
+                        rateType = 'defaultRating';
+                if(starIndex <= 2){
+                    rateType = 'badRating';
+                }
+                if(starIndex == 3){
+                    rateType = 'rating';
+                }
+                if((starIndex >= 4)&&(starIndex<=countStars)){
+                    rateType = 'coolRating';
+                }
+                for(var i = 0; i < rateStars.length; i++){
+                    if(i <= starIndex){
+                        rateStars.eq(i).removeClass();
+                        rateStars.eq(i).addClass(rateType);
+                    }
+                    else{
+                        rateStars.eq(i).removeClass();
+                        rateStars.eq(i).addClass('defaultRating');
+                    }
+                }
+            }
+            function clearRates(){
+                for(var i = 0; i < rateStars.length; i++){
+                    rateStars.eq(i).removeClass();
+                    rateStars.eq(i).addClass('defaultRating');
+                }
+            }
+            function createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep){
+                var currentNode;
+                for(var i = minRating; i <= maxRating; i+=rateStep){
+                    currentNode = prototypeStar.clone();
+                    currentNode[0].rating = i;
+                    // currentNode.param("");
+                    rateContainer.append(currentNode);
+                }
+                rateContainer.append(ratingSpan);
+                return rateContainer.find('li');
+            }
+        });
+    </script>
+{% endblock %}

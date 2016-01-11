@@ -210,6 +210,38 @@ author: bootply.com
         .search_content li {
             list-style-type: none;
         }
+        #rates {
+
+            list-style:none;
+            margin-right:20px;
+            padding-left:0;
+            display:inline-block;
+
+        }
+        #rates li {
+            float:left;
+            width:32px;
+            height:32px;
+        }
+        #rates li:hover {
+            cursor:pointer;
+        }
+        .defaultRating {
+            background-image:url('/star-white.png');
+            background-repeat:no-repeat;
+        }
+        .badRating {
+            background-image:url('/star-red.png');
+            background-repeat:no-repeat;
+        }
+        .rating {
+            background: url("/star-yellow.png");
+            background-repeat:no-repeat;
+        }
+        .coolRating {
+            background-image:url("/star-green.png");
+            background-repeat:no-repeat;
+        }
     </style>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
