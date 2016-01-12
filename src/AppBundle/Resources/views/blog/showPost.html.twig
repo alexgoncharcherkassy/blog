@@ -13,15 +13,17 @@
 
                 <div class="panel-body">
                     <p>
+                        <i class="glyphicon glyphicon-time"></i>
                         <small>Published {{ post.createdAt|date('d.m.Y h:m') }} by Anonymous</small>
-                        {% if post.createdAt < post.updateAt %}
+                        {#{% if post.createdAt < post.updateAt %}
                             <small>Updated {{ post.updateAt|date('d.m.Y h:m') }} by Anonymous</small>
-                        {% endif %}
+                        {% endif %}#}
 
                         {% for tag in post.tags %}
                             <a href="{{ path('show_tags', {'slug': tag.slug}) }}" class="pull-right">| {{ tag.tagName }}
                                 |</a>
                         {% endfor %}
+                        <i class="glyphicon glyphicon-tags pull-right" style="margin-right: 10px"></i>
                     </p>
 
                     {% if post.pathImage and post.nameImage %}
@@ -80,7 +82,7 @@
                 {% for post in sidebar1 %}
                     <p>
                         <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost }}</a>
-                        <small> [ {{ post.rating }} ] </small>
+                        <small><i class="glyphicon glyphicon-star"></i> {{ post.rating }}</small>
                     </p>
                 {% endfor %}
             </div>
