@@ -210,7 +210,7 @@ class AdminController extends Controller
             ->add('submit', SubmitType::class, [
                 'label' => ' ',
                 'attr' => [
-                    'class' => 'glyphicon glyphicon-trash btn-link',
+                    'class' => 'glyphicon glyphicon-remove btn-link',
                     'onclick' => 'return confirm("Are you sure?")'
                 ]
             ])
@@ -247,7 +247,7 @@ class AdminController extends Controller
             ->add('submit', SubmitType::class, [
                 'label' => ' ',
                 'attr' => [
-                    'class' => 'glyphicon glyphicon-trash btn-link',
+                    'class' => 'glyphicon glyphicon-remove btn-link',
                     'onclick' => 'return confirm("Are you sure?")'
                 ]
             ])
@@ -279,6 +279,9 @@ class AdminController extends Controller
         return;
     }
 
+    /**
+     *
+     */
     private function checkPath()
     {
         $em = $this->getDoctrine()->getManager();
@@ -312,7 +315,6 @@ class AdminController extends Controller
         $this->updateTagsClud();
 
         return $this->redirectToRoute('homepage');
-
     }
 
 

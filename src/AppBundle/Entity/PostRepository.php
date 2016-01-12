@@ -104,7 +104,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('p')
             ->select('p')
             ->where('p.titlePost LIKE :data')
-            ->orWhere('p.textPost LIKE :data')
+         //   ->orWhere('p.textPost LIKE :data')
             ->setParameter('data', '%'.$data.'%')
             ->orderBy('p.rating', 'DESC')
             ->getQuery()

@@ -196,7 +196,7 @@ class BlogController extends BaseController
             ->add('submit', SubmitType::class, [
                 'label' => ' ',
                 'attr' => [
-                    'class' => 'glyphicon glyphicon-trash btn-link'
+                    'class' => 'glyphicon glyphicon-remove btn-link'
                 ]
             ])
             ->getForm();
