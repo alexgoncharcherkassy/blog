@@ -76,7 +76,7 @@ class BlogController extends BaseController
 
     /**
      * @Route("/show/category/{slug}", name="show_category")
-     * @Template("@App/default/index.html.twig")
+     * @Template("@App/blog/showCategoryTags.html.twig")
      */
     public function showCategoryAction($slug)
     {
@@ -109,7 +109,7 @@ class BlogController extends BaseController
 
     /**
      * @Route("/show/tags/{slug}", name="show_tags")
-     * @Template("@App/default/index.html.twig")
+     * @Template("@App/blog/showCategoryTags.html.twig")
      */
     public function showTagsAction($slug)
     {

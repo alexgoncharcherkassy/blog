@@ -62,7 +62,6 @@ class AdminController extends Controller
                 $em->persist($post);
                 $em->flush();
 
-                $this->checkPath();
                 $this->updateTagsClud();
 
                 return $this->redirectToRoute('homepage');
@@ -168,7 +167,6 @@ class AdminController extends Controller
             $post->setNewCategory(null);
 
             $em->flush();
-            $this->checkPath();
             $this->updateTagsClud();
 
             return $this->redirectToRoute('admin_show');
@@ -281,9 +279,6 @@ class AdminController extends Controller
         return;
     }
 
-    /**
-     * @Route("admin/checkpath", name="check_path")
-     */
     private function checkPath()
     {
         $em = $this->getDoctrine()->getManager();
@@ -305,7 +300,19 @@ class AdminController extends Controller
         }
         $em->flush();
 
+        return;
+    }
+
+    /**
+     * @Route("admin/updateBlog", name="update_blog")
+     */
+    public function updateBlog()
+    {
+        $this->checkPath();
+        $this->updateTagsClud();
+
         return $this->redirectToRoute('homepage');
+
     }
 
 

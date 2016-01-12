@@ -16,7 +16,7 @@ AppBundle\Entity\Post:
         newCategory: <word()>
         rating: <randomFloat(1, 0, 5)>
         nameImage: <word()>
-        pathImage: <image("web/img/blog")>
+        pathImage: <image('web/img/blog')>
         comments: 2x @comment*
         tags: 3x @tags*
         category: @category*
