@@ -9,11 +9,74 @@
 
             <div class="col-md-3 pull-right">
                 {% block sidebar1 %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>Most Popular</h4>
+                            {% for post in sidebar1 %}
+                                <p>
+                                    <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost }}</a>
+                                    <small><i class="glyphicon glyphicon-star"></i> {{ post.rating }}</small>
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endblock %}
                 {% block sidebar2 %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>Last comments</h4>
+                            {% for comment in sidebar2 %}
+                                <p>
+                                    <a href="{{ path('show_post', {'slug': comment.post.slug}) }}">{{ comment.post.titlePost }}</a>
+                                </p>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endblock %}
                 {% block sidebar3 %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h4>Tags cloud</h4>
+                            {% for key, tag in sidebar3 %}
+
+                                <a href="{{ path('show_tags', {'slug': tag.slug}) }}" id="tags{{ key }}">{{ tag.tagName }}</a>
+
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endblock %}
             </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        var tags = {{ sidebar3|length }};
+
+        window.onload = function () {
+            for (i = 0; i < tags; i++) {
+                if (i < 18) {
+                    var size = document.getElementById('tags' + i).style.fontSize = (30 - i) + 'px';
+                    var style = document.getElementById('tags' + i).style.color = getRandomColor();
+                } else {
+                    var size = document.getElementById('tags' + i).style.fontSize = (30 - 17) + 'px';
+                    var style = document.getElementById('tags' + i).style.color = getRandomColor();
+                }
+
+            }
+
+        };
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+    </script>
 
 {% endblock %}
