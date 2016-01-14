@@ -5,11 +5,12 @@
     {% for post in posts %}
         <div class="panel panel-success">
             <div class="alert alert-info text-right">
-            {{ form(form_edit[post.slug]) }}
-            {{ form(form_delete[post.slug]) }}
-                </div>
+                {{ form(form_edit[post.slug]) }}
+                {{ form(form_delete[post.slug]) }}
+            </div>
             <div class="panel-heading" style="margin-bottom: 0">
-                <a href="{{ path('show_category', {'slug': post.category.slug}) }}" class="pull-right">Category: {{ post.category.categoryName }}</a>
+                <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
+                   class="pull-right">Category: {{ post.category.categoryName }}</a>
                 <h4>{{ post.titlePost }}</h4>
                 <small>Rating post</small>
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>

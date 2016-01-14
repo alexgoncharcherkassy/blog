@@ -144,7 +144,7 @@ class Post
      */
     public function addComment(Comment $comment)
     {
-     //   $comment->setPost($this);
+        //   $comment->setPost($this);
         $this->comments[] = $comment;
 
         return $this;
@@ -420,8 +420,6 @@ class Post
     }
 
 
-
-
     /**
      * Set blogImage
      *
@@ -496,7 +494,7 @@ class Post
     {
         return null === $this->pathImage
             ? null
-            : $this->getUploadRootDir().'/'.$this->pathImage;
+            : $this->getUploadRootDir() . '/' . $this->pathImage;
     }
 
     /**
@@ -506,7 +504,7 @@ class Post
     {
         return null === $this->pathImage
             ? null
-            : $this->getUploadDir().'/'.$this->pathImage;
+            : $this->getUploadDir() . '/' . $this->pathImage;
     }
 
     /**
@@ -514,7 +512,7 @@ class Post
      */
     protected function getUploadRootDir()
     {
-        return __DIR__.'/../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
     }
 
     /**
@@ -536,10 +534,10 @@ class Post
         $randPrefix = mt_rand(1, 9999);
         $this->getBlogImage()->move(
             $this->getUploadRootDir(),
-            $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName()
+            $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName()
         );
-        $this->pathImage = $this->getUploadDir().'/'.$randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
-        $this->nameImage = $randPrefix.'-'.$this->getBlogImage()->getClientOriginalName();
+        $this->pathImage = $this->getUploadDir() . '/' . $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
+        $this->nameImage = $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
         $this->blogImage = null;
     }
 

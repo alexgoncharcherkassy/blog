@@ -71,16 +71,16 @@
             var prototype = collectionHolder.attr('data-prototype');
             // Sustituye __name__ con el número de hijos que tiene el div #nencargo_attachments, es decir, la cantidad de archivos adjuntos que hay.
             var form = prototype.replace(/__name__/g, collectionHolder.children().length);
-            $(form).filter('div').first().html($(form).html() +'<a class="delete_link" href="#">Remove</a>');
+            $(form).filter('div').first().html($(form).html() + '<a class="delete_link" href="#">Remove</a>');
             collectionHolder.append(form);
         }
 
-        $('input.jslink').click(function(event){
+        $('input.jslink').click(function (event) {
             event.preventDefault();
             add();
         });
 
-        $(document).on('click', 'a.delete_link',function(event){
+        $(document).on('click', 'a.delete_link', function (event) {
             $(event.currentTarget).parent().remove();
         });
     </script>

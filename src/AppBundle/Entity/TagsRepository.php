@@ -24,6 +24,7 @@ class TagsRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('t')
             ->select('t')
+            ->join('t.posts', 'p')
             ->where('t.weightTag is NOT NULL')
             ->orderBy('t.weightTag', 'DESC')
             ->getQuery()

@@ -36,13 +36,14 @@
                         {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
                         <div>
 
-                            <ul id = "rates"
-                                data-min-rating = "1"
-                                data-max-rating = "5"
-                                data-step = "1"
-                                data-transfer-element-selector = "#app_bundle_comment_type_rating">
+                            <ul id="rates"
+                                data-min-rating="1"
+                                data-max-rating="5"
+                                data-step="1"
+                                data-transfer-element-selector="#app_bundle_comment_type_rating">
 
                                 <li class="defaultRating" id="prototype-star"></li>
+                                <span id="rating" class="hidden"></span>
                             </ul>
 
                         </div>
@@ -58,8 +59,8 @@
                             <small>Published {{ comment.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
                             <div class="col-md-6 text-left">
                                 {% if comment.rating %}
-                                Rating
-                                <span class="badge badge-success">{{ comment.rating }}</span>
+                                    Rating
+                                    <span class="badge badge-success">{{ comment.rating }}</span>
                                 {% endif %}
                             </div>
                             <li class="span5" style="list-style: none">
@@ -76,10 +77,10 @@
     {% endblock %}
 
 {% block javascripts %}
-{{ parent() }}
+    {{ parent() }}
 
     <script>
-        jQuery(function($){
+        jQuery(function ($) {
             var rateContainer = $("#rates"),
                     minRating = rateContainer.data('min-rating'),
                     maxRating = rateContainer.data('max-rating'),
@@ -89,65 +90,67 @@
                     prototypeStar = $("#prototype-star").detach().prop("id", ""),
                     memoryStarIndex = 0,
                     rated = false,
-                    rateStars = createRatingStars(rateContainer, prototypeStar,minRating, maxRating, rateStep),
+                    rateStars = createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep),
                     rating;
-            rateContainer.on('mouseover', 'li', function(){
+            rateContainer.on('mouseover', 'li', function () {
                 var indexOfRate = $(this).index();
                 ratingSpan.html(this.rating);
                 setRatesStars(indexOfRate);
             });
-            rateContainer.on('mouseout', 'li', function(){
-                if(rated){
+            rateContainer.on('mouseout', 'li', function () {
+                if (rated) {
                     setRatesStars(memoryStarIndex);
                     ratingSpan.html(rating);
                 }
-                else{
+                else {
                     clearRates();
                     ratingSpan.html("");
                 }
             });
-            rateContainer.on('click', 'li', function(){
+            rateContainer.on('click', 'li', function () {
                 memoryStarIndex = $(this).index();
                 rating = this.rating;
                 rated = true;
                 ratingSpan.html(rating);
                 setRatesStars(memoryStarIndex);
-                $(transferElementSelector).prop({"value" : rating });
+                $(transferElementSelector).prop({"value": rating});
             });
 //region==================== Utils ========================
-            function setRatesStars(starIndex){
+            function setRatesStars(starIndex) {
                 var
                         countStars = rateStars.length,
                         rateType = 'defaultRating';
-                if(starIndex <= 2){
+                if (starIndex <= 2) {
                     rateType = 'badRating';
                 }
-                if(starIndex == 3){
+                if (starIndex == 3) {
                     rateType = 'rating';
                 }
-                if((starIndex >= 4)&&(starIndex<=countStars)){
+                if ((starIndex >= 4) && (starIndex <= countStars)) {
                     rateType = 'coolRating';
                 }
-                for(var i = 0; i < rateStars.length; i++){
-                    if(i <= starIndex){
+                for (var i = 0; i < rateStars.length; i++) {
+                    if (i <= starIndex) {
                         rateStars.eq(i).removeClass();
                         rateStars.eq(i).addClass(rateType);
                     }
-                    else{
+                    else {
                         rateStars.eq(i).removeClass();
                         rateStars.eq(i).addClass('defaultRating');
                     }
                 }
             }
-            function clearRates(){
-                for(var i = 0; i < rateStars.length; i++){
+
+            function clearRates() {
+                for (var i = 0; i < rateStars.length; i++) {
                     rateStars.eq(i).removeClass();
                     rateStars.eq(i).addClass('defaultRating');
                 }
             }
-            function createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep){
+
+            function createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep) {
                 var currentNode;
-                for(var i = minRating; i <= maxRating; i+=rateStep){
+                for (var i = minRating; i <= maxRating; i += rateStep) {
                     currentNode = prototypeStar.clone();
                     currentNode[0].rating = i;
                     // currentNode.param("");

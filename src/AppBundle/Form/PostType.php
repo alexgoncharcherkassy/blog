@@ -16,13 +16,13 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titlePost', TextType::class,[
+            ->add('titlePost', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Add title',
+                    'placeholder' => 'Add title post',
                     'class' => 'form-control'
                 ]
             ])
-            ->add('textPost', TextareaType::class,[
+            ->add('textPost', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Add text post',
                     'class' => 'form-control',
@@ -47,8 +47,8 @@ class PostType extends AbstractType
             ])
             ->add('newCategory', TextType::class, [
                 'attr' => [
-                  'class' => 'form-control',
-                  'placeholder' => 'Add only one category or select'
+                    'class' => 'form-control',
+                    'placeholder' => 'Add only one category or select'
                 ],
                 'required' => false
             ])

@@ -90,9 +90,9 @@ class BlogController extends BaseController
                 ->showPostWithoutCategory();
 
             return ['posts' => $posts,
-                    'sidebar1' => $sidebar1,
-                    'sidebar2' => $sidebar2,
-                    'sidebar3' => $sidebar3
+                'sidebar1' => $sidebar1,
+                'sidebar2' => $sidebar2,
+                'sidebar3' => $sidebar3
             ];
         }
 
@@ -101,9 +101,9 @@ class BlogController extends BaseController
 
 
         return ['posts' => $posts,
-                'sidebar1' => $sidebar1,
-                'sidebar2' => $sidebar2,
-                'sidebar3' => $sidebar3
+            'sidebar1' => $sidebar1,
+            'sidebar2' => $sidebar2,
+            'sidebar3' => $sidebar3
         ];
     }
 
@@ -122,9 +122,9 @@ class BlogController extends BaseController
         $sidebar3 = $this->tagsCloud();
 
         return ['posts' => $posts,
-                'sidebar1' => $sidebar1,
-                'sidebar2' => $sidebar2,
-                'sidebar3' => $sidebar3
+            'sidebar1' => $sidebar1,
+            'sidebar2' => $sidebar2,
+            'sidebar3' => $sidebar3
         ];
     }
 
@@ -250,9 +250,9 @@ class BlogController extends BaseController
         $sidebar3 = $this->tagsCloud();
 
         return ['posts' => $posts,
-                'sidebar1' => $sidebar1,
-                'sidebar2' => $sidebar2,
-                'sidebar3' => $sidebar3
+            'sidebar1' => $sidebar1,
+            'sidebar2' => $sidebar2,
+            'sidebar3' => $sidebar3
         ];
     }
 

@@ -59,6 +59,7 @@ class Tags
     {
         $this->posts = new ArrayCollection();
     }
+
     /**
      * Get id
      *
@@ -116,11 +117,6 @@ class Tags
     {
         return $this->slug;
     }
-
-    /**
-     * @return mixed
-     */
-
 
     /**
      * @param Post $posts

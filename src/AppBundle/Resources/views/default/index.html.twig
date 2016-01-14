@@ -23,9 +23,9 @@
                 <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
                 <i class="glyphicon glyphicon-time"></i>
                 <small>Published {{ post.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
-             {#   {% if post.createdAt < post.updateAt %}
-                    <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
-                {% endif %}#}
+                {#   {% if post.createdAt < post.updateAt %}
+                       <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
+                   {% endif %}#}
 
                 {% for tag in post.tags %}
                     <div class="pull-right">
@@ -39,10 +39,11 @@
     {% endfor %}
     <div id="ajax_load"></div>
     <br/>
-    <p id="loading" style="display:none"><img src="{{ asset('loading.png') }}" alt=""/></p>
+    <p id="loading" style="display:none"><img src="{{ asset('img/ajax-loader(1).gif') }}" alt=""/></p>
     <br/>
     {% if posts|length >= 5 %}
-        <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax" style="margin-bottom: 20px">
+        <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax"
+               style="margin-bottom: 50px">
     {% endif %}
 {% endblock %}
 

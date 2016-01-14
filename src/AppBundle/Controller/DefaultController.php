@@ -39,9 +39,9 @@ class DefaultController extends BaseController
         $sidebar3 = $this->tagsCloud();
 
         return ['posts' => $posts,
-                'sidebar1' => $sidebar1,
-                'sidebar2' => $sidebar2,
-                'sidebar3' => $sidebar3
+            'sidebar1' => $sidebar1,
+            'sidebar2' => $sidebar2,
+            'sidebar3' => $sidebar3
         ];
     }
 
