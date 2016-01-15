@@ -9,5 +9,5 @@ Scrutinizer-ci<br/>
 <br/>
 
 
-<i>For installation of the project in command line launch install.sh and select <strong>install</strong></i><br/>
+<i>For installation of the project in command line launch <strong>bash install.sh</strong> and select <strong>install</strong></i><br/>
 <strong>For correct display of "Tag cloud" add or edit any article.</strong>
