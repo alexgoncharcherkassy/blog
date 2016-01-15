@@ -3,9 +3,10 @@ AppBundle\Entity\Category:
         categoryName: <word()>
         posts: 1x @post*
 
-AppBundle\Entity\Tags:
-    tags{1..50}:
+AppBundle\Entity\Tag:
+    tag{1..50}:
         tagName: <word()>
+        weightTag: <numberBetween(1, 30)>
         posts: 2x @post*
 
 AppBundle\Entity\Post:
@@ -16,9 +17,9 @@ AppBundle\Entity\Post:
         newCategory: <word()>
         rating: <randomFloat(1, 0, 5)>
         nameImage: <word()>
-        pathImage: <image('web/img/blog')>
+        pathImage: <imageURL()>
         comments: 2x @comment*
-        tags: 3x @tags*
+        tags: 3x @tag*
         category: @category*
 
 AppBundle\Entity\Comment:

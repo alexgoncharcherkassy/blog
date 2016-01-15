@@ -37,7 +37,7 @@ class PostType extends AbstractType
                 'required' => false
             ])
             ->add('tags', EntityType::class, [
-                'class' => 'AppBundle\Entity\Tags',
+                'class' => 'AppBundle\Entity\Tag',
                 'choice_label' => 'tagName',
                 'multiple' => true,
                 'attr' => [

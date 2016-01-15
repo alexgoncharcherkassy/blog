@@ -36,6 +36,9 @@ class BlogController extends BaseController
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
+        if (!$post) {
+            return $this->redirectToRoute('page404');
+        }
 
         if ($request->getMethod() == 'POST') {
             $form->handleRequest($request);
@@ -88,6 +91,9 @@ class BlogController extends BaseController
         if ($slug === '#') {
             $posts = $em->getRepository('AppBundle:Post')
                 ->showPostWithoutCategory();
+            if (!$posts) {
+                return $this->redirectToRoute('page404');
+            }
 
             return ['posts' => $posts,
                 'sidebar1' => $sidebar1,
@@ -98,7 +104,9 @@ class BlogController extends BaseController
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showCategoryPost($slug);
-
+        if (!$posts) {
+            return $this->redirectToRoute('page404');
+        }
 
         return ['posts' => $posts,
             'sidebar1' => $sidebar1,
@@ -117,6 +125,9 @@ class BlogController extends BaseController
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showTagsPost($slug);
+        if (!$posts) {
+            return $this->redirectToRoute('page404');
+        }
         $sidebar1 = $this->showMostPopular();
         $sidebar2 = $this->showLastComment();
         $sidebar3 = $this->tagsCloud();
@@ -245,6 +256,9 @@ class BlogController extends BaseController
 
         $posts = $em->getRepository('AppBundle:Post')
             ->search($data);
+        if (!$posts) {
+            return $this->redirectToRoute('page404');
+        }
         $sidebar1 = $this->showMostPopular();
         $sidebar2 = $this->showLastComment();
         $sidebar3 = $this->tagsCloud();

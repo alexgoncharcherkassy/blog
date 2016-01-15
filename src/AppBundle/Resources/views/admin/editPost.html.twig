@@ -10,8 +10,12 @@
 
         <div class="panel-body">
             {% if oldImage is not null %}
-
-                <img src="{{ oldImage | imagine_filter('blog_show') }}" class="img-thumbnail pull-left">
+                {% if oldImage starts with 'http:' %}
+                    <img src="{{ oldImage }}" class="img-thumbnail pull-left" style="width: 460px">
+                {% endif %}
+                {% if oldImage starts with 'img/' %}
+                    <img src="{{ oldImage | imagine_filter('blog_show') }}" class="img-thumbnail pull-left">
+                {% endif %}
                 {{ form(formDeleteImage[slug], {'attr' : {'style' : 'float:left'}}) }}
             {% endif %}
             {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}

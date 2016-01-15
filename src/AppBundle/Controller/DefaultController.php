@@ -46,8 +46,6 @@ class DefaultController extends BaseController
     }
 
     /**
-     * @param Request $request
-     * @return Response
      * @Route("/show_ajax", name="show_ajax")
      * @Template("@App/default/ajaxLoad.html.twig")
      */

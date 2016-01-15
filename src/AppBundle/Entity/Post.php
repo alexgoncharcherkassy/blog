@@ -37,7 +37,7 @@ class Post
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="3", minMessage="This field can not be less than 30 characters")
+     * @Assert\Length(min="30", minMessage="This field can not be less than 30 characters")
      *
      * @ORM\Column(name="textPost", type="text")
      */
@@ -120,7 +120,7 @@ class Post
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tags", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="posts")
      */
     private $tags;
 
@@ -167,9 +167,9 @@ class Post
     }
 
     /**
-     * @param Tags $tags
+     * @param Tag $tags
      */
-    public function addTag(Tags $tags)
+    public function addTag(Tag $tags)
     {
 
         $this->tags[] = $tags;
@@ -178,9 +178,9 @@ class Post
     }
 
     /**
-     * @param Tags $tags
+     * @param Tag $tags
      */
-    public function removeTag(Tags $tags)
+    public function removeTag(Tag $tags)
     {
         $this->tags->removeElement($tags);
     }
@@ -195,9 +195,9 @@ class Post
     }
 
     /**
-     * @param Tags $tags
+     * @param Tag $tags
      */
-    public function setTags(Tags $tags = null)
+    public function setTags(Tag $tags = null)
     {
         $this->tags = $tags;
 

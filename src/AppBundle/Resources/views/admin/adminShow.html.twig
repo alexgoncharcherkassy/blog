@@ -14,7 +14,11 @@
                 <h4>{{ post.titlePost }}</h4>
                 <small>Rating post</small>
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
-                {% if post.pathImage and post.nameImage %}
+                {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
+                    <img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
+                         alt="{{ post.nameImage }}" style="width: 140px">
+                {% endif %}
+                {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
                     <img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
                          alt="{{ post.nameImage }}">
                 {% endif %}

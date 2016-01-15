@@ -3,7 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Post;
-use AppBundle\Entity\Tags;
+use AppBundle\Entity\Tag;
 use AppBundle\Entity\Category;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -39,7 +39,7 @@ class AdminController extends Controller
                 if (null !== $newTags) {
                     $newTags = explode(',', trim($newTags));
                     foreach ($newTags as $item) {
-                        $tag = new Tags();
+                        $tag = new Tag();
                         $tag->setTagName($item);
                         $em->persist($tag);
                         $post->addTag($tag);
@@ -81,6 +81,9 @@ class AdminController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showAllPost();
+        if (!$posts) {
+            return $this->redirectToRoute('page404');
+        }
 
         $form_edit = [];
         $form_delete = [];
@@ -134,9 +137,13 @@ class AdminController extends Controller
 
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
+        if (!$post) {
+            return $this->redirectToRoute('page404');
+        }
         $oldImage = $post->getPathImage();
         $form = $this->createForm(PostType::class, $post);
 
+        $form_delete_image = [];
         $form_delete_image[$post->getSlug()] = $this->createFormDeleteImage($post->getSlug())->createView();
 
         $form->handleRequest($request);
@@ -146,7 +153,7 @@ class AdminController extends Controller
             if (null !== $newTags) {
                 $newTags = explode(',', trim($newTags));
                 foreach ($newTags as $item) {
-                    $tag = new Tags();
+                    $tag = new Tag();
                     $tag->setTagName($item);
                     $em->persist($tag);
                     $post->addTag($tag);
@@ -187,7 +194,10 @@ class AdminController extends Controller
 
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
-        if ($post->getPathImage() !== null) {
+        if (!$post) {
+            return $this->redirectToRoute('page404');
+        }
+        if ($post->getPathImage() !== null && file_exists($post->getPathImage())) {
             unlink($post->getPathImage());
         }
         $post->setPathImage(null);
@@ -261,11 +271,11 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tags = $em->getRepository('AppBundle:Tags')
+        $tags = $em->getRepository('AppBundle:Tag')
             ->countTags();
 
         /**
-         * @var \AppBundle\Entity\Tags $tag
+         * @var \AppBundle\Entity\Tag $tag
          */
         foreach ($tags as $tag) {
             $countPosts = 0;
@@ -278,44 +288,5 @@ class AdminController extends Controller
 
         return;
     }
-
-    /**
-     *
-     */
-    private function checkPath()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $posts = $em->getRepository('AppBundle:Post')
-            ->findAll();
-        $needle = 'web/';
-
-        /**
-         * \AppBundle\Entity\Post $post
-         */
-        foreach ($posts as $post) {
-            $path = $post->getPathImage();
-
-            if (false !== $offset = mb_strpos($path, $needle)) {
-                $newPath = substr($path, 4);
-                $post->setPathImage($newPath);
-            }
-        }
-        $em->flush();
-
-        return;
-    }
-
-    /**
-     * @Route("admin/updateBlog", name="update_blog")
-     */
-    public function updateBlog()
-    {
-        $this->checkPath();
-        $this->updateTagsClud();
-
-        return $this->redirectToRoute('homepage');
-    }
-
 
 }

@@ -43,7 +43,7 @@ class BaseController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $tags = $em->getRepository('AppBundle:Tags')
+        $tags = $em->getRepository('AppBundle:Tag')
             ->showNotNullTags();
 
         return $tags;
