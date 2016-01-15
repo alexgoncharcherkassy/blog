@@ -13,8 +13,6 @@ AppBundle\Entity\Post:
     post{1..20}:
         titlePost: <sentence(4)>
         textPost: <text(2000)>
-        newTags: <word()>
-        newCategory: <word()>
         rating: <randomFloat(1, 0, 5)>
         nameImage: <word()>
         pathImage: <imageURL()>

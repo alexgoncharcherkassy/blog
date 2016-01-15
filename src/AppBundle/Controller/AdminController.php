@@ -188,7 +188,7 @@ class AdminController extends Controller
      * @Route("admin/remove/image/{slug}", name="remove_image")
      * @Method("PUT")
      */
-    public function removeImage($slug)
+    public function removeImageAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
 
