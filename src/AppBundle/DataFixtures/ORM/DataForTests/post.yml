@@ -15,13 +15,13 @@ AppBundle\Entity\Post:
         rating: 4
         comments: 1x @comment*
         tags: 1x @tag*
-        category: @category*
+        category: "@category*"
 
 AppBundle\Entity\Comment:
     comment_1:
         textComment: "Test"
         rating: 4
-        post: @post*
+        post: "@post*"
 
 
 

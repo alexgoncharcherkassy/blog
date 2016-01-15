@@ -18,13 +18,13 @@ AppBundle\Entity\Post:
         pathImage: <imageURL()>
         comments: 2x @comment*
         tags: 3x @tag*
-        category: @category*
+        category: "@category*"
 
 AppBundle\Entity\Comment:
     comment{1..60}:
         textComment: <text()>
         rating: <numberBetween(1, 5)>
-        post: @post*
+        post: "@post*"
 
 
 
