@@ -14,7 +14,7 @@ class CommentRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c, p')
-            ->leftJoin('c.post', 'p')
+            ->join('c.post', 'p')
             ->orderBy('c.createdAt', 'DESC')
             ->setMaxResults(5)
             ->getQuery()

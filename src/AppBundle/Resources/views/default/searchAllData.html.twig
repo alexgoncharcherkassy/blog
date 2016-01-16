@@ -15,12 +15,12 @@
                 <small>Rating post</small>
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
                 {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
-                    <img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="width: 140px">
+                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
+                         alt="{{ post.nameImage }}" style="width: 140px"></a>
                 {% endif %}
                 {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
-                    <img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="width: 140px">
+                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
+                         alt="{{ post.nameImage }}" style="width: 140px"></a>
                 {% endif %}
             </div>
 

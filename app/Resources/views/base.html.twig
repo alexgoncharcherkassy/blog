@@ -188,7 +188,7 @@
             display: inline;
             position: fixed;
             top: 50px;
-            left: 90px;
+            left: 94px;
             z-index: 100;
             background-color: #a4eeeb;
         }
@@ -201,38 +201,8 @@
         .search_content li {
             list-style-type: none;
         }
-        #rates {
 
-            list-style:none;
-            margin-right:20px;
-            padding-left:0;
-            display:inline-block;
 
-        }
-        #rates li {
-            float:left;
-            width:32px;
-            height:32px;
-        }
-        #rates li:hover {
-            cursor:pointer;
-        }
-        .defaultRating {
-            background-image: url('/img/star-white.png');
-            background-repeat:no-repeat;
-        }
-        .badRating {
-            background-image: url('/img/star-red.png');
-            background-repeat:no-repeat;
-        }
-        .rating {
-            background-image: url("/img/star-yellow.png");
-            background-repeat:no-repeat;
-        }
-        .coolRating {
-            background-image: url("/img/star-green.png");
-            background-repeat:no-repeat;
-        }
     </style>
 
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
@@ -266,9 +236,7 @@
                     <li><a href="http://geekhub.ck.ua/" target="_ext">GeekHub</a></li>
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                    class="glyphicon glyphicon-bell"></i></a>
-
-                    </li>
+                                    class="glyphicon glyphicon-bell"></i></a></li>
                     <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
                 </ul>
             </div>
@@ -277,9 +245,8 @@
     <div class="navbar navbar-default" id="subnav">
         <div class="col-md-12">
             <div class="navbar-header">
-
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle"
-                   data-toggle="dropdown"><i class="glyphicon glyphicon-home" style="color:#dd1111;"></i> Admin
+                   data-toggle="dropdown"><i class="glyphicon glyphicon-wrench" style="color:#dd1111;"></i> Admin
                     <small><i class="glyphicon glyphicon-chevron-down"></i></small>
                 </a>
                 <ul class="nav dropdown-menu">
@@ -290,7 +257,6 @@
                     <li><a href="#"><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile </a></li>
                     <li><a href=""><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
                 </ul>
-
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">
                     <span class="sr-only">Toggle navigation</span>
@@ -388,9 +354,9 @@
 
                 var enterData = $('#srch-term').val();
                 var count = enterData.length;
-                if (count <= 2) {
+                if (count < 2) {
                     $('#search').hide();
-                } else if (count > 2) {
+                } else if (count >= 2) {
                     $('#search').show();
                     $.ajax({
                         type: "POST",

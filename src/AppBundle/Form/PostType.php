@@ -45,6 +45,7 @@ class PostType extends AbstractType
                 'choice_label' => 'tagName',
                 'multiple' => true,
                 'expanded' => true,
+                'attr' => ['class' => 'list-group-item'],
                 'required' => false
             ])
             ->add('newCategory', TextType::class, [

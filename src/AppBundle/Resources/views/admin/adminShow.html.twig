@@ -11,15 +11,15 @@
                 <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
                    class="pull-right">Category: {{ post.category.categoryName | capitalize }}</a>
                 <h4>{{ post.titlePost | capitalize }}</h4>
-                <small>Rating post</small>
+                <small id="rating-post">Rating post</small>
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
                 {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
-                    <img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="width: 140px; margin-left: 10px">
+                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
+                         alt="{{ post.nameImage }}" style="width: 140px; margin-left: 10px"></a>
                 {% endif %}
                 {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
-                    <img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="margin-left: 10px">
+                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
+                         alt="{{ post.nameImage }}" style="margin-left: 10px"></a>
                 {% endif %}
             </div>
 

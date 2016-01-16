@@ -27,13 +27,13 @@ case "$Keypress" in
     php app/console doctrine:schema:update --force
     php app/console doctrine:fixtures:load -n
 ;;
-3) echo "create/update database..."
+3) echo "create/update database start..."
     php app/console doctrine:database:drop --force
     php app/console doctrine:database:create
     php app/console doctrine:schema:update --force
     php app/console doctrine:fixtures:load -n
 ;;
-4) echo "reload database fixtures..."
+4) echo "reload database fixtures start..."
     php app/console doctrine:fixtures:load -n
 ;;
 5) exit 0
