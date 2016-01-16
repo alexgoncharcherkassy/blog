@@ -1,6 +1,5 @@
 {% extends '@App/layoutAdmin.html.twig' %}
 
-
 {% block panel %}
 
     <div class="panel panel-success">
@@ -19,13 +18,45 @@
                 {{ form(formDeleteImage[slug], {'attr' : {'style' : 'float:left'}}) }}
             {% endif %}
             {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
-            {{ form_widget(form) }}
+            <div>
+                {{ form_widget(form.titlePost) }}
+                {{ form_errors(form.titlePost) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.textPost) }}
+                {{ form_errors(form.textPost) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.newTags) }}
+                {{ form_errors(form.newTags) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.tags) }}
+                {{ form_errors(form.tags) }}
+            </div>
+            <div>
+                {{ form_widget(form.newCategory) }}
+                {{ form_errors(form.newCategory) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.category) }}
+                {{ form_errors(form.category) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.blog_image) }}
+                {{ form_errors(form.blog_image) }}
+            </div>
+            <br/>
             {{ form_rest(form) }}
-
             {# <input type="submit" value="Add file" class="jslink">
              <br/>#}
             <br/>
-            <input type="submit" VALUE="Save" class="btn btn-large btn-primary">
+            <input type="submit" VALUE="Save article" class="btn btn-large btn-primary">
             {{ form_end(form) }}
             <div id="del"></div>
         </div>

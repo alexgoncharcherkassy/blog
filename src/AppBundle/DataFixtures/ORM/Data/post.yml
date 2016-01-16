@@ -1,11 +1,11 @@
 AppBundle\Entity\Category:
     category{1..10}:
-        categoryName: <word()>
+        categoryName(unique): <word()>
         posts: 1x @post*
 
 AppBundle\Entity\Tag:
     tag{1..50}:
-        tagName: <word()>
+        tagName(unique): <word()>
         weightTag: <numberBetween(1, 30)>
         posts: 2x @post*
 

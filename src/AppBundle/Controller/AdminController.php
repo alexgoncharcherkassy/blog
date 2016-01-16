@@ -40,7 +40,8 @@ class AdminController extends Controller
                     $newTags = explode(',', trim($newTags));
                     foreach ($newTags as $item) {
                         $tag = new Tag();
-                        $tag->setTagName($item);
+                        $tag->setTagName(trim($item));
+                        $tag->setWeightTag(1);
                         $em->persist($tag);
                         $post->addTag($tag);
                     }
@@ -62,7 +63,6 @@ class AdminController extends Controller
                 $em->persist($post);
                 $em->flush();
 
-                $this->updateTagsClud();
 
                 return $this->redirectToRoute('homepage');
             }
@@ -124,6 +124,8 @@ class AdminController extends Controller
         $em->remove($post);
         $em->flush();
 
+        $this->updateTagsCloud();
+
         return $this->redirectToRoute('admin_show');
     }
 
@@ -154,7 +156,7 @@ class AdminController extends Controller
                 $newTags = explode(',', trim($newTags));
                 foreach ($newTags as $item) {
                     $tag = new Tag();
-                    $tag->setTagName($item);
+                    $tag->setTagName(trim($item));
                     $em->persist($tag);
                     $post->addTag($tag);
                 }
@@ -174,7 +176,7 @@ class AdminController extends Controller
             $post->setNewCategory(null);
 
             $em->flush();
-            $this->updateTagsClud();
+            $this->updateTagsCloud();
 
             return $this->redirectToRoute('admin_show');
         }
@@ -267,7 +269,7 @@ class AdminController extends Controller
     /**
      * @return array
      */
-    private function updateTagsClud()
+    private function updateTagsCloud()
     {
         $em = $this->getDoctrine()->getManager();
 

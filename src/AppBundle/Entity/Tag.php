@@ -42,7 +42,7 @@ class Tag
 
     /**
      *
-     * @ORM\Column(name="wieghtTag" , type="integer", nullable=true)
+     * @ORM\Column(name="weightTag" , type="integer", nullable=true)
      */
     private $weightTag;
 

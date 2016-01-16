@@ -68,7 +68,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p, c, t')
-            ->join('p.category', 'c')
+            ->leftJoin('p.category', 'c')
             ->join('p.tags', 't')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
