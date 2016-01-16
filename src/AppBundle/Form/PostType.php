@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -18,13 +19,13 @@ class PostType extends AbstractType
         $builder
             ->add('titlePost', TextType::class, [
                 'attr' => [
-                    'placeholder' => 'Add title post',
+                    'placeholder' => 'Add title article',
                     'class' => 'form-control'
                 ]
             ])
             ->add('textPost', TextareaType::class, [
                 'attr' => [
-                    'placeholder' => 'Add text post',
+                    'placeholder' => 'Add text article',
                     'class' => 'form-control',
                     'rows' => 10
                 ]
@@ -38,6 +39,10 @@ class PostType extends AbstractType
             ])
             ->add('tags', EntityType::class, [
                 'class' => 'AppBundle\Entity\Tag',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('t')
+                        ->orderBy('t.tagName', 'ASC');
+                },
                 'choice_label' => 'tagName',
                 'multiple' => true,
                 'expanded' => true,
@@ -52,6 +57,10 @@ class PostType extends AbstractType
             ])
             ->add('category', EntityType::class, [
                 'class' => 'AppBundle\Entity\Category',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.categoryName', 'ASC');
+                },
                 'choice_label' => 'categoryName',
                 'attr' => [
                     'class' => 'form-control'
