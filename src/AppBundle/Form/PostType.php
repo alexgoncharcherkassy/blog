@@ -32,7 +32,7 @@ class PostType extends AbstractType
             ->add('newTags', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Add tags through a comma'
+                    'placeholder' => 'Add tags through a comma or/and select from tags'
                 ],
                 'required' => false
             ])
@@ -40,15 +40,13 @@ class PostType extends AbstractType
                 'class' => 'AppBundle\Entity\Tag',
                 'choice_label' => 'tagName',
                 'multiple' => true,
-                'attr' => [
-                    'class' => 'form-control'
-                ],
+                'expanded' => true,
                 'required' => false
             ])
             ->add('newCategory', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'placeholder' => 'Add only one category or select'
+                    'placeholder' => 'Add only one category or select from categories'
                 ],
                 'required' => false
             ])

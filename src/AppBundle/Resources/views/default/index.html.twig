@@ -13,11 +13,11 @@
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
                 {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
                     <img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="width: 140px">
+                         alt="{{ post.nameImage }}" style="width: 140px; margin-left: 10px">
                 {% endif %}
                 {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
                     <img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}">
+                         alt="{{ post.nameImage }}" style="margin-left: 10px">
                 {% endif %}
             </div>
 
@@ -26,7 +26,7 @@
                 <p>{{ post.textPost|slice(0, 250) }}</p>
                 <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
                 <i class="glyphicon glyphicon-time"></i>
-                <small>Published {{ post.createdAt|date('d.m.Y H:m') }} by Anonymous</small>
+                <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
                 {#   {% if post.createdAt < post.updateAt %}
                        <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
                    {% endif %}#}

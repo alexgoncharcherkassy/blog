@@ -11,6 +11,41 @@
         <div class="panel-body">
 
             {{ form_start(form) }}
+            <div>
+                {{ form_widget(form.titlePost) }}
+                {{ form_errors(form.titlePost) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.textPost) }}
+                {{ form_errors(form.textPost) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.newTags) }}
+                {{ form_errors(form.newTags) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.tags) }}
+                {{ form_errors(form.tags) }}
+            </div>
+            <div>
+                {{ form_widget(form.newCategory) }}
+                {{ form_errors(form.newCategory) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.category) }}
+                {{ form_errors(form.category) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.blog_image) }}
+                {{ form_errors(form.blog_image) }}
+            </div>
+            <br/>
+            <br/>
             {{ form_widget(form) }}
             {{ form_rest(form) }}
             {# <input type="submit" value="Add file" class="jslink">
@@ -19,41 +54,6 @@
             <input type="submit" VALUE="Save" class="btn btn-large btn-primary">
             {{ form_end(form) }}
             <div id="del"></div>
-        </div>
-    </div>
-{% endblock %}
-
-{% block sidebar1 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Most Popular</h4>
-            {{ render(controller('AppBundle:Blog:showMostPopular')) }}
-        </div>
-    </div>
-{% endblock %}
-
-{% block sidebar2 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Last comments</h4>
-            {{ render(controller('AppBundle:Blog:showLastComment')) }}
-        </div>
-    </div>
-{% endblock %}
-
-{% block sidebar3 %}
-    <div class="panel panel-default">
-        <div class="panel-body">
-            <h4>Tags cloud</h4>
-
-            <p>
-                Migrating from Bootstrap 2.x to 3 is not a simple matter of swapping out the JS and CSS
-                files.
-                Bootstrap 3 is a major overhaul, and there are a lot of changes from Bootstrap 2.x.
-                <a href="http://bootply.com/bootstrap-3-migration-guide">This guidance</a> is
-                intended
-                to help 2.x developers transition to 3.
-            </p>
         </div>
     </div>
 {% endblock %}

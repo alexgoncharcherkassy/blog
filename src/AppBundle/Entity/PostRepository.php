@@ -54,8 +54,8 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p, c, t')
-            ->leftJoin('p.category', 'c')
-            ->leftJoin('p.tags', 't')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
             ->where('c.slug = :slug')
             ->setParameter('slug', $slug)
             ->orderBy('p.createdAt', 'DESC')
@@ -68,8 +68,8 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->createQueryBuilder('p')
             ->select('p, c, t')
-            ->leftJoin('p.category', 'c')
-            ->leftJoin('p.tags', 't')
+            ->join('p.category', 'c')
+            ->join('p.tags', 't')
             ->where('t.slug = :slug')
             ->setParameter('slug', $slug)
             ->orderBy('p.createdAt', 'DESC')

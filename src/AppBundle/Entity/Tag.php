@@ -75,7 +75,7 @@ class Tag
      *
      * @param string $tagName
      *
-     * @return Tags
+     * @return Tag
      */
     public function setTagName($tagName)
     {
@@ -99,7 +99,7 @@ class Tag
      *
      * @param string $slug
      *
-     * @return Tags
+     * @return Tag
      */
     public function setSlug($slug)
     {

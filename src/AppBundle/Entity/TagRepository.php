@@ -15,7 +15,7 @@ class TagRepository extends \Doctrine\ORM\EntityRepository
         return $this->createQueryBuilder('t')
             ->select('t, p')
             ->join('t.posts', 'p')
-            ->orderBy('t.id', 'DESC')
+           // ->orderBy('t.id', 'DESC')
             ->getQuery()
             ->getResult();
     }
