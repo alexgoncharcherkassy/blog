@@ -18,7 +18,7 @@
                     {% for post in sidebar1 %}
                         <p>
                             <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost |capitalize }}</a>
-                            <small><i class="glyphicon glyphicon-star"></i> {{ post.rating }}</small>
+                            <small><i class="glyphicon glyphicon-star"></i> {{ post.rating | round(1, 'floor') }}</small>
                         </p>
                     {% endfor %}
                 </div>

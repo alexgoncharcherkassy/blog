@@ -4,7 +4,7 @@ AppBundle\Entity\Category:
         posts: 1x @post*
 
 AppBundle\Entity\Tag:
-    tag{1..50}:
+    tag{1..30}:
         tagName(unique): <word()>
         weightTag: <numberBetween(1, 30)>
         posts: 2x @post*
