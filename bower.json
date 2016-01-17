@@ -1,6 +1,6 @@
 {
   "name": "blog",
-  "description": "euro [![Build Status](https://travis-ci.org/alexgoncharcherkassy/blog.svg)](https://travis-ci.org/alexgoncharcherkassy/blog) ====",
+  "description": "blog [![Build Status](https://travis-ci.org/alexgoncharcherkassy/blog.svg)](https://travis-ci.org/alexgoncharcherkassy/blog) ====",
   "main": "index.js",
   "authors": [
     "aleksandr gonchar"
