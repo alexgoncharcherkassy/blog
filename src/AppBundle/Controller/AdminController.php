@@ -63,6 +63,7 @@ class AdminController extends Controller
                 $em->persist($post);
                 $em->flush();
 
+                $this->updateTagsCloud();
 
                 return $this->redirectToRoute('homepage');
             }
