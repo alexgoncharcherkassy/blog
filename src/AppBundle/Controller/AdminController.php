@@ -96,7 +96,9 @@ class AdminController extends Controller
             $form_delete[$item->getSlug()] = $this->createFormDelete($item->getSlug())->createView();
         }
 
-        return ['posts' => $posts, 'form_edit' => $form_edit, 'form_delete' => $form_delete];
+        return ['posts' => $posts,
+                'form_edit' => $form_edit,
+                'form_delete' => $form_delete];
     }
 
     /**
@@ -182,7 +184,10 @@ class AdminController extends Controller
             return $this->redirectToRoute('admin_show');
         }
 
-        return ['form' => $form->createView(), 'oldImage' => $oldImage, 'formDeleteImage' => $form_delete_image, 'slug' => $post->getSlug()];
+        return ['form' => $form->createView(),
+                'oldImage' => $oldImage,
+                'formDeleteImage' => $form_delete_image,
+                'slug' => $post->getSlug()];
 
     }
 
