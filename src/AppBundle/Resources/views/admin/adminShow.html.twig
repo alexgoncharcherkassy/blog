@@ -1,7 +1,7 @@
 {% extends '@App/layoutAdmin.html.twig' %}
 
 {% block panel %}
-<div class="jumbotron">
+<div class="jumbotron" style="background-color: white">
     <table class="table table-condensed table-hover">
         <tr class="info">
             <th>{{ knp_pagination_sortable(posts, 'Title article', 'p.titlePost') }}</th>
@@ -13,7 +13,7 @@
         </tr>
         {% for post in posts %}
             <tr>
-                <td>{{ post.titlePost | capitalize }}</td>
+                <td><a href="{{ path('show_post', {'slug': post.slug }) }}">{{ post.titlePost | capitalize }}</a></td>
                 <td>{{ post.category.categoryName | capitalize }}</td>
                 <td>{{ post.createdAt|date('d.m.Y H:i') }}</td>
                 <td>{{ post.updateAt|date('d.m.Y H:i') }}</td>
