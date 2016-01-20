@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use AppBundle\Form\CommentType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
  * Class BlogController
  * @package AppBundle\Controller
  */
-class BlogController extends BaseController
+class BlogController extends Controller
 {
 
     /**
@@ -54,9 +55,6 @@ class BlogController extends BaseController
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showPost($slug);
-        $sidebar1 = $this->showMostPopular();
-        $sidebar2 = $this->showLastComment();
-        $sidebar3 = $this->tagsCloud();
         /**
          * @var \AppBundle\Entity\Post $items
          * @var \AppBundle\Entity\Comment $item
@@ -69,9 +67,6 @@ class BlogController extends BaseController
         }
         return [
             'posts' => $posts,
-            'sidebar1' => $sidebar1,
-            'sidebar2' => $sidebar2,
-            'sidebar3' => $sidebar3,
             'form' => $form->createView(),
             'formDeleteComment' => $form_delete_comment,
         ];
@@ -84,9 +79,6 @@ class BlogController extends BaseController
     public function showCategoryAction($slug)
     {
         $em = $this->getDoctrine()->getManager();
-        $sidebar1 = $this->showMostPopular();
-        $sidebar2 = $this->showLastComment();
-        $sidebar3 = $this->tagsCloud();
 
         if ($slug === '#') {
             $posts = $em->getRepository('AppBundle:Post')
@@ -95,11 +87,7 @@ class BlogController extends BaseController
                 return $this->redirectToRoute('page404');
             }
 
-            return ['posts' => $posts,
-                'sidebar1' => $sidebar1,
-                'sidebar2' => $sidebar2,
-                'sidebar3' => $sidebar3
-            ];
+            return ['posts' => $posts];
         }
 
         $posts = $em->getRepository('AppBundle:Post')
@@ -108,11 +96,7 @@ class BlogController extends BaseController
             return $this->redirectToRoute('page404');
         }
 
-        return ['posts' => $posts,
-            'sidebar1' => $sidebar1,
-            'sidebar2' => $sidebar2,
-            'sidebar3' => $sidebar3
-        ];
+        return ['posts' => $posts];
     }
 
     /**
@@ -128,15 +112,8 @@ class BlogController extends BaseController
         if (!$posts) {
             return $this->redirectToRoute('page404');
         }
-        $sidebar1 = $this->showMostPopular();
-        $sidebar2 = $this->showLastComment();
-        $sidebar3 = $this->tagsCloud();
 
-        return ['posts' => $posts,
-            'sidebar1' => $sidebar1,
-            'sidebar2' => $sidebar2,
-            'sidebar3' => $sidebar3
-        ];
+        return ['posts' => $posts];
     }
 
     /**
@@ -259,15 +236,8 @@ class BlogController extends BaseController
         if (!$posts) {
             return $this->redirectToRoute('page404');
         }
-        $sidebar1 = $this->showMostPopular();
-        $sidebar2 = $this->showLastComment();
-        $sidebar3 = $this->tagsCloud();
 
-        return ['posts' => $posts,
-            'sidebar1' => $sidebar1,
-            'sidebar2' => $sidebar2,
-            'sidebar3' => $sidebar3
-        ];
+        return ['posts' => $posts];
     }
 
 
