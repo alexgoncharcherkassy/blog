@@ -80,8 +80,16 @@ class AdminController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $posts = $em->getRepository('AppBundle:Post')
+        $sql = $em->getRepository('AppBundle:Post')
             ->showAllPost();
+
+        $paginator = $this->get('knp_paginator');
+        $posts = $paginator->paginate(
+            $sql,
+            $this->get('request')->query->get('page', 1),
+            $this->container->getParameter('knp_paginator.page_range')
+        );
+
         if (!$posts) {
             return $this->redirectToRoute('page404');
         }

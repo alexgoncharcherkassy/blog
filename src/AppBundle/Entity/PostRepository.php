@@ -12,14 +12,19 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
 {
     public function showAllPost()
     {
-        return $this->createQueryBuilder('p')
+        /*return $this->createQueryBuilder('p')
             ->select('p, c, t')
             ->leftJoin('p.category', 'c')
             ->leftJoin('p.tags', 't')
             ->orderBy('p.createdAt', 'DESC')
-            ->getQuery()
-            ->getResult();
-
+            ->getQuery();*/
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT p, c1, t1 FROM AppBundle:Post p
+               LEFT JOIN p.category c1
+               LEFT JOIN p.tags t1
+               ORDER BY p.createdAt DESC"
+            );
     }
 
     public function showPostWithoutCategory()

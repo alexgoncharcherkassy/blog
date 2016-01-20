@@ -1,49 +1,34 @@
 {% extends '@App/layoutAdmin.html.twig' %}
 
 {% block panel %}
-    {% for post in posts %}
-        <div class="panel panel-success">
-            <div class="alert alert-info text-right">
-                {{ form(form_edit[post.slug]) }}
-                {{ form(form_delete[post.slug]) }}
-            </div>
-            <div class="panel-heading" style="margin-bottom: 0">
-                <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
-                   class="pull-right">Category: {{ post.category.categoryName | capitalize }}</a>
-                <h4>{{ post.titlePost | capitalize }}</h4>
-                <small id="rating-post">Rating post</small>
-                <span class="badge badge-info">{{ post.rating | round(1, 'floor') }}</span>
-                {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
-                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="width: 140px; margin-left: 10px"></a>
-                {% endif %}
-                {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
-                    <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage | imagine_filter('posts_show') }}" class="img-thumbnail pull-right"
-                         alt="{{ post.nameImage }}" style="margin-left: 10px"></a>
-                {% endif %}
-            </div>
+<div class="jumbotron">
+    <table class="table table-condensed table-hover">
+        <tr class="info">
+            <th>{{ knp_pagination_sortable(posts, 'Title article', 'p.titlePost') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Category', 'c1.categoryName') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Date create', 'p.createdAt') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Date last update', 'p.updateAt') }}</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+        {% for post in posts %}
+            <tr>
+                <td>{{ post.titlePost | capitalize }}</td>
+                <td>{{ post.category.categoryName | capitalize }}</td>
+                <td>{{ post.createdAt|date('d.m.Y H:i') }}</td>
+                <td>{{ post.updateAt|date('d.m.Y H:i') }}</td>
+                <td>{{ form(form_edit[post.slug]) }}</td>
+                <td>{{ form(form_delete[post.slug]) }}</td>
+            </tr>
+        {% endfor %}
 
-            <div class="panel-body">
-
-                <p>{{ post.textPost|slice(0, 250) }}</p>
-                <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
-                <i class="glyphicon glyphicon-time"></i>
-                <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
-                {% if post.createdAt < post.updateAt %}
-                    <small>Updated {{ post.updateAt|date('d.m.Y H:i') }} by Anonymous</small>
-                {% endif %}
-
-                {% for tag in post.tags %}
-                    <div class="pull-right">
-                        <a href="{{ path('show_tags', {'slug': tag.slug}) }}"
-                           style="margin: 2px">{{ tag.tagname | lower }}</a>
-                    </div>
-                {% endfor %}
-                <i class="glyphicon glyphicon-tags pull-right" style="margin-right: 10px"></i>
-
-            </div>
+    </table>
+    {% if posts.getTotalItemCount > 10 %}
+        <div class="text-center">
+            {{ knp_pagination_render(posts) }}
         </div>
-    {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}
 
 
