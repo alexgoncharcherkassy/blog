@@ -8,7 +8,7 @@ services:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
     app.twig_extension:
-            class: "AppBundle\Twig\Extension\AppExtension"
+            class: AppBundle\Twig\Extension\AppExtension
             public: false
             arguments:
               doctrine: "@doctrine"
