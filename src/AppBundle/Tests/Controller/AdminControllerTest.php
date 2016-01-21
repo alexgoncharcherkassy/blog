@@ -25,7 +25,7 @@ class AdminControllerTest extends TestBaseWeb
         $client = static::createClient();
         $crawler = $client->request('GET', 'admin/show/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Facerenam', $crawler->filter('h4')->text());
+        $this->assertContains('Admin', $crawler->filter('h4')->text());
     }
 
     public function testEditPost()
