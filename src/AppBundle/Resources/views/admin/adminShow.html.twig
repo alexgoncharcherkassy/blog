@@ -2,6 +2,7 @@
 
 {% block panel %}
 <div class="jumbotron" style="background-color: white">
+    <h4>Admin panel</h4>
     <table class="table table-condensed table-hover">
         <tr class="success">
             <th>{{ knp_pagination_sortable(posts, 'Title article', 'p.titlePost') }}</th>
@@ -31,6 +32,13 @@
 </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+
+    </script>
+{% endblock %}
 
 
 

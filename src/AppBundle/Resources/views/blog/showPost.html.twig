@@ -71,7 +71,7 @@
                              alt="{{ post.nameImage }}" style="margin-right: 15px; margin-bottom: 15px">
                     {% endif %}
                     <div class="thumbnail">
-                        <p>{{ post.textPost|nl2br }}</p>
+                        <p>{{ post.textPost | raw | nl2br }}</p>
                         <br/><br/>
                         {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
                         <div>

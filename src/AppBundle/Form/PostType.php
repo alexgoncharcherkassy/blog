@@ -25,8 +25,8 @@ class PostType extends AbstractType
             ->add('textPost', TextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Add text article',
-                    'class' => 'form-control',
-                    'rows' => 10
+                    'class' => 'tinymce',
+                    'rows' => 15
                 ]
             ])
             ->add('newTags', TextType::class, [

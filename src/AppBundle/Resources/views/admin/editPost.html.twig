@@ -8,6 +8,7 @@
         </div>
 
         <div class="panel-body">
+            {{ tinymce_init() }}
             {% if oldImage is not null %}
                 {% if oldImage starts with 'http:' %}
                     <img src="{{ oldImage }}" class="img-thumbnail pull-left" style="width: 460px">
