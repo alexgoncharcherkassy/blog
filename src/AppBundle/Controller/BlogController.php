@@ -233,9 +233,9 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->search($data);
-        if (!$posts) {
+       /* if (!$posts) {
             return $this->redirectToRoute('page404');
-        }
+        }*/
 
         return ['posts' => $posts];
     }

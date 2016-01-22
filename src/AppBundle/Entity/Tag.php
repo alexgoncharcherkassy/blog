@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="tags")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\TagRepository")
  */
-class Tag
+class Tag implements \JsonSerializable
 {
     /**
      * @var integer
@@ -51,6 +51,13 @@ class Tag
      */
     private $posts;
 
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'tagName' => $this->getTagName()
+        ];
+    }
 
     /**
      *
@@ -159,6 +166,11 @@ class Tag
     {
         $this->weightTag = $weightTag;
     }
+
+    /*function __toString()
+    {
+        return $this->getTagName();
+    }*/
 
 
 }

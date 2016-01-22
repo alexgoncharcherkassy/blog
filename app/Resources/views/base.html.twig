@@ -149,7 +149,7 @@
 {% endblock %}
 {% block javascripts %}
     <script src="{{ asset('js/app.js') }}"></script>
-    <script src="{{ asset('js/magicsuggest.js') }}"></script>
+    <script src="{{ asset('js/typeahead.js') }}"></script>
 
     <script>
         $(document).ready(function() {
@@ -174,9 +174,6 @@
                                 template = response;
                                 $('#search').html(template);
                             })
-                            .fail(function (jqXHR, textStatus, errorThrown) {
-                                alert('Error : ' + errorThrown);
-                            });
                 } else if (count >= 7) {
                     $('#search').show();
                     $('#search').html('Not found');

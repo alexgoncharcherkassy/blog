@@ -28,6 +28,8 @@ class AdminController extends Controller
         $post = new Post();
 
         $em = $this->getDoctrine()->getManager();
+        $tags = $em->getRepository('AppBundle:Tag')
+            ->findAll();
 
         $form = $this->createForm(PostType::class, $post);
         if ($request->getMethod() == 'POST') {
@@ -69,7 +71,7 @@ class AdminController extends Controller
             }
         }
 
-        return ['form' => $form->createView()];
+        return ['form' => $form->createView(), 'tags' => $tags];
     }
 
     /**

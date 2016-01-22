@@ -21,7 +21,7 @@
             </div>
             <hr/>
             <div>
-                {{ form_widget(form.newTags) }}
+                {{ form_widget(form.newTags, {'attr' : {'class' : 'typeahead'}}) }}
                 {{ form_errors(form.newTags) }}
             </div>
             <br/>
@@ -76,6 +76,18 @@
         $(document).on('click', 'a.delete_link', function (event) {
             $(event.currentTarget).parent().remove();
         });
+
+        $(document).ready(function() {
+            $('.typeahead').typeahead({
+                        hint: true,
+                        highlight: true,
+                        minLength: 1
+                    },
+                    {
+                        name: 'tagName',
+                        source: {{ tags|json_encode|raw }}
+                    });
+        })
     </script>
 {% endblock %}
 
