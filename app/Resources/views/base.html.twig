@@ -173,9 +173,6 @@
                                 template = response;
                                 $('#search').html(template);
                             })
-                            .fail(function (jqXHR, textStatus, errorThrown) {
-                                alert('Error : ' + errorThrown);
-                            });
                 } else if (count >= 7) {
                     $('#search').show();
                     $('#search').html('Not found');
