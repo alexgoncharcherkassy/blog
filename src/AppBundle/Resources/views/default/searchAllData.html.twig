@@ -36,10 +36,10 @@
 
                 {% for tag in post.tags %}
                     <div class="pull-right">
-                        <a href="{{ path('show_tags', {'slug': tag.slug}) }}">| {{ tag.tagName | lower }} |</a>
+                        <i class="glyphicon glyphicon-tag" style="margin-left: 7px"></i>
+                        <a href="{{ path('show_tags', {'slug': tag.slug}) }}">{{ tag.tagName | lower }}</a>
                     </div>
                 {% endfor %}
-                <i class="glyphicon glyphicon-tags pull-right" style="margin-right: 10px"></i>
             </div>
         </div>
     {% endfor %}
