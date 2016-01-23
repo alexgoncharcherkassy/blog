@@ -30,10 +30,10 @@ class PostType extends AbstractType
                 ]
             ])
             ->add('newTags', TextType::class, [
-                'attr' => [
+                /*'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Add tags through a comma or/and select from tags'
-                ],
+                ],*/
                 'required' => false
             ])
             ->add('tags', EntityType::class, [

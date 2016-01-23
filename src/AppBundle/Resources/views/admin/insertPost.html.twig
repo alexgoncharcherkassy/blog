@@ -21,7 +21,7 @@
             </div>
             <hr/>
             <div>
-                {{ form_widget(form.newTags, {'attr' : {'class' : 'typeahead'}}) }}
+                {{ form_widget(form.newTags, {'attr' : {'class' : 'ms-tagbox'}}) }}
                 {{ form_errors(form.newTags) }}
             </div>
             <br/>
@@ -78,15 +78,16 @@
         });
 
         $(document).ready(function() {
-            $('.typeahead').typeahead({
-                        hint: true,
-                        highlight: true,
-                        minLength: 1
-                    },
-                    {
-                        name: 'tagName',
-                        source: {{ tags|json_encode|raw }}
-                    });
+            $('.ms-tagbox').magicSuggest({
+                placeholder: 'Enter one or multiple tags',
+                data: {{ tags|json_encode|raw }},
+                name: 'app_bundle_post_type[tags][]',
+                selectionCls: 'custom',
+                selectFirst: true,
+                valueField: 'tagName',
+                resultsField: 'tagName'
+
+            });
         })
     </script>
 {% endblock %}
