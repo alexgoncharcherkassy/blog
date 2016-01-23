@@ -187,6 +187,7 @@ class AdminController extends Controller
 
             if (null !== $newTags) {
               //  $newTags = explode(',', trim($newTags));
+                $post->getTags()->clear();
                 foreach ($newTags as $item) {
                     $findTag = $em->getRepository('AppBundle:Tag')->find(trim($item));
                     if ($post->getTags()->contains($findTag)) {
