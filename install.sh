@@ -5,8 +5,7 @@ echo "Выберите дествие :"
 echo "1 - install"
 echo "2 - update"
 echo "3 - create/update database"
-echo "4 - reload database fixtures"
-echo "5 - quit"
+echo "4 - quit"
 
 read Keypress
 
@@ -21,11 +20,10 @@ case "$Keypress" in
     php app/console doctrine:fixtures:load -n
 ;;
 2) echo "update start..."
-    composer update
-    php app/console doctrine:database:drop --force
-    php app/console doctrine:database:create
-    php app/console doctrine:schema:update --force
-    php app/console doctrine:fixtures:load -n
+    npm install
+    composer install
+    ./node_modules/.bin/bower install
+    ./node_modules/.bin/gulp
 ;;
 3) echo "create/update database start..."
     php app/console doctrine:database:drop --force
@@ -33,10 +31,7 @@ case "$Keypress" in
     php app/console doctrine:schema:update --force
     php app/console doctrine:fixtures:load -n
 ;;
-4) echo "reload database fixtures start..."
-    php app/console doctrine:fixtures:load -n
-;;
-5) exit 0
+4) exit 0
 ;;
 esac
 
