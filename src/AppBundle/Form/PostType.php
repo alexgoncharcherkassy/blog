@@ -36,7 +36,7 @@ class PostType extends AbstractType
                 ],*/
                 'required' => false
             ])
-            ->add('tags', EntityType::class, [
+            /*->add('tags', EntityType::class, [
                 'class' => 'AppBundle\Entity\Tag',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('t')
@@ -47,15 +47,15 @@ class PostType extends AbstractType
                 'expanded' => true,
                 'attr' => ['class' => 'list-group-item'],
                 'required' => false
-            ])
+            ])*/
             ->add('newCategory', TextType::class, [
-                'attr' => [
+               /* 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Add only one category or select from categories'
-                ],
+                ],*/
                 'required' => false
             ])
-            ->add('category', EntityType::class, [
+           /* ->add('category', EntityType::class, [
                 'class' => 'AppBundle\Entity\Category',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
@@ -67,7 +67,7 @@ class PostType extends AbstractType
                 ],
                 'placeholder' => 'Select category',
                 'required' => false
-            ])
+            ])*/
             ->add('blog_image', FileType::class, [
                 'required' => false
             ]);

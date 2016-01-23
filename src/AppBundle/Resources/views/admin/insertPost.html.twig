@@ -25,20 +25,20 @@
                 {{ form_errors(form.newTags) }}
             </div>
             <br/>
-            <div>
+            {#<div>
                 {{ form_widget(form.tags) }}
                 {{ form_errors(form.tags) }}
-            </div>
+            </div>#}
             <hr/>
             <div>
-                {{ form_widget(form.newCategory) }}
+                {{ form_widget(form.newCategory, {'attr' : {'class' : 'ms-categorybox'}}) }}
                 {{ form_errors(form.newCategory) }}
             </div>
             <br/>
-            <div>
+           {# <div>
                 {{ form_widget(form.category) }}
                 {{ form_errors(form.category) }}
-            </div>
+            </div>#}
             <br/>
             <div>
                 {{ form_widget(form.blog_image) }}
@@ -81,13 +81,29 @@
             $('.ms-tagbox').magicSuggest({
                 placeholder: 'Enter one or multiple tags',
                 data: {{ tags|json_encode|raw }},
-                name: 'app_bundle_post_type[tags][]',
+                name: 'app_bundle_post_type[newTags]',
                 selectionCls: 'custom',
+                useZebraStyle: true,
                 selectFirst: true,
-                valueField: 'tagName',
-                resultsField: 'tagName'
-
+                valueField: 'id',
+                resultsField: 'id',
+                displayField: 'tagName'
             });
+
+            $('.ms-categorybox').magicSuggest({
+                placeholder: 'Enter one category',
+                data: {{ categories|json_encode|raw }},
+                name: 'app_bundle_post_type[newCategory]',
+                selectionCls: 'custom',
+                useZebraStyle: true,
+                selectFirst: true,
+                maxSelection: 1,
+                valueField: 'id',
+                resultsField: 'id',
+                displayField: 'categoryName'
+            });
+
+
         })
     </script>
 {% endblock %}

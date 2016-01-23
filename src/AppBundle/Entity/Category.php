@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="category")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\CategoryRepository")
  */
-class Category
+class Category implements \JsonSerializable
 {
     /**
      * @var integer
@@ -45,6 +45,14 @@ class Category
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="category")
      */
     private $posts;
+
+    function jsonSerialize()
+    {
+        return [
+            'id' => $this->getId(),
+            'categoryName' => $this->getCategoryName()
+        ];
+    }
 
 
     /**

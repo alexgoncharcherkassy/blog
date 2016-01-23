@@ -30,6 +30,8 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $tags = $em->getRepository('AppBundle:Tag')
             ->findAll();
+        $categories = $em->getRepository('AppBundle:Category')
+            ->findAll();
 
         $form = $this->createForm(PostType::class, $post);
         if ($request->getMethod() == 'POST') {
@@ -39,23 +41,34 @@ class AdminController extends Controller
                 $newTags = $post->getNewTags();
 
                 if (null !== $newTags) {
-                    $newTags = explode(',', trim($newTags));
+                  //  $newTags = explode(',', trim($newTags));
                     foreach ($newTags as $item) {
-                        $tag = new Tag();
-                        $tag->setTagName(trim($item));
-                        $tag->setWeightTag(1);
-                        $em->persist($tag);
-                        $post->addTag($tag);
+                        if ($findTag = $em->getRepository('AppBundle:Tag')->find(trim($item))) {
+                            $post->addTag($findTag);
+                        } else {
+                            $tag = new Tag();
+                            $tag->setTagName(trim($item));
+                            $tag->setWeightTag(1);
+                            $em->persist($tag);
+                            $post->addTag($tag);
+                        }
+
                     }
                 }
 
                 $newCategory = $post->getNewCategory();
 
                 if (null !== $newCategory) {
-                    $category = new Category();
-                    $category->setCategoryName(trim($newCategory));
-                    $em->persist($category);
-                    $post->setCategory($category);
+                    $item = $newCategory[0];
+                    if ($findCategory = $em->getRepository('AppBundle:Category')->find(trim($item))) {
+                        $post->setCategory($findCategory);
+                    } else {
+                        $category = new Category();
+                        $category->setCategoryName(trim($item));
+                        $em->persist($category);
+                        $post->setCategory($category);
+                    }
+
                 }
 
                 $post->uploadImage();
@@ -71,7 +84,7 @@ class AdminController extends Controller
             }
         }
 
-        return ['form' => $form->createView(), 'tags' => $tags];
+        return ['form' => $form->createView(), 'tags' => $tags, 'categories' => $categories];
     }
 
     /**
@@ -152,6 +165,13 @@ class AdminController extends Controller
 
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
+        $tags = $em->getRepository('AppBundle:Tag')
+            ->findAll();
+        $categories = $em->getRepository('AppBundle:Category')
+            ->findAll();
+        $itemTags = $post->getTags()->getIterator();
+        $itemCategory = $post->getCategory();
+
         if (!$post) {
             return $this->redirectToRoute('page404');
         }
@@ -166,22 +186,35 @@ class AdminController extends Controller
             $newTags = $post->getNewTags();
 
             if (null !== $newTags) {
-                $newTags = explode(',', trim($newTags));
+              //  $newTags = explode(',', trim($newTags));
                 foreach ($newTags as $item) {
-                    $tag = new Tag();
-                    $tag->setTagName(trim($item));
-                    $em->persist($tag);
-                    $post->addTag($tag);
+                    $findTag = $em->getRepository('AppBundle:Tag')->find(trim($item));
+                    if ($post->getTags()->contains($findTag)) {
+                        continue;
+                    } elseif ($findTag) {
+                        $post->addTag($findTag);
+                    } else {
+                        $tag = new Tag();
+                        $tag->setTagName(trim($item));
+                        $tag->setWeightTag(1);
+                        $em->persist($tag);
+                        $post->addTag($tag);
+                    }
                 }
             }
 
             $newCategory = $post->getNewCategory();
 
             if (null !== $newCategory) {
-                $category = new Category();
-                $category->setCategoryName(trim($newCategory));
-                $em->persist($category);
-                $post->setCategory($category);
+                $item = $newCategory[0];
+                if ($findCategory = $em->getRepository('AppBundle:Category')->find(trim($item))) {
+                    $post->setCategory($findCategory);
+                } else {
+                    $category = new Category();
+                    $category->setCategoryName(trim($item));
+                    $em->persist($category);
+                    $post->setCategory($category);
+                }
             }
 
             $post->uploadImage();
@@ -197,7 +230,12 @@ class AdminController extends Controller
         return ['form' => $form->createView(),
                 'oldImage' => $oldImage,
                 'formDeleteImage' => $form_delete_image,
-                'slug' => $post->getSlug()];
+                'slug' => $post->getSlug(),
+                'tags' => $tags,
+                'categories' => $categories,
+                'itemTags' => $itemTags,
+                'itemCategory' => $itemCategory
+        ];
 
     }
 

@@ -30,24 +30,24 @@
             </div>
             <hr/>
             <div>
-                {{ form_widget(form.newTags) }}
+                {{ form_widget(form.newTags, {'attr' : {'class' : 'ms-tagbox'}}) }}
                 {{ form_errors(form.newTags) }}
             </div>
             <br/>
-            <div>
+            {#<div>
                 {{ form_widget(form.tags) }}
                 {{ form_errors(form.tags) }}
-            </div>
+            </div>#}
             <hr/>
             <div>
-                {{ form_widget(form.newCategory) }}
+                {{ form_widget(form.newCategory, {'attr' : {'class' : 'ms-categorybox'}}) }}
                 {{ form_errors(form.newCategory) }}
             </div>
             <br/>
-            <div>
+            {#<div>
                 {{ form_widget(form.category) }}
                 {{ form_errors(form.category) }}
-            </div>
+            </div>#}
             <br/>
             <div>
                 {{ form_widget(form.blog_image) }}
@@ -85,6 +85,35 @@
         $(document).on('click', 'a.delete_link', function (event) {
             $(event.currentTarget).parent().remove();
         });
+
+        $(document).ready(function() {
+            $('.ms-tagbox').magicSuggest({
+                placeholder: 'Enter one or multiple tags',
+                data: {{ tags|json_encode|raw }},
+                name: 'app_bundle_post_type[newTags]',
+                selectionCls: 'custom',
+                useZebraStyle: true,
+                selectFirst: true,
+                value: {{ itemTags|json_encode|raw }},
+                valueField: 'id',
+                resultsField: 'id',
+                displayField: 'tagName'
+            });
+
+            $('.ms-categorybox').magicSuggest({
+                placeholder: 'Enter one category',
+                data: {{ categories|json_encode|raw }},
+                name: 'app_bundle_post_type[newCategory]',
+                selectionCls: 'custom',
+                useZebraStyle: true,
+                selectFirst: true,
+                value: {{ itemCategory|json_encode|raw }},
+                maxSelection: 1,
+                valueField: 'id',
+                resultsField: 'id',
+                displayField: 'categoryName'
+            });
+        })
     </script>
 {% endblock %}
 
