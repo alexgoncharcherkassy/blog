@@ -46,7 +46,7 @@ class Category implements \JsonSerializable
      */
     private $posts;
 
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return [
             'id' => $this->getId(),
