@@ -14,3 +14,10 @@ services:
               doctrine: "@doctrine"
             tags:
                 - { name: twig.extension }
+
+    kernel.listener.kernel_request:
+           class: "AppBundle\EventListener\ErrorRedirect"
+           arguments:
+               router: "@router"
+           tags:
+               - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
