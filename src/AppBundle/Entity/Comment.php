@@ -10,7 +10,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Comment
  *
  * @ORM\Table(name="comment")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\CommentRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CommentRepository")
  */
 class Comment
 {
@@ -26,7 +26,7 @@ class Comment
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="1", minMessage="This field can not be less than 5 characters")
+     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
      * @ORM\Column(name="textComment", type="text")
      */
     private $textComment;
@@ -48,7 +48,7 @@ class Comment
     /**
      * @var integer
      *
-     * @ORM\Column(name="rating", type="integer")
+     * @ORM\Column(name="rating", type="integer", nullable=true)
      */
     private $rating;
 

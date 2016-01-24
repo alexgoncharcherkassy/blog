@@ -72,9 +72,37 @@ swiftmailer:
     spool:     { type: memory }
 
 stof_doctrine_extensions:
-    default_locale: en
+    default_locale: en_US
     orm:
         default:
             timestampable: true
             sluggable: true
             softdeleteable: true
+
+liip_imagine:
+    resolvers:
+       default:
+          web_path: ~
+
+    filter_sets:
+        cache: ~
+        blog_show:
+            quality: 75
+            filters:
+                relative_resize: { widen: 460 }
+
+        posts_show:
+                    quality: 75
+                    filters:
+                        relative_resize: { widen: 130 }
+
+knp_paginator:
+    page_range: 10                      # default page range used in pagination control
+    default_options:
+        page_name: page                # page query parameter name
+        sort_field_name: sort          # sort field query parameter name
+        sort_direction_name: direction # sort direction query parameter name
+        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
+    template:
+        pagination: KnpPaginatorBundle:Pagination:foundation_v5_pagination.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig

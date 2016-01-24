@@ -1,35 +1,31 @@
 AppBundle\Entity\Category:
     category{1..10}:
-        categoryName: <word()>
+        categoryName(unique): <word()>
         posts: 1x @post*
 
-AppBundle\Entity\Tags:
-    tags{1..50}:
-        tagName: <word()>
+AppBundle\Entity\Tag:
+    tag{1..30}:
+        tagName(unique): <word()>
+        weightTag: <numberBetween(1, 30)>
         posts: 2x @post*
 
 AppBundle\Entity\Post:
     post{1..20}:
         titlePost: <sentence(4)>
         textPost: <text(2000)>
-        newTags: <word()>
-        newCategory: <word()>
+        rating: <randomFloat(1, 0, 5)>
+        nameImage: <word()>
+        pathImage: <imageURL()>
         comments: 2x @comment*
-        images: 1x @image*
-        tags: 3x @tags*
-        category: @category*
+        tags: 3x @tag*
+        category: "@category*"
 
 AppBundle\Entity\Comment:
     comment{1..60}:
         textComment: <text()>
         rating: <numberBetween(1, 5)>
-        post: @post*
+        post: "@post*"
 
-AppBundle\Entity\Image:
-    image{1..40}:
-        nameImage: <word()>
-        pathImage: <url()>
-        post: @post*
 
 
 

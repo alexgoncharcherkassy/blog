@@ -8,12 +8,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Category
+ * Tags
  *
- * @ORM\Table(name="category")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
+ * @ORM\Table(name="tags")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TagRepository")
  */
-class Category
+class Tag
 {
     /**
      * @var integer
@@ -27,22 +27,27 @@ class Category
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
+     * @Assert\Length(min="3", minMessage="This field can not be less than 3 characters")
      *
-     * @ORM\Column(name="categoryName", type="string", length=255)
+     * @ORM\Column(name="tagName", type="string", length=255)
      */
-    private $categoryName;
+    private $tagName;
 
     /**
      * @var string
-     * @Gedmo\Slug(fields={"categoryName"})
+     * @Gedmo\Slug(fields={"tagName"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;
 
+    /**
+     *
+     * @ORM\Column(name="weightTag" , type="integer", nullable=true)
+     */
+    private $weightTag;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="category")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Post", mappedBy="tags")
      */
     private $posts;
 
@@ -55,7 +60,6 @@ class Category
         $this->posts = new ArrayCollection();
     }
 
-
     /**
      * Get id
      *
@@ -67,27 +71,27 @@ class Category
     }
 
     /**
-     * Set categoryName
+     * Set tagName
      *
-     * @param string $categoryName
+     * @param string $tagName
      *
-     * @return Category
+     * @return Tag
      */
-    public function setCategoryName($categoryName)
+    public function setTagName($tagName)
     {
-        $this->categoryName = $categoryName;
+        $this->tagName = $tagName;
 
         return $this;
     }
 
     /**
-     * Get categoryName
+     * Get tagName
      *
      * @return string
      */
-    public function getCategoryName()
+    public function getTagName()
     {
-        return $this->categoryName;
+        return $this->tagName;
     }
 
     /**
@@ -95,7 +99,7 @@ class Category
      *
      * @param string $slug
      *
-     * @return Category
+     * @return Tag
      */
     public function setSlug($slug)
     {
@@ -115,7 +119,25 @@ class Category
     }
 
     /**
-     * @return mixed
+     * @param Post $posts
+     */
+    public function addPost(Post $posts)
+    {
+        $this->posts[] = $posts;
+
+        return $this;
+    }
+
+    /**
+     * @param Post $posts
+     */
+    public function removePost(Post $posts)
+    {
+        $this->posts->removeElement($posts);
+    }
+
+    /**
+     * @return ArrayCollection
      */
     public function getPosts()
     {
@@ -123,22 +145,19 @@ class Category
     }
 
     /**
-     * @param Post $post
+     * @return mixed
      */
-    public function addPost(Post $post)
+    public function getWeightTag()
     {
-        //   $post->setCategory($this);
-        $this->posts[] = $post;
-
-        return $this;
+        return $this->weightTag;
     }
 
     /**
-     * @param Post $post
+     * @param mixed $weightTag
      */
-    public function removePost(Post $post)
+    public function setWeightTag($weightTag)
     {
-        $this->posts->removeElement($post);
+        $this->weightTag = $weightTag;
     }
 
 

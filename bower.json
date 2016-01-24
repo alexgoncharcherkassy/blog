@@ -1,12 +1,12 @@
 {
-  "name": "euro",
-  "description": "euro [![Build Status](https://travis-ci.org/alexgoncharcherkassy/euro.svg)](https://travis-ci.org/alexgoncharcherkassy/euro) ====",
+  "name": "blog",
+  "description": "blog [![Build Status](https://travis-ci.org/alexgoncharcherkassy/blog.svg)](https://travis-ci.org/alexgoncharcherkassy/blog) ====",
   "main": "index.js",
   "authors": [
     "aleksandr gonchar"
   ],
   "license": "BSD-2-Clause",
-  "homepage": "https://github.com/alexgoncharcherkassy/euro",
+  "homepage": "https://github.com/alexgoncharcherkassy/blog",
   "moduleType": [],
   "ignore": [
     "**/.*",

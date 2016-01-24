@@ -1,0 +1,31 @@
+AppBundle\Entity\Category:
+    category_1:
+        categoryName: "Ammet"
+        posts: 1x @post*
+
+AppBundle\Entity\Tag:
+    tag_1:
+        tagName: "Culpa"
+        posts: 1x @post*
+
+AppBundle\Entity\Post:
+    post_1:
+        titlePost: "Facerenam"
+        textPost: "Architecto fugit repellendus illo veritatis qui. Esse veritatis voluptate vel possimus omnis. Incidunt sunt cumque asperiores incidunt."
+        rating: 4
+        comments: 1x @comment*
+        tags: 1x @tag*
+        category: "@category*"
+
+AppBundle\Entity\Comment:
+    comment_1:
+        textComment: "Test"
+        rating: 4
+        post: "@post*"
+
+
+
+
+
+
+

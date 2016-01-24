@@ -1,0 +1,205 @@
+{% extends '@App/layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #rates {
+
+            list-style:none;
+            margin-right:20px;
+            padding-left:0;
+            display:inline-block;
+
+        }
+        #rates li {
+            float:left;
+            width:32px;
+            height:32px;
+        }
+        #rates li:hover {
+            cursor:pointer;
+        }
+        .defaultRating {
+            background-image: url('{{ asset('img/star-white.png') }}');
+            background-repeat:no-repeat;
+        }
+        .badRating {
+            background-image: url('{{ asset('img/star-red.png') }}');
+            background-repeat:no-repeat;
+        }
+        .rating {
+            background-image: url('{{ asset('img/star-yellow.png') }}');
+            background-repeat:no-repeat;
+        }
+        .coolRating {
+            background-image: url('{{ asset('img/star-green.png') }}');
+            background-repeat:no-repeat;
+        }
+    </style>
+{% endblock %}
+    {% block panel %}
+        {% for post in posts %}
+            <div class="panel panel-success">
+                <div class="panel-heading" style="margin-bottom: 0">
+                    <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
+                       class="pull-right">Category: {{ post.category.categoryName | capitalize }}</a>
+                    <h4>{{ post.titlePost | capitalize }}</h4>
+                    <small>Rating post</small>
+                    <span class="badge badge-info">{{ post.rating | round(1, 'floor') }}</span>
+                </div>
+
+                <div class="panel-body">
+                    <p>
+                        <i class="glyphicon glyphicon-time"></i>
+                        <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
+                        {#{% if post.createdAt < post.updateAt %}
+                            <small>Updated {{ post.updateAt|date('d.m.Y h:m') }} by Anonymous</small>
+                        {% endif %}#}
+
+                        {% for tag in post.tags %}
+
+                            <a href="{{ path('show_tags', {'slug': tag.slug}) }}" class="pull-right">
+                                {{ tag.tagName | lower }}</a>
+                            <i class="glyphicon glyphicon-tag pull-right" style="margin-left: 7px; margin-right: 2px"></i>
+                        {% endfor %}
+                    </p>
+
+                    {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
+                        <img src="{{ post.pathImage }}" class="img-thumbnail pull-left"
+                             alt="{{ post.nameImage }}" style="width: 460px; margin-right: 15px; margin-bottom: 15px">
+                    {% endif %}
+                    {% if post.pathImage starts with 'img/' and post.nameImage and post.pathImage %}
+                        <img src="{{ post.pathImage | imagine_filter('blog_show') }}" class="img-thumbnail pull-left"
+                             alt="{{ post.nameImage }}" style="margin-right: 15px; margin-bottom: 15px">
+                    {% endif %}
+                    <div class="thumbnail">
+                        <p>{{ post.textPost | raw | nl2br }}</p>
+                        <br/><br/>
+                        {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
+                        <div>
+
+                            <ul id="rates"
+                                data-min-rating="1"
+                                data-max-rating="5"
+                                data-step="1"
+                                data-transfer-element-selector="#app_bundle_comment_type_rating">
+
+                                <li class="defaultRating" id="prototype-star"></li>
+                                <span id="rating" class="hidden"></span>
+                            </ul>
+
+                        </div>
+                        {{ form_widget(form) }}
+                        <br/>
+                        <input type="submit" value="Send" class="btn btn-large btn-primary">
+                        {{ form_end(form) }}
+                    </div>
+                    <strong>Comments</strong>
+                    {% for comment in post.comments %}
+                        <ul class="thumbnail" style="width: 65%; margin-left: 20px">
+                            {{ form(formDeleteComment[comment.id], {'attr' : {'style' : 'text-align : right'}}) }}
+                            <small>Published {{ comment.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
+                            <div class="col-md-6 text-left">
+                                {% if comment.rating %}
+                                    Rating
+                                    <span class="badge badge-success">{{ comment.rating }}</span>
+                                {% endif %}
+                            </div>
+                            <li class="span5" style="list-style: none">
+                                <div class="thumbnail">
+                                    {{ comment.textComment }}
+                                </div>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                </div>
+
+            </div>
+        {% endfor %}
+    {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script>
+        jQuery(function ($) {
+            var rateContainer = $("#rates"),
+                    minRating = rateContainer.data('min-rating'),
+                    maxRating = rateContainer.data('max-rating'),
+                    rateStep = rateContainer.data('step'),
+                    transferElementSelector = rateContainer.data('transfer-element-selector'),
+                    ratingSpan = $('#rating').detach(),
+                    prototypeStar = $("#prototype-star").detach().prop("id", ""),
+                    memoryStarIndex = 0,
+                    rated = false,
+                    rateStars = createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep),
+                    rating;
+            rateContainer.on('mouseover', 'li', function () {
+                var indexOfRate = $(this).index();
+                ratingSpan.html(this.rating);
+                setRatesStars(indexOfRate);
+            });
+            rateContainer.on('mouseout', 'li', function () {
+                if (rated) {
+                    setRatesStars(memoryStarIndex);
+                    ratingSpan.html(rating);
+                }
+                else {
+                    clearRates();
+                    ratingSpan.html("");
+                }
+            });
+            rateContainer.on('click', 'li', function () {
+                memoryStarIndex = $(this).index();
+                rating = this.rating;
+                rated = true;
+                ratingSpan.html(rating);
+                setRatesStars(memoryStarIndex);
+                $(transferElementSelector).prop({"value": rating});
+            });
+//region==================== Utils ========================
+            function setRatesStars(starIndex) {
+                var
+                        countStars = rateStars.length,
+                        rateType = 'defaultRating';
+                if (starIndex <= 2) {
+                    rateType = 'badRating';
+                }
+                if (starIndex == 3) {
+                    rateType = 'rating';
+                }
+                if ((starIndex >= 4) && (starIndex <= countStars)) {
+                    rateType = 'coolRating';
+                }
+                for (var i = 0; i < rateStars.length; i++) {
+                    if (i <= starIndex) {
+                        rateStars.eq(i).removeClass();
+                        rateStars.eq(i).addClass(rateType);
+                    }
+                    else {
+                        rateStars.eq(i).removeClass();
+                        rateStars.eq(i).addClass('defaultRating');
+                    }
+                }
+            }
+
+            function clearRates() {
+                for (var i = 0; i < rateStars.length; i++) {
+                    rateStars.eq(i).removeClass();
+                    rateStars.eq(i).addClass('defaultRating');
+                }
+            }
+
+            function createRatingStars(rateContainer, prototypeStar, minRating, maxRating, rateStep) {
+                var currentNode;
+                for (var i = minRating; i <= maxRating; i += rateStep) {
+                    currentNode = prototypeStar.clone();
+                    currentNode[0].rating = i;
+                    // currentNode.param("");
+                    rateContainer.append(currentNode);
+                }
+                rateContainer.append(ratingSpan);
+                return rateContainer.find('li');
+            }
+        });
+    </script>
+{% endblock %}
