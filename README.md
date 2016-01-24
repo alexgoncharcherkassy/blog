@@ -2,10 +2,10 @@ blog
 ====
 
 Travis -ci<br/> 
-[![Build Status](https://travis-ci.org/alexgoncharcherkassy/blog.svg?branch=base)](https://travis-ci.org/alexgoncharcherkassy/blog)
+[![Build Status](https://travis-ci.org/alexgoncharcherkassy/blog.svg?branch=develop)](https://travis-ci.org/alexgoncharcherkassy/blog)
 <br/>
 Scrutinizer-ci<br/>
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexgoncharcherkassy/blog/badges/quality-score.png?b=base)](https://scrutinizer-ci.com/g/alexgoncharcherkassy/blog/?branch=base)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/alexgoncharcherkassy/blog/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/alexgoncharcherkassy/blog/?branch=develop)
 <br/>
 
 
