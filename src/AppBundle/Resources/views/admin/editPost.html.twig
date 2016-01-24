@@ -91,7 +91,7 @@
                 displayField: 'tagName'
             });
 
-           var ms = $('.ms-categorybox').magicSuggest({
+           $('.ms-categorybox').magicSuggest({
                 placeholder: 'Enter one category',
                 data: {{ categories|json_encode|raw }},
                 name: 'app_bundle_post_type[newCategory]',

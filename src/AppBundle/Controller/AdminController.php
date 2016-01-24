@@ -170,7 +170,7 @@ class AdminController extends Controller
         $categories = $em->getRepository('AppBundle:Category')
             ->findAll();
         $itemTags = $post->getTags()->getIterator();
-        $itemCategory = $post->getCategory();
+        $itemCategory[0] = $post->getCategory();
 
         if (!$post) {
             return $this->redirectToRoute('page404');
@@ -202,11 +202,14 @@ class AdminController extends Controller
                         $post->addTag($tag);
                     }
                 }
+            } else {
+                $post->getTags()->clear();
             }
 
             $newCategory = $post->getNewCategory();
 
             if (null !== $newCategory) {
+                $post->setCategory(null);
                 $item = $newCategory[0];
                 if ($findCategory = $em->getRepository('AppBundle:Category')->find(trim($item))) {
                     $post->setCategory($findCategory);
@@ -216,6 +219,8 @@ class AdminController extends Controller
                     $em->persist($category);
                     $post->setCategory($category);
                 }
+            } else {
+                $post->setCategory(null);
             }
 
             $post->uploadImage();
