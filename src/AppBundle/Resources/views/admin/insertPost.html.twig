@@ -86,8 +86,6 @@
                 data: {{ tags|json_encode|raw }},
                 name: 'app_bundle_post_type[newTags]',
                 selectionCls: 'custom',
-                useZebraStyle: true,
-                selectFirst: true,
                 valueField: 'id',
                 resultsField: 'id',
                 displayField: 'tagName'
@@ -98,8 +96,6 @@
                 data: {{ categories|json_encode|raw }},
                 name: 'app_bundle_post_type[newCategory]',
                 selectionCls: 'custom',
-                useZebraStyle: true,
-                selectFirst: true,
                 maxSelection: 1,
                 valueField: 'id',
                 resultsField: 'id',
