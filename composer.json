@@ -1,5 +1,5 @@
 {
-    "name": "device/euro",
+    "name": "device/blog",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -24,12 +24,12 @@
 
         "hautelook/alice-bundle": "0.2",
         "stof/doctrine-extensions-bundle": "^1.2",
-        "liip/imagine-bundle": "^1.4"
+        "liip/imagine-bundle": "^1.4",
+        "knplabs/knp-paginator-bundle": "^2.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~3.0",
         "phpunit/phpunit": "^4.8",
-        "symfony/phpunit-bridge": "~2.7",
         "doctrine/doctrine-fixtures-bundle": "^2.3"
     },
     "scripts": {

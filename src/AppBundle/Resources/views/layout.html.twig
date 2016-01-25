@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block layout %}
+
+    <div class="col-md-9 pull-left">
+        {% block panel %}
+        {% endblock %}
+    </div>
+
+    <div class="col-md-3 pull-right">
+        {{ showSideBar() }}
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

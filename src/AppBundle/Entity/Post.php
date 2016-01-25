@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -11,7 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Post
  *
  * @ORM\Table(name="post")
- * @ORM\Entity(repositoryClass="AppBundle\Entity\PostRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
  */
 class Post
 {
@@ -27,7 +28,7 @@ class Post
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="1", minMessage="This field can not be less than 5 characters")
+     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
      *
      * @ORM\Column(name="titlePost", type="string", length=255)
      */
@@ -36,7 +37,7 @@ class Post
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="3", minMessage="This field can not be less than 30 characters")
+     * @Assert\Length(min="30", minMessage="This field can not be less than 30 characters")
      *
      * @ORM\Column(name="textPost", type="text")
      */
@@ -69,29 +70,57 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="newTags", type="string", length=255)
+     * @ORM\Column(name="newTags", type="string", length=255, nullable=true)
      */
     private $newTags;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="newCategory", type="string", length=255)
+     * @ORM\Column(name="newCategory", type="string", length=255, nullable=true)
      */
     private $newCategory;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="rating", type="float")
+     */
+    private $rating;
+
+    /**
+     * @var string
+     * @Assert\File(
+     *              maxSize = "3M",
+     *              mimeTypes = {"image/*"},
+     *              maxSizeMessage = "The file is too large ({{ size }}).Allowed maximum size is {{ limit }}",
+     *              mimeTypesMessage = "The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}"
+     *              )
+     */
+    private $blogImage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nameImage", type="string", length=255, nullable=true)
+     */
+    private $nameImage;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="pathImage", type="string", length=255, nullable=true)
+     */
+    private $pathImage;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Comment", mappedBy="post")
      */
     private $comments;
 
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Image", mappedBy="post")
-     */
-    private $images;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tags", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Tag", inversedBy="posts")
      */
     private $tags;
 
@@ -100,10 +129,12 @@ class Post
      */
     private $category;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->images = new ArrayCollection();
         $this->tags = new ArrayCollection();
     }
 
@@ -113,7 +144,7 @@ class Post
      */
     public function addComment(Comment $comment)
     {
-     //   $comment->setPost($this);
+        //   $comment->setPost($this);
         $this->comments[] = $comment;
 
         return $this;
@@ -136,36 +167,9 @@ class Post
     }
 
     /**
-     * @param Image $image
+     * @param Tag $tags
      */
-    public function addImage(Image $image)
-    {
-     //   $image->setPost($this);
-        $this->images[] = $image;
-
-        return $this;
-    }
-
-    /**
-     * @param Image $image
-     */
-    public function removeImage(Image $image)
-    {
-        $this->images->removeElement($image);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getImages()
-    {
-        return $this->images;
-    }
-
-    /**
-     * @param Tags $tags
-     */
-    public function addTag(Tags $tags)
+    public function addTag(Tag $tags)
     {
 
         $this->tags[] = $tags;
@@ -174,38 +178,42 @@ class Post
     }
 
     /**
-     * @param Tags $tags
+     * @param Tag $tags
      */
-    public function removeTag(Tags $tags)
+    public function removeTag(Tag $tags)
     {
         $this->tags->removeElement($tags);
     }
 
 
-
+    /**
+     * @return ArrayCollection
+     */
     public function getTags()
     {
         return $this->tags;
     }
 
     /**
-     *
+     * @param Tag $tags
      */
-    /*public function setTags(ArrayCollection $tags)
+    public function setTags(Tag $tags = null)
     {
-        $this->tags[] = $tags;
-        $tags->forAll(function ($key, $element) {
-            $element->addPost($this);
-            return true;
-        });
+        $this->tags = $tags;
+
         return $this;
-    }*/
+    }
 
     /**
      * @return mixed
      */
     public function getCategory()
     {
+        if ($this->category === null) {
+            $this->category = array('slug' => '#', 'categoryName' => 'Without category');
+
+            return $this->category;
+        }
         return $this->category;
     }
 
@@ -394,4 +402,143 @@ class Post
     {
         return $this->newCategory;
     }
+
+    /**
+     * @return float
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * @param float $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+
+    /**
+     * Set blogImage
+     *
+     * @param string $blogImage
+     *
+     */
+    public function setBlogImage(UploadedFile $file = null)
+    {
+        $this->blogImage = $file;
+    }
+
+    /**
+     * Get blogImage
+     *
+     * @return string
+     */
+    public function getBlogImage()
+    {
+        return $this->blogImage;
+    }
+
+    /**
+     * Set nameImage
+     *
+     * @param string $nameImage
+     *
+     */
+    public function setNameImage($nameImage)
+    {
+        $this->nameImage = $nameImage;
+
+        return $this;
+    }
+
+    /**
+     * Get nameImage
+     *
+     * @return string
+     */
+    public function getNameImage()
+    {
+        return $this->nameImage;
+    }
+
+    /**
+     * Set pathImage
+     *
+     * @param string $pathImage
+     *
+     */
+    public function setPathImage($pathImage)
+    {
+        $this->pathImage = $pathImage;
+
+        return $this;
+    }
+
+    /**
+     * Get pathImage
+     *
+     * @return string
+     */
+    public function getPathImage()
+    {
+        return $this->pathImage;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAbsolutePath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->pathImage;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getWebPath()
+    {
+        return null === $this->pathImage
+            ? null
+            : $this->getUploadDir() . '/' . $this->pathImage;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadRootDir()
+    {
+        return __DIR__ . '/../../../web/' . $this->getUploadDir();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getUploadDir()
+    {
+        return 'img/blog';
+    }
+
+    /**
+     *
+     */
+    public function uploadImage()
+    {
+        if (null === $this->getBlogImage()) {
+            return;
+        }
+        $randPrefix = mt_rand(1, 9999);
+        $this->getBlogImage()->move(
+            $this->getUploadRootDir(),
+            $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName()
+        );
+        $this->pathImage = $this->getUploadDir() . '/' . $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
+        $this->nameImage = $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
+        $this->blogImage = null;
+    }
+
 }

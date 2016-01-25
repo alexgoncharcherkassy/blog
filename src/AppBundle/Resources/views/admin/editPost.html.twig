@@ -1,0 +1,92 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block panel %}
+
+    <div class="panel panel-success">
+        <div class="panel-heading" style="margin-bottom: 0">
+            <h4>Edit post</h4>
+        </div>
+
+        <div class="panel-body">
+            {% if oldImage is not null %}
+                {% if oldImage starts with 'http:' %}
+                    <img src="{{ oldImage }}" class="img-thumbnail pull-left" style="width: 460px">
+                {% endif %}
+                {% if oldImage starts with 'img/' %}
+                    <img src="{{ oldImage | imagine_filter('blog_show') }}" class="img-thumbnail pull-left">
+                {% endif %}
+                {{ form(formDeleteImage[slug], {'attr' : {'style' : 'float:left'}}) }}
+            {% endif %}
+            {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
+            <div>
+                {{ form_widget(form.titlePost) }}
+                {{ form_errors(form.titlePost) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.textPost) }}
+                {{ form_errors(form.textPost) }}
+            </div>
+            <hr/>
+            <div>
+                {{ form_widget(form.newTags) }}
+                {{ form_errors(form.newTags) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.tags) }}
+                {{ form_errors(form.tags) }}
+            </div>
+            <hr/>
+            <div>
+                {{ form_widget(form.newCategory) }}
+                {{ form_errors(form.newCategory) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.category) }}
+                {{ form_errors(form.category) }}
+            </div>
+            <br/>
+            <div>
+                {{ form_widget(form.blog_image) }}
+                {{ form_errors(form.blog_image) }}
+            </div>
+            <br/>
+            {{ form_rest(form) }}
+            {# <input type="submit" value="Add file" class="jslink">
+             <br/>#}
+            <br/>
+            <input type="submit" VALUE="Save article" class="btn btn-large btn-primary">
+            {{ form_end(form) }}
+            <div id="del"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function add() {
+            var collectionHolder = $('#app_bundle_post_type_images');
+            var prototype = collectionHolder.attr('data-prototype');
+            // Sustituye __name__ con el número de hijos que tiene el div #nencargo_attachments, es decir, la cantidad de archivos adjuntos que hay.
+            var form = prototype.replace(/__name__/g, collectionHolder.children().length);
+            $(form).filter('div').first().html($(form).html() + '<a class="delete_link" href="#">Remove</a>');
+            collectionHolder.append(form);
+        }
+
+        $('input.jslink').click(function (event) {
+            event.preventDefault();
+            add();
+        });
+
+        $(document).on('click', 'a.delete_link', function (event) {
+            $(event.currentTarget).parent().remove();
+        });
+    </script>
+{% endblock %}
+
+
+
+

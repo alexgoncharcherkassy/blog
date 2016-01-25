@@ -26,65 +26,18 @@
                 <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
                 <i class="glyphicon glyphicon-time"></i>
                 <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
-                {#   {% if post.createdAt < post.updateAt %}
-                       <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
-                   {% endif %}#}
+                {#{% if post.createdAt < post.updateAt %}
+                    <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
+                {% endif %}#}
 
                 {% for tag in post.tags %}
                     <div class="pull-right">
                         <i class="glyphicon glyphicon-tag" style="margin-left: 7px"></i>
-                        <a href="{{ path('show_tags', {'slug': tag.slug}) }}">{{ tag.tagName | lower }}</a>
+                        <a href="{{ path('show_tags', {'slug': tag.slug}) }}">{{ tag.tagName |lower }}</a>
                     </div>
                 {% endfor %}
-
-
             </div>
         </div>
     {% endfor %}
-    <div id="ajax_load"></div>
-    <br/>
-    <p id="loading" style="display:none"><img src="{{ asset('img/ajax-loader(1).gif') }}" alt=""/></p>
-    <br/>
-    {% if posts|length >= 5 %}
-        <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax"
-               style="margin-bottom: 50px">
-    {% endif %}
 {% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-        var page = 2;
-
-        $(document).ready(function () {
-            $('#ajax').click(function () {
-                $('#loading').show();
-                $.ajax({
-                    type: "POST",
-                    dataType: 'html',
-                    data: {
-                        page: page
-                    },
-                    url: "{{ path('homepage') }}"
-                })
-                        .success(function (response) {
-                            if (response == '') {
-                                $('#ajax').attr('disabled', true);
-                                $('#loading').hide();
-                            }
-                            page++;
-                            template = response;
-                            $('#loading').hide();
-                            $('#ajax_load').append(template);
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            alert('Error : ' + errorThrown);
-                        });
-            });
-        });
-
-    </script>
-{% endblock %}
-
-
 
