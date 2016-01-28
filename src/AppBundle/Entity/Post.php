@@ -487,19 +487,15 @@ class Post
         return $this->pathImage;
     }
 
-    /**
-     * @return null|string
-     */
-    public function getAbsolutePath()
+
+   /* public function getAbsolutePath()
     {
         return null === $this->pathImage
             ? null
             : $this->getUploadRootDir() . '/' . $this->pathImage;
     }
 
-    /**
-     * @return null|string
-     */
+
     public function getWebPath()
     {
         return null === $this->pathImage
@@ -507,25 +503,19 @@ class Post
             : $this->getUploadDir() . '/' . $this->pathImage;
     }
 
-    /**
-     * @return string
-     */
+
     protected function getUploadRootDir()
     {
         return __DIR__ . '/../../../web/' . $this->getUploadDir();
     }
 
-    /**
-     * @return string
-     */
+
     protected function getUploadDir()
     {
         return 'img/blog';
     }
 
-    /**
-     *
-     */
+
     public function uploadImage()
     {
         if (null === $this->getBlogImage()) {
@@ -539,6 +529,6 @@ class Post
         $this->pathImage = $this->getUploadDir() . '/' . $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
         $this->nameImage = $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
         $this->blogImage = null;
-    }
+    }*/
 
 }

@@ -47,7 +47,8 @@ class BlogController extends Controller
                 $comment->setPost($post);
                 $em->persist($comment);
                 $em->flush();
-                $this->changeRating($slug);
+
+                $this->get('app.change.rating')->changeRating($slug);
 
                 return $this->redirectToRoute('show_post', array('slug' => $slug));
             }
@@ -118,40 +119,6 @@ class BlogController extends Controller
 
     /**
      * @param $slug
-     */
-    private function changeRating($slug)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $post = $em->getRepository('AppBundle:Post')
-            ->findOneBy(array('slug' => $slug));
-        $comments = $em->getRepository('AppBundle:Comment')
-            ->findBy(array('post' => $post));
-
-        $count = 0;
-        $summ = 0;
-
-        foreach ($comments as $comment) {
-            if ($comment->getRating() !== null) {
-                $summ += $comment->getRating();
-                $count++;
-            }
-        }
-        if ($summ == 0 || $count == 0) {
-            $post->setRating(0);
-            $em->flush();
-            return;
-        }
-        $rating = $summ / $count;
-
-        $post->setRating($rating);
-        $em->flush();
-
-        return;
-    }
-
-    /**
-     * @param $slug
      * @Route("/remove/comment/{id}/{slug}", name="remove_comment")
      * @Method("DELETE")
      */
@@ -165,7 +132,7 @@ class BlogController extends Controller
         $em->remove($comment);
         $em->flush();
 
-        $this->changeRating($slug);
+        $this->get('app.change.rating')->changeRating($slug);
 
         return $this->redirectToRoute('show_post', ['slug' => $slug]);
 

@@ -71,14 +71,15 @@ class AdminController extends Controller
 
                 }
 
-                $post->uploadImage();
+            //    $image = $this->get('app.image.manager');
+            //    $image->uploadImage($post);
                 $post->setNewTags(null);
                 $post->setNewCategory(null);
                 $post->setRating(0);
                 $em->persist($post);
                 $em->flush();
 
-                $this->updateTagsCloud();
+                $this->get('app.update.tagscloud');
 
                 return $this->redirectToRoute('homepage');
             }
@@ -144,13 +145,13 @@ class AdminController extends Controller
         foreach ($comments as $comment) {
             $em->remove($comment);
         }
-        if ($post->getPathImage() !== null) {
+       /* if ($post->getPathImage() !== null) {
             unlink($post->getPathImage());
-        }
+        }*/
         $em->remove($post);
         $em->flush();
 
-        $this->updateTagsCloud();
+        $this->get('app.update.tagscloud');
 
         return $this->redirectToRoute('admin_show');
     }
@@ -223,12 +224,14 @@ class AdminController extends Controller
                 $post->setCategory(null);
             }
 
-            $post->uploadImage();
+          //  $image = $this->get('app.image.manager');
+          //  $image->uploadImage($post);
             $post->setNewTags(null);
             $post->setNewCategory(null);
 
             $em->flush();
-            $this->updateTagsCloud();
+
+            $this->get('app.update.tagscloud');
 
             return $this->redirectToRoute('admin_show');
         }
@@ -324,31 +327,6 @@ class AdminController extends Controller
                 ]
             ])
             ->getForm();
-    }
-
-    /**
-     * @return array
-     */
-    private function updateTagsCloud()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $tags = $em->getRepository('AppBundle:Tag')
-            ->countTags();
-
-        /**
-         * @var \AppBundle\Entity\Tag $tag
-         */
-        foreach ($tags as $tag) {
-            $countPosts = 0;
-            foreach ($tag->getPosts() as $item) {
-                $countPosts++;
-            }
-            $tag->setWeightTag($countPosts);
-        }
-        $em->flush();
-
-        return;
     }
 
 }

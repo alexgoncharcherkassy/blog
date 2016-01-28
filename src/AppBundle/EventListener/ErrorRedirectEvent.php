@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
-class ErrorRedirect
+class ErrorRedirectEvent
 {
     protected $router;
 

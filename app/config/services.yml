@@ -7,17 +7,3 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    app.twig_extension:
-            class: "AppBundle\Twig\Extension\AppExtension"
-            public: false
-            arguments:
-              doctrine: "@doctrine"
-            tags:
-                - { name: twig.extension }
-
-    kernel.listener.kernel_request:
-           class: "AppBundle\EventListener\ErrorRedirect"
-           arguments:
-               router: "@router"
-           tags:
-               - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }

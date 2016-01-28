@@ -23,6 +23,12 @@ class AppExtension extends \Twig_Extension
         $this->doctrine = $doctrine;
     }
 
+    public function getFilters()
+    {
+        return array(
+            'limitWords' => new \Twig_Filter_Method($this, 'limitWords')
+        );
+    }
     /**
      * @return array
      */
@@ -63,12 +69,32 @@ class AppExtension extends \Twig_Extension
         );
     }
 
+    /**
+     *
+     * @param string $string
+     */
+    public function limitWords($string, $limit = 20)
+    {
+        $str = explode(' ', $string);
+        $countWords = count($str);
+        if ($countWords <= $limit) {
+            $lim = $countWords;
+        } else {
+            $lim = $limit;
+        }
+        $strResult = '';
+        for ($i = 0; $i < $lim; $i++) {
+            $strResult .= $str[$i].' ';
+        }
+
+        return $strResult.' ...';
+    }
 
     /**
      * {@inheritdoc}
      */
     public function getName()
     {
-        return 'app_extension';
+        return 'app.twig.extension';
     }
 }

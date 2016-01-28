@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+    <services>
+
+        <service id="app.twig.extension" class="AppBundle\Twig\Extension\AppExtension">
+            <argument type="service" id="doctrine" />
+            <tag name="twig.extension" />
+        </service>
+
+        <service id="kernel.listener.kernel_request" class="AppBundle\EventListener\ErrorRedirectEvent">
+            <argument key="router" type="service" id="router" />
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+
+        <service id="app.change.rating" class="AppBundle\Service\RatingServices">
+            <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="app.update.tagscloud" class="AppBundle\Service\TagsCloudServices">
+            <argument type="service" id="doctrine" />
+        </service>
+
+        <service id="app.image.subscriber" class="AppBundle\EventListener\ImageManagerSubscriber">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+
+    </services>
+
+</container>
