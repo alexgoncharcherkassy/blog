@@ -34,21 +34,4 @@ class GedmoServices
         $post->setUpdateAt(new \DateTime());
     }
 
-    private function slugify(Post $post)
-    {
-        $em = $this->doctrine->getManager();
-        $titles = $em->getRepository('AppBundle:Post')
-            ->findAll();
-
-        $string = preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower(trim(strip_tags($post->getTitlePost()))));
-
-        foreach ($titles as $title) {
-            if ($title->getTitlePost() == $post->getTitlePost()) {
-                $string .= '-'.$title->getId();
-            }
-        }
-
-        return $string;
-    }
-
 }
