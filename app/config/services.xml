@@ -25,8 +25,15 @@
             <argument type="service" id="doctrine" />
         </service>
 
-        <service id="app.image.subscriber" class="AppBundle\EventListener\ImageManagerSubscriber">
+        <service id="app.image.subscriber" class="AppBundle\EventListener\BlogSubscriber">
+            <argument type="service" id="service_container"/>
             <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+
+        <service id="app.image.manager" class="AppBundle\Service\ImageManagerServices"/>
+
+        <service id="app.custom.gedmo" class="AppBundle\Service\GedmoServices">
+            <argument type="service" id="doctrine" />
         </service>
 
     </services>

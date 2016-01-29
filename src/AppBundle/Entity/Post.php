@@ -487,48 +487,4 @@ class Post
         return $this->pathImage;
     }
 
-
-   /* public function getAbsolutePath()
-    {
-        return null === $this->pathImage
-            ? null
-            : $this->getUploadRootDir() . '/' . $this->pathImage;
-    }
-
-
-    public function getWebPath()
-    {
-        return null === $this->pathImage
-            ? null
-            : $this->getUploadDir() . '/' . $this->pathImage;
-    }
-
-
-    protected function getUploadRootDir()
-    {
-        return __DIR__ . '/../../../web/' . $this->getUploadDir();
-    }
-
-
-    protected function getUploadDir()
-    {
-        return 'img/blog';
-    }
-
-
-    public function uploadImage()
-    {
-        if (null === $this->getBlogImage()) {
-            return;
-        }
-        $randPrefix = mt_rand(1, 9999);
-        $this->getBlogImage()->move(
-            $this->getUploadRootDir(),
-            $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName()
-        );
-        $this->pathImage = $this->getUploadDir() . '/' . $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
-        $this->nameImage = $randPrefix . '-' . $this->getBlogImage()->getClientOriginalName();
-        $this->blogImage = null;
-    }*/
-
 }

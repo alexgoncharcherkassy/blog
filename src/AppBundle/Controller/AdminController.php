@@ -71,8 +71,6 @@ class AdminController extends Controller
 
                 }
 
-            //    $image = $this->get('app.image.manager');
-            //    $image->uploadImage($post);
                 $post->setNewTags(null);
                 $post->setNewCategory(null);
                 $post->setRating(0);
@@ -145,9 +143,7 @@ class AdminController extends Controller
         foreach ($comments as $comment) {
             $em->remove($comment);
         }
-       /* if ($post->getPathImage() !== null) {
-            unlink($post->getPathImage());
-        }*/
+
         $em->remove($post);
         $em->flush();
 
@@ -224,8 +220,6 @@ class AdminController extends Controller
                 $post->setCategory(null);
             }
 
-          //  $image = $this->get('app.image.manager');
-          //  $image->uploadImage($post);
             $post->setNewTags(null);
             $post->setNewCategory(null);
 

@@ -87,7 +87,7 @@ class AppExtension extends \Twig_Extension
             $strResult .= $str[$i].' ';
         }
 
-        return $strResult.' ...';
+        return $strResult;
     }
 
     /**
