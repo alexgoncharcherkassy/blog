@@ -32,10 +32,6 @@
 
         <service id="app.image.manager" class="AppBundle\Service\ImageManagerServices"/>
 
-        <service id="app.custom.gedmo" class="AppBundle\Service\GedmoServices">
-            <argument type="service" id="doctrine" />
-        </service>
-
     </services>
 
 </container>
