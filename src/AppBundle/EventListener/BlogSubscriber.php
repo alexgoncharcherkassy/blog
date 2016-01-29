@@ -36,7 +36,6 @@ class BlogSubscriber implements EventSubscriber
     {
         $post = $args->getEntity();
 
-
         if ($post instanceof Post) {
             if (null === $post->getBlogImage()) {
                 return;
@@ -45,6 +44,7 @@ class BlogSubscriber implements EventSubscriber
                 unlink($post->getPathImage());
             }
 
+            $this->container->get('app.custom.gedmo')->gedmoUpdatePost($post);
             $this->container->get('app.image.manager')->upload($post);
         }
     }
@@ -58,7 +58,7 @@ class BlogSubscriber implements EventSubscriber
                 $this->container->get('app.image.manager')->upload($post);
             }
 
-
+            $this->container->get('app.custom.gedmo')->gedmoPersistPost($post);
         }
     }
 

@@ -35,7 +35,6 @@ class Category implements \JsonSerializable
 
     /**
      * @var string
-     * @Gedmo\Slug(fields={"categoryName"})
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
     private $slug;

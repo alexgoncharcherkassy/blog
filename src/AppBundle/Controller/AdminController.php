@@ -48,6 +48,7 @@ class AdminController extends Controller
                         } else {
                             $tag = new Tag();
                             $tag->setTagName(trim($item));
+                            $this->get('app.custom.gedmo')->gedmoPersistTag($tag);
                             $tag->setWeightTag(1);
                             $em->persist($tag);
                             $post->addTag($tag);
@@ -65,6 +66,7 @@ class AdminController extends Controller
                     } else {
                         $category = new Category();
                         $category->setCategoryName(trim($item));
+                        $this->get('app.custom.gedmo')->gedmoPersistCategory($category);
                         $em->persist($category);
                         $post->setCategory($category);
                     }
@@ -194,6 +196,7 @@ class AdminController extends Controller
                     } else {
                         $tag = new Tag();
                         $tag->setTagName(trim($item));
+                        $this->get('app.custom.gedmo')->gedmoPersistTag($tag);
                         $tag->setWeightTag(1);
                         $em->persist($tag);
                         $post->addTag($tag);
@@ -213,6 +216,7 @@ class AdminController extends Controller
                 } else {
                     $category = new Category();
                     $category->setCategoryName(trim($item));
+                    $this->get('app.custom.gedmo')->gedmoPersistCategory($category);
                     $em->persist($category);
                     $post->setCategory($category);
                 }

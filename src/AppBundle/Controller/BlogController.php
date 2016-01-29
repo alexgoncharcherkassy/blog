@@ -45,6 +45,7 @@ class BlogController extends Controller
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $comment->setPost($post);
+                $this->get('app.custom.gedmo')->gedmoPersistComment($comment);
                 $em->persist($comment);
                 $em->flush();
 

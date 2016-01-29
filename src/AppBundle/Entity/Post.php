@@ -45,7 +45,6 @@ class Post
 
     /**
      * @var string
-     * @Gedmo\Slug(fields={"titlePost"})
      *
      * @ORM\Column(name="slug", type="string", length=255, unique=true)
      */
@@ -53,7 +52,6 @@ class Post
 
     /**
      * @var \DateTime
-     * @Gedmo\Timestampable(on="create")
      *
      * @ORM\Column(name="createdAt", type="datetime")
      */
@@ -61,7 +59,6 @@ class Post
 
     /**
      * @var \DateTime
-     * @Gedmo\Timestampable(on="update")
      *
      * @ORM\Column(name="updateAt", type="datetime")
      */
