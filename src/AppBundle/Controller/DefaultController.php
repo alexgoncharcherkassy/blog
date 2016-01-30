@@ -22,7 +22,7 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $page = $request->request->get('page', 1);
-        $limit = 5;
+        $limit = $this->container->getParameter('numberofarticles');
         $start = $page * $limit - $limit;
         if ($page > 1) {
             $template = $this->forward('AppBundle:Default:showAjax',

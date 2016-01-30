@@ -44,10 +44,8 @@
     <br/>
     <p id="loading" style="display:none"><img src="{{ asset('img/ajax-loader(1).gif') }}" alt=""/></p>
     <br/>
-    {% if posts|length >= 5 %}
-        <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax"
-               style="margin-bottom: 50px">
-    {% endif %}
+    <input type="submit" VALUE="Show More >>>" class="btn btn-large btn-primary" id="ajax"
+           style="margin-bottom: 50px">
 {% endblock %}
 
 {% block javascripts %}
