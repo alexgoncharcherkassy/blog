@@ -41,7 +41,7 @@ class AdminController extends Controller
                 $newTags = $post->getNewTags();
 
                 if (null !== $newTags) {
-                  //  $newTags = explode(',', trim($newTags));
+                    //  $newTags = explode(',', trim($newTags));
                     foreach ($newTags as $item) {
                         if ($findTag = $em->getRepository('AppBundle:Tag')->find(trim($item))) {
                             $post->addTag($findTag);
@@ -52,7 +52,6 @@ class AdminController extends Controller
                             $em->persist($tag);
                             $post->addTag($tag);
                         }
-
                     }
                 }
 
@@ -68,7 +67,6 @@ class AdminController extends Controller
                         $em->persist($category);
                         $post->setCategory($category);
                     }
-
                 }
 
                 $post->setNewTags(null);
@@ -119,8 +117,8 @@ class AdminController extends Controller
         }
 
         return ['posts' => $posts,
-                'form_edit' => $form_edit,
-                'form_delete' => $form_delete];
+            'form_edit' => $form_edit,
+            'form_delete' => $form_delete];
     }
 
     /**
@@ -183,7 +181,7 @@ class AdminController extends Controller
             $newTags = $post->getNewTags();
 
             if (null !== $newTags) {
-              //  $newTags = explode(',', trim($newTags));
+                //  $newTags = explode(',', trim($newTags));
                 $post->getTags()->clear();
                 foreach ($newTags as $item) {
                     $findTag = $em->getRepository('AppBundle:Tag')->find(trim($item));
@@ -231,13 +229,13 @@ class AdminController extends Controller
         }
 
         return ['form' => $form->createView(),
-                'oldImage' => $oldImage,
-                'formDeleteImage' => $form_delete_image,
-                'slug' => $post->getSlug(),
-                'tags' => $tags,
-                'categories' => $categories,
-                'itemTags' => $itemTags,
-                'itemCategory' => $itemCategory
+            'oldImage' => $oldImage,
+            'formDeleteImage' => $form_delete_image,
+            'slug' => $post->getSlug(),
+            'tags' => $tags,
+            'categories' => $categories,
+            'itemTags' => $itemTags,
+            'itemCategory' => $itemCategory
         ];
 
     }
@@ -261,6 +259,7 @@ class AdminController extends Controller
         }
         $post->setPathImage(null);
         $post->setNameImage(null);
+
         $em->flush();
 
         return $this->redirectToRoute('edit_post', ['slug' => $slug]);
