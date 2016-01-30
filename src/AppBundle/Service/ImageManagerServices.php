@@ -11,9 +11,16 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\Post;
 
+/**
+ * Class ImageManagerServices
+ * @package AppBundle\Service
+ */
 class ImageManagerServices
 {
 
+    /**
+     * @return string
+     */
     protected function getUploadRootDir()
     {
         return __DIR__ . '/../../../web/' . $this->getUploadDir();
@@ -27,6 +34,9 @@ class ImageManagerServices
         return 'img/blog';
     }
 
+    /**
+     * @param Post $post
+     */
     public function upload(Post $post)
     {
         $randPrefix = mt_rand(1, 9999);

@@ -14,15 +14,28 @@ use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+ * Class BlogSubscriber
+ * @package AppBundle\EventListener
+ */
 class BlogSubscriber implements EventSubscriber
 {
+    /**
+     * @var ContainerInterface
+     */
     protected $container;
 
+    /**
+     * @param ContainerInterface $container
+     */
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
 
+    /**
+     * @return array
+     */
     public function getSubscribedEvents()
     {
         return array(
@@ -32,6 +45,9 @@ class BlogSubscriber implements EventSubscriber
         );
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function preUpdate(LifecycleEventArgs $args)
     {
         $post = $args->getEntity();
@@ -49,6 +65,9 @@ class BlogSubscriber implements EventSubscriber
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function prePersist(LifecycleEventArgs $args)
     {
         $post = $args->getEntity();
@@ -62,6 +81,9 @@ class BlogSubscriber implements EventSubscriber
         }
     }
 
+    /**
+     * @param LifecycleEventArgs $args
+     */
     public function postRemove(LifecycleEventArgs $args)
     {
         $post = $args->getEntity();

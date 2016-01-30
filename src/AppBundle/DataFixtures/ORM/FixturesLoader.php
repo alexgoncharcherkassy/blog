@@ -3,6 +3,10 @@ namespace AppBundle\DataFixtures\ORM;
 
 use Hautelook\AliceBundle\Alice\DataFixtureLoader;
 
+/**
+ * Class FixturesLoader
+ * @package AppBundle\DataFixtures\ORM
+ */
 class FixturesLoader extends DataFixtureLoader
 {
     /**

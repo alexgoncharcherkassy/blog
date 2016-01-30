@@ -11,10 +11,20 @@ namespace AppBundle\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
+/**
+ * Class RatingServices
+ * @package AppBundle\Service
+ */
 class RatingServices
 {
+    /**
+     * @var Registry
+     */
     private $doctrine;
 
+    /**
+     * @param Registry $doctrine
+     */
     public function __construct(Registry $doctrine)
     {
         $this->doctrine = $doctrine;

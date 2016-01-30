@@ -11,15 +11,28 @@ namespace AppBundle\Service;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 
+/**
+ * Class TagsCloudServices
+ * @package AppBundle\Service
+ */
 class TagsCloudServices
 {
+    /**
+     * @var Registry
+     */
     private $doctrine;
 
+    /**
+     * @param Registry $doctrine
+     */
     public function __construct(Registry $doctrine)
     {
         $this->doctrine = $doctrine;
     }
 
+    /**
+     *
+     */
     public function updateTagsCloud()
     {
         $em = $this->doctrine->getManager();

@@ -51,6 +51,9 @@ class Tag implements \JsonSerializable
      */
     private $posts;
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [

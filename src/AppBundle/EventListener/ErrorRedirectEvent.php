@@ -14,15 +14,28 @@ use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
+/**
+ * Class ErrorRedirectEvent
+ * @package AppBundle\EventListener
+ */
 class ErrorRedirectEvent
 {
+    /**
+     * @var Router
+     */
     protected $router;
 
+    /**
+     * @param Router $router
+     */
     public function __construct(Router $router)
     {
         $this->router = $router;
     }
 
+    /**
+     * @param GetResponseForExceptionEvent $event
+     */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
