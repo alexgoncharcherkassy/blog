@@ -32,6 +32,16 @@
 
         <service id="app.image.manager" class="AppBundle\Service\ImageManagerServices"/>
 
+
+        <service id="acme.form.type.purified_textarea" class="AppBundle\Form\PurifiedTextareaType">
+            <argument type="service" id="acme.form.transformer.html_purifier" />
+            <tag name="form.type" alias="purified_textarea" />
+        </service>
+
+        <service id="acme.form.transformer.html_purifier" class="Exercise\HTMLPurifierBundle\Form\HTMLPurifierTransformer">
+            <argument type="service" id="exercise_html_purifier.default" />
+        </service>
+
     </services>
 
 </container>

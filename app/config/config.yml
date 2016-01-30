@@ -107,3 +107,8 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:foundation_v5_pagination.html.twig
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+
+exercise_html_purifier:
+    default:
+        Cache.SerializerPath: '%kernel.cache_dir%/htmlpurifier'
+

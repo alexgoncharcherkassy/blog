@@ -26,7 +26,7 @@ class Comment
     /**
      * @var string
      * @Assert\NotBlank(message="This field can not be empty")
-     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
+     * @Assert\Length(min="2", minMessage="This field can not be less than 2 characters")
      * @ORM\Column(name="textComment", type="text")
      */
     private $textComment;

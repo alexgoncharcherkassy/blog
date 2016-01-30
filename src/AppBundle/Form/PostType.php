@@ -28,7 +28,7 @@ class PostType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('textPost', TextareaType::class, [
+            ->add('textPost', PurifiedTextareaType::class, [
                 'attr' => [
                     'placeholder' => 'Add text article',
                     'class' => 'tinymce',
