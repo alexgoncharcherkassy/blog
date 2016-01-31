@@ -79,7 +79,7 @@ class AdminController extends Controller
                 $em->persist($post);
                 $em->flush();
 
-                $this->get('app.update.tagscloud');
+                $this->get('app.update.tagscloud')->updateTagsCloud();
 
                 return $this->redirectToRoute('homepage');
             }
@@ -149,7 +149,7 @@ class AdminController extends Controller
         $em->remove($post);
         $em->flush();
 
-        $this->get('app.update.tagscloud');
+        $this->get('app.update.tagscloud')->updateTagsCloud();
 
         return $this->redirectToRoute('admin_show');
     }
@@ -229,7 +229,7 @@ class AdminController extends Controller
 
             $em->flush();
 
-            $this->get('app.update.tagscloud');
+            $this->get('app.update.tagscloud')->updateTagsCloud();
 
             return $this->redirectToRoute('admin_show');
         }
