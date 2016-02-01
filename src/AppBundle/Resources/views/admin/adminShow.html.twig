@@ -15,7 +15,7 @@
         {% for post in posts %}
             <tr>
                 <td><a href="{{ path('show_post', {'slug': post.slug }) }}">{{ post.titlePost | capitalize }}</a></td>
-                <td>{{ post.category.categoryName | capitalize }}</td>
+                <td>{{ post.category.categoryName | upper }}</td>
                 <td>{{ post.createdAt|date('d.m.Y H:i') }}</td>
                 <td>{{ post.updateAt|date('d.m.Y H:i') }}</td>
                 <td>{{ form(form_edit[post.slug]) }}</td>

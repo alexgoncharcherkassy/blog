@@ -3,7 +3,7 @@
         <div class="panel-heading" style="margin-bottom: 0">
 
             <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
-               class="pull-right">Category: {{ post.category.categoryName | capitalize }}</a>
+               class="pull-right">Category: {{ post.category.categoryName | upper }}</a>
             <h4>{{ post.titlePost | capitalize | purify }}</h4>
             <small>Rating post</small>
             <span class="badge badge-info">{{ post.rating | round(1, 'floor') }}</span>
