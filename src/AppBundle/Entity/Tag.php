@@ -133,7 +133,7 @@ class Tag implements \JsonSerializable
      */
     public function addPost(Post $posts)
     {
-        $this->posts[] = $posts;
+        $this->posts->add($posts);
 
         return $this;
     }

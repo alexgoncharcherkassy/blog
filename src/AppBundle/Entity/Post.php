@@ -145,7 +145,7 @@ class Post
     public function addComment(Comment $comment)
     {
         //   $comment->setPost($this);
-        $this->comments[] = $comment;
+        $this->comments->add($comment);
 
         return $this;
     }
@@ -172,7 +172,7 @@ class Post
     public function addTag(Tag $tags)
     {
 
-        $this->tags[] = $tags;
+        $this->tags->add($tags);
 
         return $this;
     }

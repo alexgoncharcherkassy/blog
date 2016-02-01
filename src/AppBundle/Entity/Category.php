@@ -139,7 +139,7 @@ class Category implements \JsonSerializable
     public function addPost(Post $post)
     {
         //   $post->setCategory($this);
-        $this->posts[] = $post;
+        $this->posts->add($post);
 
         return $this;
     }
