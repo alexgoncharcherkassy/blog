@@ -42,6 +42,10 @@
             <argument type="service" id="exercise_html_purifier.default" />
         </service>
 
+        <service id="app.blog.tags.category" class="AppBundle\Service\BlogServices">
+            <argument type="service" id="doctrine" />
+        </service>
+
     </services>
 
 </container>

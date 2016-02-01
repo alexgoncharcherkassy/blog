@@ -41,32 +41,13 @@ class AdminController extends Controller
                 $newTags = $post->getNewTags();
 
                 if (null !== $newTags) {
-                    //  $newTags = explode(',', trim($newTags));
-                    foreach ($newTags as $item) {
-                        if ($findTag = $em->getRepository('AppBundle:Tag')->find(trim($item))) {
-                            $post->addTag($findTag);
-                        } else {
-                            $tag = new Tag();
-                            $tag->setTagName(trim($item));
-                            $tag->setWeightTag(1);
-                            $em->persist($tag);
-                            $post->addTag($tag);
-                        }
-                    }
+                 $this->get('app.blog.tags.category')->tagsInsertPost($post, $newTags);
                 }
 
                 $newCategory = $post->getNewCategory();
 
                 if (null !== $newCategory) {
-                    $item = $newCategory[0];
-                    if ($findCategory = $em->getRepository('AppBundle:Category')->find(trim($item))) {
-                        $post->setCategory($findCategory);
-                    } else {
-                        $category = new Category();
-                        $category->setCategoryName(trim($item));
-                        $em->persist($category);
-                        $post->setCategory($category);
-                    }
+                   $this->get('app.blog.tags.category')->categoryPost($post, $newCategory);
                 }
 
                 $post->setNewTags(null);
@@ -181,22 +162,7 @@ class AdminController extends Controller
             $newTags = $post->getNewTags();
 
             if (null !== $newTags) {
-                //  $newTags = explode(',', trim($newTags));
-                $post->getTags()->clear();
-                foreach ($newTags as $item) {
-                    $findTag = $em->getRepository('AppBundle:Tag')->find(trim($item));
-                    if ($post->getTags()->contains($findTag)) {
-                        continue;
-                    } elseif ($findTag) {
-                        $post->addTag($findTag);
-                    } else {
-                        $tag = new Tag();
-                        $tag->setTagName(trim($item));
-                        $tag->setWeightTag(1);
-                        $em->persist($tag);
-                        $post->addTag($tag);
-                    }
-                }
+              $this->get('app.blog.tags.category')->tagsEditPost($post, $newTags);
             } else {
                 $post->getTags()->clear();
             }
@@ -205,15 +171,7 @@ class AdminController extends Controller
 
             if (null !== $newCategory) {
                 $post->setCategory(null);
-                $item = $newCategory[0];
-                if ($findCategory = $em->getRepository('AppBundle:Category')->find(trim($item))) {
-                    $post->setCategory($findCategory);
-                } else {
-                    $category = new Category();
-                    $category->setCategoryName(trim($item));
-                    $em->persist($category);
-                    $post->setCategory($category);
-                }
+                $this->get('app.blog.tags.category')->categoryPost($post, $newCategory);
             } else {
                 $post->setCategory(null);
             }
