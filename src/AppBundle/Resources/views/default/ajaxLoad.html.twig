@@ -22,7 +22,8 @@
             <p>{{ post.textPost | limitWords(25) | purify }}</p>
             <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
             <i class="glyphicon glyphicon-time"></i>
-            <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by Anonymous</small>
+            <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by
+                <a href="">{{ post.author.username | capitalize }}</a></small>
             {#{% if post.createdAt < post.updateAt %}
                 <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
             {% endif %}
