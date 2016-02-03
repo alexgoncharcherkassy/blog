@@ -46,6 +46,9 @@
             <argument type="service" id="doctrine" />
         </service>
 
+        <service id="app.post_voter" class="AppBundle\Security\PostVoter" public="false">
+            <tag name="security.voter" />
+        </service>
     </services>
 
 </container>

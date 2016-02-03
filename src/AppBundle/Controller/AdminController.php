@@ -25,6 +25,7 @@ class AdminController extends Controller
      */
     public function insertPostAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
         $post = new Post();
 
         $em = $this->getDoctrine()->getManager();
@@ -71,6 +72,8 @@ class AdminController extends Controller
      */
     public function showPostAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $sql = $em->getRepository('AppBundle:Post')

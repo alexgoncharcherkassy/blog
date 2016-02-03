@@ -1,3 +1,15 @@
+AppBundle\Entity\User:
+    user{1..10}:
+        username(unique): <userName()>
+        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G"
+        email: <email()>
+        isActive: true
+        roles: "ROLE_USER"
+        firstName: <firstName()>
+        lastName: <lastName()>
+        posts: 1x @post*
+        comments: 1x @comment*
+
 AppBundle\Entity\Category:
     category{1..10}:
         categoryName(unique): <word()>
@@ -19,12 +31,14 @@ AppBundle\Entity\Post:
         comments: 2x @comment*
         tags: 3x @tag*
         category: "@category*"
+        author: "@user*"
 
 AppBundle\Entity\Comment:
     comment{1..60}:
         textComment: <text()>
         rating: <numberBetween(1, 5)>
         post: "@post*"
+        author: "@user*"
 
 
 

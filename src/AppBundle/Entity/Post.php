@@ -130,6 +130,11 @@ class Post
     private $category;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="posts")
+     */
+    private $author;
+
+    /**
      *
      */
     public function __construct()
@@ -248,6 +253,24 @@ class Post
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor(User $author = null)
+    {
+        $this->author = $author;
+    }
+
+
 
     /**
      * Get titlePost

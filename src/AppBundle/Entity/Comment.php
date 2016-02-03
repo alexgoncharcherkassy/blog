@@ -58,6 +58,11 @@ class Comment
     private $post;
 
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="comments")
+     */
+    private $author;
+
+    /**
      * @return mixed
      */
     public function getPost()
@@ -72,6 +77,23 @@ class Comment
     {
         $this->post = $post;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAuthor()
+    {
+        return $this->author;
+    }
+
+    /**
+     * @param mixed $author
+     */
+    public function setAuthor(User $author = null)
+    {
+        $this->author = $author;
+    }
+
 
 
     /**
