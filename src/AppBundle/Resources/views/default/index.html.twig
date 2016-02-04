@@ -28,7 +28,7 @@
                 <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
                 <i class="glyphicon glyphicon-time"></i>
                 <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by
-                    <a href="">{{ post.author.username | capitalize }}</a></small>
+                    <a href="{{ path('show_users', {'slug': post.author.slug }) }}">{{ post.author.username | capitalize }}</a></small>
                 {#   {% if post.createdAt < post.updateAt %}
                        <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>
                    {% endif %}#}
@@ -76,10 +76,8 @@
                             template = response;
                             $('#loading').hide();
                             $('#ajax_load').append(template);
-                        })
-                        .fail(function (jqXHR, textStatus, errorThrown) {
-                            alert('Error : ' + errorThrown);
                         });
+
             });
         });
 

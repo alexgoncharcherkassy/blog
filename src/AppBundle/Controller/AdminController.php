@@ -27,6 +27,7 @@ class AdminController extends Controller
     {
         $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
         $post = new Post();
+        $user = $this->getUser();
 
         $em = $this->getDoctrine()->getManager();
         $tags = $em->getRepository('AppBundle:Tag')
@@ -51,6 +52,7 @@ class AdminController extends Controller
                    $this->get('app.blog.tags.category')->categoryPost($post, $newCategory);
                 }
 
+                $post->setAuthor($user);
                 $post->setNewTags(null);
                 $post->setNewCategory(null);
                 $post->setRating(0);
@@ -76,8 +78,11 @@ class AdminController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $user = $this->getUser();
+        $id = $user->getId();
+
         $sql = $em->getRepository('AppBundle:Post')
-            ->showAllPost();
+            ->showAllPost($id);
 
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate(
@@ -111,6 +116,8 @@ class AdminController extends Controller
      */
     public function removePostAction($slug)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $post = $em->getRepository('AppBundle:Post')

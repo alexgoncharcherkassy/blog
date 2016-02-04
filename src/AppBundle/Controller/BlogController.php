@@ -33,6 +33,8 @@ class BlogController extends Controller
     public function showPostAction($slug, Request $request)
     {
         $comment = new Comment();
+        $user = $this->getUser();
+
         $form = $this->createForm(CommentType::class, $comment);
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')
@@ -42,9 +44,11 @@ class BlogController extends Controller
         }
 
         if ($request->getMethod() == 'POST') {
+            $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
             $form->handleRequest($request);
             if ($form->isValid()) {
                 $comment->setPost($post);
+                $comment->setAuthor($user);
                 $em->persist($comment);
                 $em->flush();
 
@@ -63,8 +67,14 @@ class BlogController extends Controller
         $form_delete_comment = [];
         foreach ($posts as $items) {
             foreach ($items->getComments() as $item)
-                $form_delete_comment[$item->getId()] =
-                    $this->createFormDeleteComment($item->getId(), $slug)->createView();
+                if ($item->getAuthor() === $user) {
+                    $form_delete_comment[$item->getId()] =
+                        $this->createFormDeleteComment($item->getId(), $slug)->createView();
+                } else {
+                    $form_delete_comment[$item->getId()] = $this->createFormBuilder()
+                        ->getForm()
+                        ->createView();
+                }
         }
         return [
             'posts' => $posts,
@@ -110,6 +120,23 @@ class BlogController extends Controller
 
         $posts = $em->getRepository('AppBundle:Post')
             ->showTagsPost($slug);
+        if (!$posts) {
+            return $this->redirectToRoute('page404');
+        }
+
+        return ['posts' => $posts];
+    }
+
+    /**
+     * @Route("/show/users/{slug}", name="show_users")
+     * @Template("@App/blog/showCategoryTags.html.twig")
+     */
+    public function showUsersAction($slug)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $posts = $em->getRepository('AppBundle:Post')
+            ->showUsers($slug);
         if (!$posts) {
             return $this->redirectToRoute('page404');
         }

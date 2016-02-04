@@ -31,8 +31,17 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=25, unique=true)
+     * @Assert\NotBlank(message="This field can not be empty")
+     * @Assert\Length(min="5", minMessage="This field can not be less than 5 characters")
      */
     private $username;
+
+    /**
+     * @Assert\NotBlank(message="This field can not be empty")
+     * @Assert\Length(min="6", minMessage="This field can not be less than 6 characters")
+     * @Assert\Length(max="4092", maxMessage="This field can not be more than 4092 characters")
+     */
+    private $plainPassword;
 
     /**
      * @ORM\Column(type="string", length=64)
@@ -41,6 +50,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=60, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -48,6 +58,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\Column(type="string", length=256)
+     */
+    private $salt;
 
     /**
      * @ORM\Column(type="array")
@@ -63,13 +78,31 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(min="1", minMessage="This field can not be less than 1 character")
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @Assert\Length(min="1", minMessage="This field can not be less than 1 character")
      */
     private $lastName;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="create")
+     *
+     * @ORM\Column(name="createdAt", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     * @Gedmo\Timestampable(on="update")
+     *
+     * @ORM\Column(name="updateAt", type="datetime")
+     */
+    private $updateAt;
 
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Post", mappedBy="author")
@@ -87,6 +120,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -136,6 +170,22 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getPassword()
     {
         return $this->password;
@@ -155,7 +205,7 @@ class User implements UserInterface, \Serializable
      */
     public function getSalt()
     {
-        return null;
+        return $this->salt;
     }
 
     /**
@@ -322,6 +372,40 @@ class User implements UserInterface, \Serializable
     {
         $this->lastName = $lastName;
     }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateAt()
+    {
+        return $this->updateAt;
+    }
+
+    /**
+     * @param \DateTime $updateAt
+     */
+    public function setUpdateAt($updateAt)
+    {
+        $this->updateAt = $updateAt;
+    }
+
+
 
 }
 

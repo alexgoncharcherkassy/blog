@@ -36,11 +36,8 @@
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="http://geekhub.ck.ua/" target="_ext">GeekHub</a></li>
-                    <li>
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i
-                                    class="glyphicon glyphicon-bell"></i></a></li>
-                    <li><a href="#"><i class="glyphicon glyphicon-user"></i></a></li>
                     {% if app.user %}
+                        <li><a href="{{ path('user_profile') }}"><i class="glyphicon glyphicon-user"></i></a></li>
                         <li><a href="{{ path('logout') }}"><i class="glyphicon glyphicon-off"></i></a></li>
                     {% endif %}
 
@@ -51,10 +48,12 @@
     <div class="navbar navbar-default" id="subnav">
         <div class="col-md-12">
             <div class="navbar-header">
+                {% if app.user %}
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle"
                    data-toggle="dropdown"><i class="glyphicon glyphicon-wrench" style="color:#dd1111;"></i> Admin
                     <small><i class="glyphicon glyphicon-chevron-down"></i></small>
                 </a>
+                {% endif %}
                 <ul class="nav dropdown-menu">
                     <li><a href="{{ path('insert_post') }}"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;"></i> Insert Post</a>
                     </li>
@@ -75,7 +74,9 @@
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="{{ path('homepage') }}">Home</a></li>
+                    {% if app.user is null %}
                     <li><a href="{{ path('login_route') }}" role="button" data-toggle="modal">Login</a></li>
+                    {% endif %}
                     <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
                 </ul>
             </div>

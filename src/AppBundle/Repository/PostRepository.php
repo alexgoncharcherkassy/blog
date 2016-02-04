@@ -17,7 +17,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function showAllPost()
+    public function showAllPost($id)
     {
         /*return $this->createQueryBuilder('p')
             ->select('p, c, t')
@@ -27,11 +27,14 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getQuery();*/
         return $this->getEntityManager()
             ->createQuery(
-                "SELECT p, c1, t1 FROM AppBundle:Post p
+                "SELECT p, c1, t1, a1 FROM AppBundle:Post p
                LEFT JOIN p.category c1
                LEFT JOIN p.tags t1
+               LEFT JOIN p.author a1
+               WHERE a1.id = :id
                ORDER BY p.createdAt DESC"
-            );
+            )
+            ->setParameter('id', $id);
     }
 
     /**
@@ -98,6 +101,25 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->leftJoin('p.category', 'c')
             ->join('p.tags', 't')
             ->where('t.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->orderBy('p.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+    }
+
+    /**
+     * @param $slug
+     * @return array
+     */
+    public function showUsers($slug)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, c, t, a')
+            ->leftJoin('p.category', 'c')
+            ->join('p.tags', 't')
+            ->join('p.author', 'a')
+            ->where('a.slug = :slug')
             ->setParameter('slug', $slug)
             ->orderBy('p.createdAt', 'DESC')
             ->getQuery()

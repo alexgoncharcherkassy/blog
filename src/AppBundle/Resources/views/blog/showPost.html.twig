@@ -54,7 +54,7 @@
                     <p>
                         <i class="glyphicon glyphicon-time"></i>
                         <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by
-                            <a href="">{{ post.author.username | capitalize }}</a></small>
+                            <a href="{{ path('show_users', {'slug': post.author.slug }) }}">{{ post.author.username | capitalize }}</a></small>
                         {#{% if post.createdAt < post.updateAt %}
                             <small>Updated {{ post.updateAt|date('d.m.Y h:m') }} by Anonymous</small>
                         {% endif %}#}
@@ -102,7 +102,7 @@
                         <ul class="thumbnail" style="width: 65%; margin-left: 20px">
                             {{ form(formDeleteComment[comment.id], {'attr' : {'style' : 'text-align : right'}}) }}
                             <small>Published {{ comment.createdAt|date('d.m.Y H:i') }} by
-                                <a href="">{{ post.author.username | capitalize }}</a></small>
+                                <a href="{{ path('show_users', {'slug': comment.author.slug }) }}">{{ comment.author.username | capitalize }}</a></small>
                             <div class="col-md-6 text-left">
                                 {% if comment.rating %}
                                     Rating

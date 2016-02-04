@@ -1,0 +1,56 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block panel %}
+<div class="col-md-12 well">
+    <div class="col-md-4">
+        <table class="table-condensed table-bordered" style="font-size: large">
+            <tr>
+                <td>Login</td>
+                <td>{{ profile.username }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ profile.firstName | capitalize }} {{ profile.lastName | capitalize }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ profile.email }}</td>
+            </tr>
+            <tr>
+                <td>Date register</td>
+                <td>{{ profile.createdAt | date("d-m-Y") }}</td>
+            </tr>
+            <tr>
+                <td>Date last update</td>
+                <td>{{ profile.updateAt | date("d-m-Y") }}</td>
+            </tr>
+        </table>
+        <br/>
+        <a href="" class="btn btn-large btn-primary">Edit profile</a>
+    </div>
+    <div class="col-md-8">
+        <table class="table-condensed table-bordered">
+        <tr>
+            <td>Login</td>
+            <td>{{ profile.username }}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ profile.firstName }} {{ profile.lastName }}</td>
+        </tr>
+        <tr>
+            <td>Email</td>
+            <td>{{ profile.email }}</td>
+        </tr>
+        <tr>
+            <td>Date register</td>
+            <td>{{ profile.createdAt | date("d-m-Y") }}</td>
+        </tr>
+        <tr>
+            <td>Date last update</td>
+            <td>{{ profile.updateAt | date("d-m-Y") }}</td>
+        </tr>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -10,3 +10,9 @@ page404:
     defaults:
         _controller: FrameworkBundle:Template:template
         template: "@App/static/page404.html.twig"
+
+login_check:
+        path: /login_check
+
+logout:
+        path: /logout
