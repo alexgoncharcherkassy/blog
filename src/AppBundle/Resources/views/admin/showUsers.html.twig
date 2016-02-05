@@ -1,0 +1,61 @@
+{% extends '@App/layoutAdmin.html.twig' %}
+
+{% block panel %}
+    <div class="jumbotron" style="background-color: white">
+        <h4>Users</h4>
+        <table class="table table-condensed table-hover">
+            <tr class="success">
+                <th>{{ knp_pagination_sortable(users, 'Login', 'u.username') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'First Name', 'u.firstName') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Last Name', 'u.lastName') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Data created', 'u.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Data update', 'u.updateAt') }}</th>
+                <th>Role</th>
+                <th>Is Active</th>
+            </tr>
+            {% for user in users %}
+                {% if user.username != 'admin' %}
+                    <tr>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.firstName | capitalize }}</td>
+                        <td>{{ user.lastName | capitalize }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.createdAt|date('d.m.Y H:i') }}</td>
+                        <td>{{ user.updateAt|date('d.m.Y H:i') }}</td>
+                        {% if user.roles | join == 'ROLE_USER' %}
+                            <td><a href="{{ path('set_role', {'role': 'ROLE_MODERATOR', 'slug': user.slug }) }}">{{ user.roles | join }}</a></td>
+                        {% elseif user.roles | join == 'ROLE_MODERATOR' %}
+                            <td><a href="{{ path('set_role', {'role': 'ROLE_USER', 'slug': user.slug }) }}">{{ user.roles | join }}</a></td>
+                        {% endif %}
+                        {% if user.isActive == true %}
+                            <td><a href="{{ path('set_is_active', {'isActive': 0, 'slug': user.slug}) }}">Deactive</a></td>
+                        {% else %}
+                            <td><a href="{{ path('set_is_active', {'isActive': 1, 'slug': user.slug}) }}">Active</a></td>
+                        {% endif %}
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+        </table>
+        {% if users.getTotalItemCount > 10 %}
+            <div class="text-center">
+                {{ knp_pagination_render(users) }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+
+    </script>
+{% endblock %}
+
+
+
+
+
+

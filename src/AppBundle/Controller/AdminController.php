@@ -20,12 +20,71 @@ use AppBundle\Form\PostType;
 class AdminController extends Controller
 {
     /**
+     * @Route("admin/users/show", name="show_register_users")
+     * @Template("@App/admin/showUsers.html.twig")
+     */
+    public function showUsers()
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $sql = $em->getRepository('AppBundle:User')
+            ->showUsers();
+
+        $paginator = $this->get('knp_paginator');
+        $users = $paginator->paginate(
+            $sql,
+            $this->get('request')->query->get('page', 1),
+            $this->container->getParameter('knp_paginator.page_range')
+        );
+
+        return ['users' => $users];
+    }
+
+    /**
+     * @Route("admin/users/setstatus/{isActive}/{slug}", name="set_is_active")
+     */
+    public function setIsActiveAction($isActive, $slug)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('slug' => $slug));
+
+        $user->setIsActive($isActive);
+        $em->flush();
+
+        return $this->redirectToRoute('show_register_users');
+    }
+
+    /**
+     * @Route("admin/users/setrole/{role}/{slug}", name="set_role")
+     */
+    public function setModeratorAction($role, $slug)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('slug' => $slug));
+
+        $user->setRoles($role);
+        $em->flush();
+
+        return $this->redirectToRoute('show_register_users');
+    }
+
+    /**
      * @Route("admin/insert/post", name="insert_post")
      * @Template("@App/admin/insertPost.html.twig")
      */
     public function insertPostAction(Request $request)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
         $post = new Post();
         $user = $this->getUser();
 
@@ -74,7 +133,7 @@ class AdminController extends Controller
      */
     public function showPostAction()
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -116,7 +175,7 @@ class AdminController extends Controller
      */
     public function removePostAction($slug)
     {
-        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
 
         $em = $this->getDoctrine()->getManager();
 
@@ -147,6 +206,8 @@ class AdminController extends Controller
      */
     public function editPostAction(Request $request, $slug)
     {
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $post = $em->getRepository('AppBundle:Post')
@@ -215,6 +276,8 @@ class AdminController extends Controller
      */
     public function removeImageAction($slug)
     {
+        $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
 
         $post = $em->getRepository('AppBundle:Post')

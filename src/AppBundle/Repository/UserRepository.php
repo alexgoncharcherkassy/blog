@@ -13,5 +13,12 @@ use Doctrine\ORM\EntityRepository;
 
 class UserRepository extends EntityRepository
 {
-
+    public function showUsers()
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT u FROM AppBundle:User u
+               ORDER BY u.createdAt DESC"
+            );
+    }
 }

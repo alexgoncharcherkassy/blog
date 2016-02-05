@@ -47,7 +47,17 @@
         </service>
 
         <service id="app.post_voter" class="AppBundle\Security\PostVoter" public="false">
+            <argument type="service" id="security.access.decision_manager" />
             <tag name="security.voter" />
+        </service>
+
+        <service id="app.register.admin" class="AppBundle\Service\RegisterAdminServices">
+            <argument type="service" id="doctrine" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="app.console.register.admin" class="AppBundle\Command\RegisterCommand">
+            <tag name="console.command" />
         </service>
     </services>
 
