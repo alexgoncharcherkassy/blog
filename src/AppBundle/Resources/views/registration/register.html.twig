@@ -35,7 +35,63 @@
         <br/>
         {{ form_rest(form) }}
         <br/>
-        <input type="submit" VALUE="Register" class="btn btn-large btn-primary">
+        <input type="submit" VALUE="Register" class="btn btn-large btn-primary" id="submit">
         {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function () {
+            $('#app_bundle_user_type_username').keyup(function(){
+
+                var enterData = $('#app_bundle_user_type_username').val();
+                var count = enterData.length;
+                if (count > 4) {
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            username: enterData
+                        },
+                        url: "{{ path('register_check_username') }}"
+                    })
+                            .success(function (response) {
+                                if (response == 'Yes') {
+                                    $('#submit').attr('disabled', false);
+                                    $('#app_bundle_user_type_username').css('background', 'green');
+                                } else {
+                                    $('#app_bundle_user_type_username').css('background', 'red');
+                                    $('#submit').attr('disabled', true);
+                                }
+                            });
+                }
+            });
+            $('#app_bundle_user_type_email').css('background', 'white');
+            $('#app_bundle_user_type_email').blur(function(){
+
+                var enterData = $('#app_bundle_user_type_email').val();
+                var count = enterData.length;
+                if (count > 1) {
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            email: enterData
+                        },
+                        url: "{{ path('register_check_email') }}"
+                    })
+                            .success(function (response) {
+                                if (response == 'Yes') {
+                                    $('#submit').attr('disabled', false);
+                                    $('#app_bundle_user_type_email').css('background', 'green');
+                                } else {
+                                    $('#app_bundle_user_type_email').css('background', 'red');
+                                    $('#submit').attr('disabled', true);
+                                }
+                            });
+                }
+            });
+        });
+
+    </script>
 {% endblock %}

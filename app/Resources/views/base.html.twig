@@ -58,9 +58,10 @@
                     <li><a href="{{ path('insert_post') }}"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;"></i> Insert Post</a>
                     </li>
                     <li><a href="{{ path('admin_show') }}"><i class="glyphicon glyphicon-inbox" style="color:#11dd11;"></i> Edit/Delete</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-divider"></li>
-                    <li><a href=""><i class="glyphicon glyphicon-user" style="color:#1111dd;"></i> Profile </a></li>
-                    <li><a href="{{ path('show_register_users') }}"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Settings</a></li>
+                    <li><a href="{{ path('show_register_users') }}"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Users list</a></li>
+                    {% endif %}
                 </ul>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse2">

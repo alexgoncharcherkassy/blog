@@ -59,6 +59,8 @@
         <service id="app.console.register.admin" class="AppBundle\Command\RegisterCommand">
             <tag name="console.command" />
         </service>
+
+        <service id="app.check.roles" class="AppBundle\Service\AdminServices" />
     </services>
 
 </container>

@@ -9,6 +9,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -39,6 +40,8 @@ class BlogController extends Controller
         $em = $this->getDoctrine()->getManager();
         $post = $em->getRepository('AppBundle:Post')
             ->findOneBy(array('slug' => $slug));
+        $admin = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('username' => 'admin'));
         if (!$post) {
             return $this->redirectToRoute('page404');
         }
@@ -67,7 +70,7 @@ class BlogController extends Controller
         $form_delete_comment = [];
         foreach ($posts as $items) {
             foreach ($items->getComments() as $item)
-                if ($item->getAuthor() === $user) {
+                if ($this->get('app.check.roles')->checkRole($user, $admin, $items, $item)) {
                     $form_delete_comment[$item->getId()] =
                         $this->createFormDeleteComment($item->getId(), $slug)->createView();
                 } else {

@@ -8,6 +8,7 @@ use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class RegistrationController extends Controller
@@ -40,5 +41,43 @@ class RegistrationController extends Controller
         }
 
         return ['form' =>$form->createView()];
+    }
+
+    /**
+ * @Route("/register/check_username", name="register_check_username")
+ */
+    public function checkUserName(Request $request)
+    {
+        $userName = $request->request->get('username');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('username' => $userName));
+
+        if ($user) {
+            return new Response('No', 200);
+        }
+
+        return new Response('Yes', 200);
+    }
+
+    /**
+     * @Route("/register/check_useremail", name="register_check_email")
+     */
+    public function checkUserEmail(Request $request)
+    {
+        $email = $request->request->get('email');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('email' => $email));
+
+        if ($user) {
+            return new Response('No', 200);
+        }
+
+        return new Response('Yes', 200);
     }
 }
