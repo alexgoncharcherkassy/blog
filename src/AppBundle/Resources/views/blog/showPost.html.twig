@@ -78,7 +78,7 @@
                     <div class="thumbnail">
                         <p>{{ post.textPost | purify }}</p>
                         <br/><br/>
-                        {% if app.user %}
+                        {% if is_granted('ROLE_USER') %}
                         {{ form_start(form, {'attr' : {'style' : 'clear : both'}}) }}
                         <div>
 
