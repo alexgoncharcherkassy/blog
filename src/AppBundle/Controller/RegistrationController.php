@@ -11,6 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Response;
 
 
+/**
+ * Class RegistrationController
+ * @package AppBundle\Controller
+ */
 class RegistrationController extends Controller
 {
     /**
@@ -56,6 +60,7 @@ class RegistrationController extends Controller
             ->findOneBy(array('username' => $userName));
 
         if ($user) {
+
             return new Response('No', 200);
         }
 
@@ -75,6 +80,7 @@ class RegistrationController extends Controller
             ->findOneBy(array('email' => $email));
 
         if ($user) {
+
             return new Response('No', 200);
         }
 

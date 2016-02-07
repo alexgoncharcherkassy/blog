@@ -43,6 +43,31 @@ class AdminController extends Controller
     }
 
     /**
+     * @Route("admin/users/search", name="search_register_users")
+     * @Template("@App/admin/showUsers.html.twig")
+     */
+    public function searchUsers(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, 'Unable to access this page!');
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $request->request->get('srch');
+
+        $sql = $em->getRepository('AppBundle:User')
+            ->searchUsers($user);
+
+        $paginator = $this->get('knp_paginator');
+        $users = $paginator->paginate(
+            $sql,
+            $this->get('request')->query->get('page', 1),
+            $this->container->getParameter('knp_paginator.page_range')
+        );
+
+        return ['users' => $users];
+    }
+
+    /**
      * @Route("admin/users/setstatus/{isActive}/{slug}", name="set_is_active")
      */
     public function setIsActiveAction($isActive, $slug)
@@ -139,9 +164,13 @@ class AdminController extends Controller
 
         $user = $this->getUser();
         $id = $user->getId();
-
-        $sql = $em->getRepository('AppBundle:Post')
-            ->showAllPost($id);
+        if (in_array('ROLE_ADMIN', $user->getRoles())) {
+            $sql = $em->getRepository('AppBundle:Post')
+                ->showAllPostAdmin();
+        } else {
+            $sql = $em->getRepository('AppBundle:Post')
+                ->showAllPost($id);
+        }
 
         $paginator = $this->get('knp_paginator');
         $posts = $paginator->paginate(

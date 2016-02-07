@@ -1,10 +1,10 @@
 AppBundle\Entity\User:
     user_1:
-        username(unique): "Tests"
-        password: "user"
+        username(unique): "admin"
+        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G"
         email: test@test.com
         isActive: true
-        roles: "ROLE_USER"
+        roles: "ROLE_ADMIN"
         firstName: "Alex"
         lastName: "Gonchar"
         posts: 1x @post*
