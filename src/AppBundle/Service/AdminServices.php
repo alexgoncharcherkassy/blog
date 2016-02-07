@@ -15,9 +15,9 @@ use AppBundle\Entity\User;
 
 class AdminServices
 {
-    public function checkRole($user, User $admin, Post $post, Comment $comment)
+    public function checkRole($user,  $admin, Post $post, Comment $comment)
     {
-        if ($user instanceof User && $user !== null) {
+        if ($user instanceof User && $user !== null && $admin instanceof User && $admin !== null) {
             if (in_array('ROLE_ADMIN', $user->getRoles())) {
 
                 return true;
