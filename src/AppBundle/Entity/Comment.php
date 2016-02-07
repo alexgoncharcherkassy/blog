@@ -94,8 +94,6 @@ class Comment
         $this->author = $author;
     }
 
-
-
     /**
      * Get id
      *

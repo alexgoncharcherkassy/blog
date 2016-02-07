@@ -1,6 +1,6 @@
 AppBundle\Entity\User:
     user_1:
-        username(unique): "admin"
+        username: "admin"
         password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G"
         email: test@test.com
         isActive: true
@@ -35,7 +35,7 @@ AppBundle\Entity\Comment:
         textComment: "Test"
         rating: 4
         post: "@post*"
-        user: "@user*"
+        author: "@user*"
 
 
 
