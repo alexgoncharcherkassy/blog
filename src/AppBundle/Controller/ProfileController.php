@@ -40,7 +40,7 @@ class ProfileController extends Controller
         $maxRatingPost = $em->getRepository('AppBundle:Post')
             ->getMaxRating($user->getId());
 
-        $maxRating = $maxRatingPost[0]->getRating();
+        $maxRating = $maxRatingPost ? $maxRatingPost[0]->getRating() : null;
 
 
         return ['profile' => $profile,
