@@ -190,4 +190,18 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
+    public function getMaxRating($user)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p')
+            ->join('p.author', 'a')
+            ->where('a.id = :user')
+            ->setParameter('user', $user)
+            ->orderBy('p.rating', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult();
+
+    }
+
 }

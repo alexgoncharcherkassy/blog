@@ -1,7 +1,7 @@
 AppBundle\Entity\User:
     user{1..10}:
         username(unique): <userName()>
-        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G"
+        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G" # user
         email: <email()>
         isActive: true
         roles: "ROLE_USER"

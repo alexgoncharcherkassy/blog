@@ -24,6 +24,30 @@ class ProfileController extends Controller
         $profile = $em->getRepository('AppBundle:User')
             ->find($user);
 
-        return ['profile' => $profile];
+        $posts = $em->getRepository('AppBundle:Post')
+            ->findBy(array('author' => $user));
+        $postsCount = count($posts);
+
+        $comments = $em->getRepository('AppBundle:Comment')
+            ->findBy(array('author' => $user));
+        $commentsCount = count($comments);
+
+        $allComment = 0;
+        foreach ($posts as $post) {
+            $allComment += count($post->getComments());
+        }
+
+        $maxRatingPost = $em->getRepository('AppBundle:Post')
+            ->getMaxRating($user->getId());
+
+        $maxRating = $maxRatingPost[0]->getRating();
+
+
+        return ['profile' => $profile,
+                'countPosts' => $postsCount,
+                'countComments' => $commentsCount,
+                'allComment' => $allComment,
+                'maxRating' => $maxRating
+        ];
     }
 }

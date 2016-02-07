@@ -30,25 +30,17 @@
     </div>
     <div class="col-md-8">
         <table class="table-condensed table-bordered">
-        <tr>
-            <td>Login</td>
-            <td>{{ profile.username }}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>{{ profile.firstName }} {{ profile.lastName }}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{ profile.email }}</td>
-        </tr>
-        <tr>
-            <td>Date register</td>
-            <td>{{ profile.createdAt | date("d-m-Y") }}</td>
-        </tr>
-        <tr>
-            <td>Date last update</td>
-            <td>{{ profile.updateAt | date("d-m-Y") }}</td>
+            <tr>
+                <th>Count your posts</th>
+                <th>Count your comments</th>
+                <th>All comments your posts</th>
+                <th>Max rating your posts</th>
+            </tr>
+        <tr style="text-align: center">
+            <td>{{ countPosts }}</td>
+            <td>{{ countComments }}</td>
+            <td>{{ allComment }}</td>
+            <td>{{ maxRating }}</td>
         </tr>
         </table>
     </div>

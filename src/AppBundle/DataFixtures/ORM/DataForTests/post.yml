@@ -1,7 +1,7 @@
 AppBundle\Entity\User:
     user_1:
         username: "admin"
-        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G"
+        password: "$2a$10$77RsIOPvT9ZxVdfcsRCCZet6Zg6krq3smbpCrkIX6El8QuFJMLL0G" # user
         email: test@test.com
         isActive: true
         roles: "ROLE_ADMIN"

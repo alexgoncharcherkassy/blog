@@ -5,7 +5,8 @@ echo "Выберите дествие :"
 echo "1 - install"
 echo "2 - update"
 echo "3 - create/update database"
-echo "4 - quit"
+echo "4 - add user admin"
+echo "5 - quit"
 
 read Keypress
 
@@ -31,7 +32,10 @@ case "$Keypress" in
     php app/console doctrine:schema:update --force
     php app/console doctrine:fixtures:load -n
 ;;
-4) exit 0
+4) echo "add user admin start..."
+    php app/console register:admin Test Test test@test.com password
+;;
+5) exit 0
 ;;
 esac
 
