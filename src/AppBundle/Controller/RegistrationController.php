@@ -41,6 +41,8 @@ class RegistrationController extends Controller
             $em->persist($user);
             $em->flush();
 
+         //   $this->get('app.custom.mailer')->sendMail($user->getEmail());
+
             $this->addFlash('notice', 'You successfully were registered. Transfer to the form of login');
 
             return $this->redirectToRoute('homepage');
@@ -87,5 +89,25 @@ class RegistrationController extends Controller
         }
 
         return new Response('Yes', 200);
+    }
+
+    /**
+     * @Route("/register/check_hash/{hash}", name="register_check_hash")
+     */
+    public function checkUserHash($hash)
+    {
+        $hashData = $hash;
+
+       /* $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('AppBundle:User')
+            ->findOneBy(array('email' => $email));
+
+        if ($user) {
+
+            return new Response('No', 200);
+        }
+
+        return new Response('Yes', 200);*/
     }
 }

@@ -137,8 +137,6 @@ class AdminController extends Controller
                 }
 
                 $post->setAuthor($user);
-                $post->setNewTags(null);
-                $post->setNewCategory(null);
                 $post->setRating(0);
                 $em->persist($post);
                 $em->flush();
@@ -275,9 +273,6 @@ class AdminController extends Controller
             } else {
                 $post->setCategory(null);
             }
-
-            $post->setNewTags(null);
-            $post->setNewCategory(null);
 
             $em->flush();
 

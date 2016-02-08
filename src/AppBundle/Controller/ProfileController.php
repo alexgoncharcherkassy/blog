@@ -2,9 +2,12 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\User;
+use AppBundle\Form\UserType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class ProfileController
@@ -23,6 +26,8 @@ class ProfileController extends Controller
 
         $profile = $em->getRepository('AppBundle:User')
             ->find($user);
+
+    //    $this->denyAccessUnlessGranted('edit', $profile);
 
         $posts = $em->getRepository('AppBundle:Post')
             ->findBy(array('author' => $user));
@@ -48,6 +53,60 @@ class ProfileController extends Controller
                 'countComments' => $commentsCount,
                 'allComment' => $allComment,
                 'maxRating' => $maxRating
+        ];
+    }
+
+    /**
+     * @Route("/profile/edit", name="user_profile_edit")
+     * @Template("@App/profile/showprofile.html.twig")
+     */
+    public function editProfileAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $profile = $em->getRepository('AppBundle:User')
+            ->find($user);
+
+     //   $this->denyAccessUnlessGranted('edit', $profile);
+
+        $posts = $em->getRepository('AppBundle:Post')
+            ->findBy(array('author' => $user));
+        $postsCount = count($posts);
+
+        $comments = $em->getRepository('AppBundle:Comment')
+            ->findBy(array('author' => $user));
+        $commentsCount = count($comments);
+
+        $allComment = 0;
+        foreach ($posts as $post) {
+            $allComment += count($post->getComments());
+        }
+
+        $maxRatingPost = $em->getRepository('AppBundle:Post')
+            ->getMaxRating($user->getId());
+
+        $maxRating = $maxRatingPost ? $maxRatingPost[0]->getRating() : null;
+        $form = $this->createForm(UserType::class, $profile);
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $password = $this->get('security.password_encoder')
+                ->encodePassword($profile, $profile->getPlainPassword());
+            $profile->setPassword($password);
+
+            $em->flush();
+
+            return $this->redirectToRoute('user_profile');
+        }
+
+        return ['profile' => $profile,
+                'countPosts' => $postsCount,
+                'countComments' => $commentsCount,
+                'allComment' => $allComment,
+                'maxRating' => $maxRating,
+                'form' => $form->createView()
         ];
     }
 }

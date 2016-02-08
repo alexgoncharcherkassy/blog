@@ -11,7 +11,7 @@ namespace AppBundle\Service;
 
 use AppBundle\Entity\User;
 use Symfony\Bridge\Doctrine\RegistryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 
 class RegisterAdminServices
 {
@@ -19,7 +19,7 @@ class RegisterAdminServices
     private $container;
 
 
-    public function __construct(RegistryInterface $doctrine, ContainerInterface $container)
+    public function __construct(RegistryInterface $doctrine, UserPasswordEncoder $container)
     {
         $this->doctrine = $doctrine;
         $this->container = $container;
@@ -36,8 +36,7 @@ class RegisterAdminServices
         $user->setEmail($email);
         $user->setFirstName($firstName);
         $user->setLastName($lastName);
-        $password = $this->container->get('security.password_encoder')
-            ->encodePassword($user, $plainPassword);
+        $password = $this->container->encodePassword($user, $plainPassword);
         $user->setPassword($password);
         $user->setIsActive(true);
 

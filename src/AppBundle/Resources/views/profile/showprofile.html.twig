@@ -3,6 +3,7 @@
 {% block panel %}
 <div class="col-md-12 well">
     <div class="col-md-4">
+        {% if form is not defined %}
         <table class="table-condensed table-bordered" style="font-size: large">
             <tr>
                 <td>Login</td>
@@ -26,7 +27,14 @@
             </tr>
         </table>
         <br/>
-        <a href="" class="btn btn-large btn-primary">Edit profile</a>
+        <a href="{{ path('user_profile_edit') }}" class="btn btn-large btn-primary">Edit profile</a>
+        {% endif %}
+        <br/>
+        {% if form is defined %}
+            {{ form(form) }}
+            <br/>
+            <button class="btn btn-large btn-primary">Save</button>
+        {% endif %}
     </div>
     <div class="col-md-8">
         <table class="table-condensed table-bordered">
@@ -37,10 +45,10 @@
                 <th>Max rating your posts</th>
             </tr>
         <tr style="text-align: center">
-            <td>{{ countPosts }}</td>
-            <td>{{ countComments }}</td>
-            <td>{{ allComment }}</td>
-            <td>{{ maxRating }}</td>
+            <td><div class="label label-primary">{{ countPosts }}</div></td>
+            <td><div class="label label-primary">{{ countComments }}</div></td>
+            <td><div class="label label-primary">{{ allComment }}</div></td>
+            <td><div class="label label-primary">{{ maxRating }}</div></td>
         </tr>
         </table>
     </div>

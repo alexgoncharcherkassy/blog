@@ -10,6 +10,7 @@ namespace AppBundle\EventListener;
 
 
 use AppBundle\Entity\Post;
+use AppBundle\Service\ImageManagerServices;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -26,9 +27,9 @@ class BlogSubscriber implements EventSubscriber
     protected $container;
 
     /**
-     * @param ContainerInterface $container
+     * @param ImageManagerServices $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ImageManagerServices $container)
     {
         $this->container = $container;
     }
@@ -61,7 +62,7 @@ class BlogSubscriber implements EventSubscriber
                 unlink($post->getPathImage());
             }
 
-            $this->container->get('app.image.manager')->upload($post);
+            $this->container->upload($post);
         }
     }
 
@@ -74,7 +75,7 @@ class BlogSubscriber implements EventSubscriber
 
         if ($post instanceof Post) {
             if (null !== $post->getBlogImage()) {
-                $this->container->get('app.image.manager')->upload($post);
+                $this->container->upload($post);
             }
 
 

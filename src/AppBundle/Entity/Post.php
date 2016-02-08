@@ -70,14 +70,12 @@ class Post
     /**
      * @var string
      *
-     * @ORM\Column(name="newTags", type="string", length=255, nullable=true)
      */
     private $newTags;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="newCategory", type="string", length=255, nullable=true)
      */
     private $newCategory;
 

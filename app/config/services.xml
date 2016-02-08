@@ -26,7 +26,7 @@
         </service>
 
         <service id="app.image.subscriber" class="AppBundle\EventListener\BlogSubscriber">
-            <argument type="service" id="service_container"/>
+            <argument type="service" id="app.image.manager"/>
             <tag name="doctrine.event_subscriber" connection="default" />
         </service>
 
@@ -53,7 +53,7 @@
 
         <service id="app.register.admin" class="AppBundle\Service\RegisterAdminServices">
             <argument type="service" id="doctrine" />
-            <argument type="service" id="service_container" />
+            <argument type="service" id="security.password_encoder" />
         </service>
 
         <service id="app.console.register.admin" class="AppBundle\Command\RegisterCommand">
@@ -61,6 +61,11 @@
         </service>
 
         <service id="app.check.roles" class="AppBundle\Service\AdminServices" />
+
+        <service id="app.custom.mailer" class="AppBundle\Service\MailerServices">
+            <argument type="service" id="mailer" />
+            <argument type="service" id="templating" />
+        </service>
     </services>
 
 </container>
