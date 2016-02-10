@@ -20,7 +20,7 @@ use AppBundle\Form\PostType;
 class AdminController extends Controller
 {
     /**
-     * @Route("admin/users/show", name="show_register_users")
+     * @Route("{_locale}/admin/users/show", name="show_register_users", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/showUsers.html.twig")
      */
     public function showUsers()
@@ -43,7 +43,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/users/search", name="search_register_users")
+     * @Route("{_locale}/admin/users/search", name="search_register_users", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/showUsers.html.twig")
      */
     public function searchUsers(Request $request)
@@ -104,7 +104,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/insert/post", name="insert_post")
+     * @Route("{_locale}/admin/insert/post", name="insert_post", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/insertPost.html.twig")
      */
     public function insertPostAction(Request $request)
@@ -151,7 +151,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/show/", name="admin_show")
+     * @Route("{_locale}/admin/show/", name="admin_show", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/adminShow.html.twig")
      */
     public function showPostAction()
@@ -228,7 +228,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/edit/post/{slug}", name="edit_post")
+     * @Route("{_locale}/admin/edit/post/{slug}", name="edit_post", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/editPost.html.twig")
      */
     public function editPostAction(Request $request, $slug)

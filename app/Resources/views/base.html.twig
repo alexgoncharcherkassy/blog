@@ -15,7 +15,7 @@
         <div class="col-md-12">
             <div class="navbar-header">
 
-                <a href="{{ path('homepage') }}" class="navbar-brand">Blog</a>
+                <a href="{{ path('homepage') }}" class="navbar-brand">{{ 'Blog' | trans }}</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse1">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse1">
                 <form class="navbar-form pull-left" method="post" id="formSearch" action="{{ path('search_all') }}">
                     <div class="input-group" style="max-width:470px;">
-                        <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">
+                        <input type="text" class="form-control" placeholder="{{ 'Search' | trans }}" name="srch-term" id="srch-term">
 
                         <div class="input-group-btn">
                             <button class="btn btn-default btn-primary" type="submit" id="searchData"><i
@@ -35,10 +35,16 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{{ path('set_locale', {'_locale': 'en'}) }}">
+                            <img src="{{ asset('img/usa.png') }}" width="30" title="English"></a></li>
+                    <li><a href="{{ path('set_locale', {'_locale': 'ru'}) }}">
+                            <img src="{{ asset('img/rus.png') }}" width="30" title="Русский"></a></li>
                     <li><a href="http://geekhub.ck.ua/" target="_ext">GeekHub</a></li>
                     {% if app.user %}
-                        <li><a href="{{ path('user_profile') }}"><i class="glyphicon glyphicon-user"></i></a></li>
-                        <li><a href="{{ path('logout') }}"><i class="glyphicon glyphicon-off"></i></a></li>
+                        <li><a href="{{ path('user_profile') }}" title="{{ 'Profile' | trans }}">
+                                <i class="glyphicon glyphicon-user"></i></a></li>
+                        <li><a href="{{ path('logout') }}" title="{{ 'Quit' | trans }}">
+                                <i class="glyphicon glyphicon-off"></i></a></li>
                     {% endif %}
 
                 </ul>
@@ -50,17 +56,20 @@
             <div class="navbar-header">
                 {% if is_granted('ROLE_MODERATOR') %}
                 <a href="#" style="margin-left:15px;" class="navbar-btn btn btn-default btn-plus dropdown-toggle"
-                   data-toggle="dropdown"><i class="glyphicon glyphicon-wrench" style="color:#dd1111;"></i> Admin
+                   data-toggle="dropdown"><i class="glyphicon glyphicon-wrench" style="color:#dd1111;"></i> {{ 'Admin' | trans }}
                     <small><i class="glyphicon glyphicon-chevron-down"></i></small>
                 </a>
                 {% endif %}
                 <ul class="nav dropdown-menu">
-                    <li><a href="{{ path('insert_post') }}"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;"></i> Insert Post</a>
+                    <li><a href="{{ path('insert_post') }}"><i class="glyphicon glyphicon-dashboard" style="color:#0000aa;">
+                            </i> {{ 'Insert' | trans }}</a>
                     </li>
-                    <li><a href="{{ path('admin_show') }}"><i class="glyphicon glyphicon-inbox" style="color:#11dd11;"></i> Edit/Delete</a></li>
+                    <li><a href="{{ path('admin_show') }}"><i class="glyphicon glyphicon-inbox" style="color:#11dd11;">
+                            </i> {{ 'Edit/Delete' | trans }}</a></li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li class="nav-divider"></li>
-                    <li><a href="{{ path('show_register_users') }}"><i class="glyphicon glyphicon-cog" style="color:#dd1111;"></i> Users list</a></li>
+                    <li><a href="{{ path('show_register_users') }}"><i class="glyphicon glyphicon-cog" style="color:#dd1111;">
+                            </i> {{ 'Users list' | trans }}</a></li>
                     {% endif %}
                 </ul>
 
@@ -74,11 +83,11 @@
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('homepage') }}">Home</a></li>
+                    <li><a href="{{ path('homepage') }}">{{ 'Home' | trans }}</a></li>
                     {% if app.user is null %}
-                    <li><a href="{{ path('login_route') }}" role="button" data-toggle="modal">Login</a></li>
+                    <li><a href="{{ path('login_route') }}" role="button" data-toggle="modal">{{ 'Login' | trans }}</a></li>
                     {% endif %}
-                    <li><a href="#aboutModal" role="button" data-toggle="modal">About</a></li>
+                    <li><a href="#aboutModal" role="button" data-toggle="modal">{{ 'About' | trans }}</a></li>
                 </ul>
             </div>
         </div>
@@ -95,49 +104,13 @@
         </div><!--/row-->
     </div><!--/main-->
 {% endblock %}
- <!--login modal-->
-    <div id="loginModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h2 class="text-center"><img
-                                src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100"
-                                class="img-circle"><br>Login</h2>
-                </div>
-                <div class="modal-body">
-
-                    <form class="form col-md-12 center-block" method="post" action="{{ path('login_check') }}">
-                        <div class="form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Login" name="_username">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" class="form-control input-lg" placeholder="Password" name="_password">
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-                            <span class="pull-right"><a href="#">Register</a></span><span><a href="#">Need
-                                    help?</a></span>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <div class="col-md-12">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
  <!--about modal-->
     <div id="aboutModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h2 class="text-center">About</h2>
+                    <h2 class="text-center">{{ 'About' | trans }}</h2>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 text-center">

@@ -12,7 +12,7 @@ security:
             ROLE_ADMIN:       [ROLE_MODERATOR, ROLE_ADMIN]
 
     providers:
-        our_db_provider:
+        user_db_provider:
             entity:
                 class: AppBundle:User
                 property: username
@@ -21,7 +21,7 @@ security:
         main:
             pattern: ^/
             form_login:
-                provider: our_db_provider
+                provider: user_db_provider
                 check_path: /login_check
                 login_path: /login
                 username_parameter: _username
@@ -36,6 +36,8 @@ security:
                 path: /
 
     access_control:
-        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin, role: ROLE_USER }
         - { path: ^/admin/users, role: ROLE_ADMIN }
+        - { path: ^/admin, role: ROLE_MODERATOR }
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+

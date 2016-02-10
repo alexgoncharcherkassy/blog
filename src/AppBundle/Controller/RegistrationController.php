@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class RegistrationController extends Controller
 {
     /**
-     * @Route("/register", name="user_registration")
+     * @Route("/{_locale}/register", name="user_registration", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/registration/register.html.twig")
      */
     public function registerAction(Request $request)

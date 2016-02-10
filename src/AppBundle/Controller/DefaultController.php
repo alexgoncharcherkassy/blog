@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{_locale}", name="homepage", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/default/index.html.twig")
      */
     public function indexAction(Request $request)
@@ -51,5 +52,19 @@ class DefaultController extends Controller
             ->show($start, $limit);
 
         return ['posts' => $posts];
+    }
+
+    /**
+     * @param Request $request
+     * @param $locale
+     * @Route("/{_locale}/setlocale/", name="set_locale", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
+     */
+    public function setLocale(Request $request, $_locale)
+    {
+        $request->setLocale($_locale);
+
+    //    $parameter = $request->headers->get('referer');
+
+        return $this->redirectToRoute('homepage');
     }
 }

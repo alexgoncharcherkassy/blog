@@ -37,7 +37,7 @@ class CommentType extends AbstractType
             ->add('rating', HiddenType::class)
             ->add('textComment', PurifiedTextareaType::class, [
                 'required' => false,
-                'label' => 'Add comment',
+                'label' => ' ',
                 'attr' => [
                     'class' => 'tinymce',
                 ]

@@ -3,16 +3,16 @@
 
 {% block panel %}
     <h4>
-        {{ posts|length }} article(s) are found
+        {{ posts|length }} {{ 'found' | trans }}
     </h4>
     {% for post in posts %}
         <div class="panel panel-default">
             <div class="panel-heading" style="margin-bottom: 0">
 
                 <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
-                   class="pull-right">Category: {{ post.category.categoryName | upper }}</a>
+                   class="pull-right">{{ 'Category' | trans }}: {{ post.category.categoryName | upper }}</a>
                 <h4>{{ post.titlePost | capitalize | purify }}</h4>
-                <small>Rating post</small>
+                <small>{{ 'Rating post' | trans }}</small>
                 <span class="badge badge-info">{{ post.rating|round(1, 'floor') }}</span>
                 {% if post.pathImage starts with 'http:' and post.nameImage and post.pathImage %}
                     <a href="{{ path('show_post', {'slug': post.slug}) }}"><img src="{{ post.pathImage }}" class="img-thumbnail pull-right"
@@ -29,7 +29,7 @@
                 <p>{{ post.textPost | limitWords(25) | purify }}</p>
                 <h5><a href="{{ path('show_post', {'slug': post.slug }) }}">More >>></a></h5>
                 <i class="glyphicon glyphicon-time"></i>
-                <small>Published {{ post.createdAt | date('d.m.Y H:i') }} by
+                <small>{{ 'Published' | trans }} {{ post.createdAt | date('d.m.Y H:i') }} {{ 'by' | trans }}
                     <a href="{{ path('show_users', {'slug': post.author.slug }) }}">{{ post.author.username | capitalize }}</a></small>
                 {#{% if post.createdAt < post.updateAt %}
                     <small>Updated {{ post.updateAt|date('d.m.Y H:m') }} by Anonymous</small>

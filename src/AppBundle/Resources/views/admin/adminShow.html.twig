@@ -2,15 +2,15 @@
 
 {% block panel %}
 <div class="jumbotron" style="background-color: white">
-    <h4>Admin panel</h4>
+    <h4>{{ 'Admin panel' | trans }}</h4>
     <table class="table table-condensed table-hover">
         <tr class="success">
-            <th>{{ knp_pagination_sortable(posts, 'Title article', 'p.titlePost') }}</th>
-            <th>{{ knp_pagination_sortable(posts, 'Category', 'c1.categoryName') }}</th>
-            <th>{{ knp_pagination_sortable(posts, 'Date create', 'p.createdAt') }}</th>
-            <th>{{ knp_pagination_sortable(posts, 'Date last update', 'p.updateAt') }}</th>
-            <th>Edit</th>
-            <th>Remove</th>
+            <th>{{ knp_pagination_sortable(posts, 'Title article' | trans, 'p.titlePost') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Category' | trans, 'c1.categoryName') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Date create' | trans, 'p.createdAt') }}</th>
+            <th>{{ knp_pagination_sortable(posts, 'Date last update' | trans, 'p.updateAt') }}</th>
+            <th>{{ 'Edit' | trans }}</th>
+            <th>{{ 'Remove' | trans }}</th>
         </tr>
         {% for post in posts %}
             <tr>
@@ -30,14 +30,6 @@
         </div>
     {% endif %}
 </div>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script>
-
-
-    </script>
 {% endblock %}
 
 

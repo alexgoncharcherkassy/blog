@@ -1,6 +1,6 @@
 {% if posts %}
     <ul>
-        <p>Search result:</p>
+        <p>{{ 'Search' | trans }}</p>
         {% for post in posts %}
             <li><a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost | capitalize }}</a></li>
         {% endfor %}

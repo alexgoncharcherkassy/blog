@@ -1,7 +1,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h4>Most Popular</h4>
+                    <h4>{{ 'Most Popular' | trans }}</h4>
                     {% for post in posts %}
                         <p>
                             <a href="{{ path('show_post', {'slug': post.slug}) }}">{{ post.titlePost |capitalize }}</a>
@@ -12,7 +12,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h4>Last comments</h4>
+                    <h4>{{ 'Last comments' | trans }}</h4>
                     {% for comment in comments %}
                         <p>
                             <a href="{{ path('show_post', {'slug': comment.post.slug}) }}">
@@ -23,7 +23,7 @@
             </div>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h4>Tags cloud</h4>
+                    <h4>{{ 'Tags cloud' | trans }}</h4>
                     {% for key, tag in tags %}
 
                         <a href="{{ path('show_tags', {'slug': tag.slug}) }}" id="tags{{ key }}">

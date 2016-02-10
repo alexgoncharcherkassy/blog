@@ -44,16 +44,16 @@
             <div class="panel panel-success">
                 <div class="panel-heading" style="margin-bottom: 0">
                     <a href="{{ path('show_category', {'slug': post.category.slug}) }}"
-                       class="pull-right">Category: {{ post.category.categoryName | upper }}</a>
+                       class="pull-right">{{ 'Category' | trans }}: {{ post.category.categoryName | upper }}</a>
                     <h4>{{ post.titlePost | capitalize | purify }}</h4>
-                    <small>Rating post</small>
+                    <small>{{ 'Rating post' | trans }}</small>
                     <span class="badge badge-info">{{ post.rating | round(1, 'floor') }}</span>
                 </div>
 
                 <div class="panel-body">
                     <p>
                         <i class="glyphicon glyphicon-time"></i>
-                        <small>Published {{ post.createdAt|date('d.m.Y H:i') }} by
+                        <small>{{ 'Published' | trans }} {{ post.createdAt|date('d.m.Y H:i') }} {{ 'by' | trans }}
                             <a href="{{ path('show_users', {'slug': post.author.slug }) }}">{{ post.author.username | capitalize }}</a></small>
                         {#{% if post.createdAt < post.updateAt %}
                             <small>Updated {{ post.updateAt|date('d.m.Y h:m') }} by Anonymous</small>
@@ -93,26 +93,27 @@
                             </ul>
 
                         </div>
-                        {{ form_widget(form) }}
+                            <p>{{ 'Add comment' | trans }}</p>
+                            {{ form_widget(form) }}
                         <br/>
-                        <input type="submit" value="Send" class="btn btn-large btn-primary">
+                        <input type="submit" value="{{ 'Send' | trans }}" class="btn btn-large btn-primary">
                         {{ form_end(form) }}
                         {% else %}
                             <p class="bg-info">
-                                For adding of comments it is necessary to pass
-                                <a href="{{ path('login_route') }}">authorization</a>
+                                {{ 'mes' | trans }}
+                                <a href="{{ path('login_route') }}">{{ 'authorization' }}</a>
                             </p>
                         {% endif %}
                     </div>
-                    <strong>Comments</strong>
+                    <strong>{{ 'Comments' | trans }}</strong>
                     {% for comment in post.comments %}
                         <ul class="thumbnail" style="width: 65%; margin-left: 20px">
                             {{ form(formDeleteComment[comment.id], {'attr' : {'style' : 'text-align : right'}}) }}
-                            <small>Published {{ comment.createdAt|date('d.m.Y H:i') }} by
+                            <small>{{ 'Published' | trans }} {{ comment.createdAt|date('d.m.Y H:i') }} {{ 'by' | trans }}
                                 <a href="{{ path('show_users', {'slug': comment.author.slug }) }}">{{ comment.author.username | capitalize }}</a></small>
                             <div class="col-md-6 text-left">
                                 {% if comment.rating %}
-                                    Rating
+                                    {{ 'Rating' | trans }}
                                     <span class="badge badge-success">{{ comment.rating }}</span>
                                 {% endif %}
                             </div>

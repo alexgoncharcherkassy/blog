@@ -2,10 +2,10 @@
 
 {% block panel %}
     <div class="jumbotron" style="background-color: white">
-        <h4>Users</h4>
+        <h4>{{ 'Users' | trans }}</h4>
         <form class="navbar-form pull-right" method="post" action="{{ path('search_register_users') }}">
             <div class="input-group" style="max-width:470px;">
-                <input type="text" class="form-control" placeholder="Search full login" name="srch">
+                <input type="text" class="form-control" placeholder="{{ 'Search full login' | trans }}" name="srch">
 
                 <div class="input-group-btn">
                     <button class="btn btn-default btn-primary" type="submit"><i
@@ -16,19 +16,19 @@
         </form>
         <table class="table table-condensed table-hover">
             <caption>
-                * - For change of a role click "Role" of the user
+                * - {{ 'rem1' | trans }}
                 <br/>
-                ** - For access restriction click "Is Active" of the user
+                ** - {{ 'rem2' | trans }}
             </caption>
             <tr class="success">
-                <th>{{ knp_pagination_sortable(users, 'Login', 'u.username') }}</th>
-                <th>{{ knp_pagination_sortable(users, 'First Name', 'u.firstName') }}</th>
-                <th>{{ knp_pagination_sortable(users, 'Last Name', 'u.lastName') }}</th>
-                <th>{{ knp_pagination_sortable(users, 'Email', 'u.email') }}</th>
-                <th>{{ knp_pagination_sortable(users, 'Data created', 'u.createdAt') }}</th>
-                <th>{{ knp_pagination_sortable(users, 'Data update', 'u.updateAt') }}</th>
-                <th>Role</th>
-                <th>Is Active</th>
+                <th>{{ knp_pagination_sortable(users, 'Login' | trans, 'u.username') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'First Name' | trans, 'u.firstName') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Last Name' | trans, 'u.lastName') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Email' | trans, 'u.email') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Date create' | trans, 'u.createdAt') }}</th>
+                <th>{{ knp_pagination_sortable(users, 'Date last update' | trans, 'u.updateAt') }}</th>
+                <th>{{ 'Role' | trans }}</th>
+                <th>{{ 'Is Active' | trans }}</th>
             </tr>
             {% for user in users %}
                 {% if user.username != 'admin' %}
@@ -45,9 +45,9 @@
                             <td><a href="{{ path('set_role', {'role': 'ROLE_USER', 'slug': user.slug }) }}">{{ user.roles | join }}</a></td>
                         {% endif %}
                         {% if user.isActive == true %}
-                            <td><a href="{{ path('set_is_active', {'isActive': 0, 'slug': user.slug}) }}">Deactive</a></td>
+                            <td><a href="{{ path('set_is_active', {'isActive': 0, 'slug': user.slug}) }}">{{ 'Deactive' | trans }}</a></td>
                         {% else %}
-                            <td><a href="{{ path('set_is_active', {'isActive': 1, 'slug': user.slug}) }}">Active</a></td>
+                            <td><a href="{{ path('set_is_active', {'isActive': 1, 'slug': user.slug}) }}">{{ 'Active' | trans }}</a></td>
                         {% endif %}
                     </tr>
                 {% endif %}

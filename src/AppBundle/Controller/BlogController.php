@@ -28,7 +28,7 @@ class BlogController extends Controller
 {
 
     /**
-     * @Route("/show/{slug}", name="show_post")
+     * @Route("/{_locale}/show/{slug}", name="show_post", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/blog/showPost.html.twig")
      */
     public function showPostAction($slug, Request $request)
@@ -87,7 +87,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/show/category/{slug}", name="show_category")
+     * @Route("/{_locale}/show/category/{slug}", name="show_category", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/blog/showCategoryTags.html.twig")
      */
     public function showCategoryAction($slug)
@@ -114,7 +114,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/show/tags/{slug}", name="show_tags")
+     * @Route("/{_locale}/show/tags/{slug}", name="show_tags", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/blog/showCategoryTags.html.twig")
      */
     public function showTagsAction($slug)
@@ -131,7 +131,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/show/users/{slug}", name="show_users")
+     * @Route("/{_locale}/show/users/{slug}", name="show_users", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/blog/showCategoryTags.html.twig")
      */
     public function showUsersAction($slug)
@@ -220,7 +220,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/search/all", name="search_all")
+     * @Route("/{_locale}/search/all", name="search_all", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/default/searchAllData.html.twig")
      */
     public function searchAllAction(Request $request)

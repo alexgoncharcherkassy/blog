@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ProfileController extends Controller
 {
     /**
-     * @Route("/profile", name="user_profile")
+     * @Route("/{_locale}/profile", name="user_profile", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/profile/showprofile.html.twig")
      */
     public function showProfileAction()
@@ -57,7 +57,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * @Route("/profile/edit", name="user_profile_edit")
+     * @Route("/{_locale}/profile/edit", name="user_profile_edit", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/profile/showprofile.html.twig")
      */
     public function editProfileAction(Request $request)
@@ -87,6 +87,7 @@ class ProfileController extends Controller
             ->getMaxRating($user->getId());
 
         $maxRating = $maxRatingPost ? $maxRatingPost[0]->getRating() : null;
+
         $form = $this->createForm(UserType::class, $profile);
 
         $form->handleRequest($request);

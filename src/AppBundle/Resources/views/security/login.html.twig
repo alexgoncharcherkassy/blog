@@ -16,11 +16,11 @@
             <input type="password" class="form-control input-lg" placeholder="Password" name="_password">
         </div>
         <input type="checkbox" id="remember_me" name="_remember_me" checked />
-        <label for="remember_me">Keep me logged in</label>
+        <label for="remember_me">{{ 'Keep me logged in' | trans }}</label>
         <div class="form-group">
-            <button class="btn btn-primary btn-lg btn-block">Sign In</button>
-            <span class="pull-right"><a href="{{ path('user_registration') }}">Register</a></span>
-            <span><a href="#">Need help?</a></span>
+            <button class="btn btn-primary btn-lg btn-block">{{ 'Sign In' | trans }}</button>
+            <span class="pull-right"><a href="{{ path('user_registration') }}">{{ 'Register' | trans }}</a></span>
+            <span><a href="#">{{ 'Need help' | trans }}?</a></span>
         </div>
     </form>
 </div>

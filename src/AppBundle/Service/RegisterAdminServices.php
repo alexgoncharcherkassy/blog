@@ -16,13 +16,13 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 class RegisterAdminServices
 {
     private $doctrine;
-    private $container;
+    private $service;
 
 
-    public function __construct(RegistryInterface $doctrine, UserPasswordEncoder $container)
+    public function __construct(RegistryInterface $doctrine, UserPasswordEncoder $service)
     {
         $this->doctrine = $doctrine;
-        $this->container = $container;
+        $this->service = $service;
     }
 
     public function registerAdmin($firstName, $lastName, $email, $plainPassword)
@@ -36,7 +36,7 @@ class RegisterAdminServices
         $user->setEmail($email);
         $user->setFirstName($firstName);
         $user->setLastName($lastName);
-        $password = $this->container->encodePassword($user, $plainPassword);
+        $password = $this->service->encodePassword($user, $plainPassword);
         $user->setPassword($password);
         $user->setIsActive(true);
 

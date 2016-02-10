@@ -22,16 +22,16 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class BlogSubscriber implements EventSubscriber
 {
     /**
-     * @var ContainerInterface
+     * @var ImageManagerServices
      */
-    protected $container;
+    protected $service;
 
     /**
      * @param ImageManagerServices $container
      */
-    public function __construct(ImageManagerServices $container)
+    public function __construct(ImageManagerServices $service)
     {
-        $this->container = $container;
+        $this->service = $service;
     }
 
     /**
@@ -62,7 +62,7 @@ class BlogSubscriber implements EventSubscriber
                 unlink($post->getPathImage());
             }
 
-            $this->container->upload($post);
+            $this->service->upload($post);
         }
     }
 
@@ -75,7 +75,7 @@ class BlogSubscriber implements EventSubscriber
 
         if ($post instanceof Post) {
             if (null !== $post->getBlogImage()) {
-                $this->container->upload($post);
+                $this->service->upload($post);
             }
 
 
