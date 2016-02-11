@@ -70,8 +70,6 @@ class ProfileController extends Controller
         $profile = $em->getRepository('AppBundle:User')
             ->find($user);
 
-     //   $this->denyAccessUnlessGranted('edit', $profile);
-
         $posts = $em->getRepository('AppBundle:Post')
             ->findBy(array('author' => $user));
         $postsCount = count($posts);
@@ -109,7 +107,7 @@ class ProfileController extends Controller
                 'countComments' => $commentsCount,
                 'allComment' => $allComment,
                 'maxRating' => $maxRating,
-                'form' => $form->createView()
+                'form' => $form->createView(),
         ];
     }
 }

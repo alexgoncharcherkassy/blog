@@ -16,9 +16,9 @@
         </form>
         <table class="table table-condensed table-hover">
             <caption>
-                * - {{ 'rem1' | trans }}
+                * - {{ 'For change of a role click "Role" of the user' | trans }}
                 <br/>
-                ** - {{ 'rem2' | trans }}
+                ** - {{ 'For access restriction click "Is Active" of the user' | trans }}
             </caption>
             <tr class="success">
                 <th>{{ knp_pagination_sortable(users, 'Login' | trans, 'u.username') }}</th>
@@ -31,9 +31,9 @@
                 <th>{{ 'Is Active' | trans }}</th>
             </tr>
             {% for user in users %}
-                {% if user.username != 'admin' %}
+                {% if user.roles | join != 'ROLE_ADMIN' %}
                     <tr>
-                        <td>{{ user.username }}</td>
+                        <td><a href="{{ path('show_users', {'slug': user.slug }) }}">{{ user.username }}</td>
                         <td>{{ user.firstName | capitalize }}</td>
                         <td>{{ user.lastName | capitalize }}</td>
                         <td>{{ user.email }}</td>

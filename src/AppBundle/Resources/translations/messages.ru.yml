@@ -48,8 +48,8 @@ Register: Регистрация
 Need help: Нужна помощь
 Send: Отправить
 Search full login: Поиск по полному логину
-rem1: Для изменения роли нажмите на "Роль" пользователя
-rem2: Для блокирования входа пользователя нажмите на "Доступ"
+For change of a role click "Role" of the user: Для изменения роли нажмите на "Роль" пользователя
+For access restriction click "Is Active" of the user: Для блокирования входа пользователя нажмите на "Доступ"
 Admin panel: Панель администратора
 Edit post: Редактирование статьи
 Profile: Профиль
