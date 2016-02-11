@@ -13,10 +13,10 @@ use AppBundle\Tests\TestBaseWeb;
 
 class RegistrationControllerTest extends TestBaseWeb
 {
-    public function testShowPost()
+    public function testRegister()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', 'en/register');
+        $crawler = $client->request('GET', '/en/register');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Register', $crawler->filter('submit')->text());
     }

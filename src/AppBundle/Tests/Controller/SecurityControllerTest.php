@@ -13,10 +13,10 @@ use AppBundle\Tests\TestBaseWeb;
 
 class SecurityControllerTest extends TestBaseWeb
 {
-    public function testShowPost()
+    public function testLogin()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', 'en/login');
+        $crawler = $client->request('GET', '/en/login');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Sign', $crawler->filter('submit')->text());
     }
