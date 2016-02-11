@@ -17,7 +17,7 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return \Doctrine\ORM\Query
      */
-    public function showAllPost($id)
+    public function showAllPost($id, $data)
     {
         /*return $this->createQueryBuilder('p')
             ->select('p, c, t')
@@ -32,12 +32,14 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                LEFT JOIN p.tags t1
                LEFT JOIN p.author a1
                WHERE a1.id = :id
+               AND p.titlePost LIKE :srch
                ORDER BY p.createdAt DESC"
             )
-            ->setParameter('id', $id);
+            ->setParameter('id', $id)
+            ->setParameter('srch', '%'.$data.'%');
     }
 
-    public function showAllPostAdmin()
+    public function showAllPostAdmin($data)
     {
         /*return $this->createQueryBuilder('p')
             ->select('p, c, t')
@@ -51,8 +53,10 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
                LEFT JOIN p.category c1
                LEFT JOIN p.tags t1
                LEFT JOIN p.author a1
+               WHERE p.titlePost LIKE :srch
                ORDER BY p.createdAt DESC"
-            );
+            )
+            ->setParameter('srch', '%'.$data.'%');
     }
 
     /**
@@ -188,6 +192,17 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->orderBy('p.rating', 'DESC')
             ->getQuery()
             ->getResult();
+    }
+
+    public function searchPost($data)
+    {
+        return $this->getEntityManager()
+            ->createQuery(
+                "SELECT p FROM AppBundle:Post p
+               WHERE p.titlePost LIKE :srch
+               ORDER BY p.createdAt DESC"
+            )
+            ->setParameter('srch', '%'.$data.'%');
     }
 
     public function getMaxRating($user)

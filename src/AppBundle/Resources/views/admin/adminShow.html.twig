@@ -3,6 +3,17 @@
 {% block panel %}
 <div class="jumbotron" style="background-color: white">
     <h4>{{ 'Admin panel' | trans }}</h4>
+    <form class="navbar-form pull-right" method="post" action="{{ path('admin_show') }}">
+        <div class="input-group" style="max-width:470px;">
+            <input type="text" class="form-control" placeholder="{{ 'Search' | trans }}" name="srch-post">
+
+            <div class="input-group-btn">
+                <button class="btn btn-default btn-primary" type="submit"><i
+                            class="glyphicon glyphicon-search" ></i></button>
+            </div>
+
+        </div>
+    </form>
     <table class="table table-condensed table-hover">
         <tr class="success">
             <th>{{ knp_pagination_sortable(posts, 'Title article' | trans, 'p.titlePost') }}</th>

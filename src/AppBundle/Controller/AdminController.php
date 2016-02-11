@@ -154,7 +154,7 @@ class AdminController extends Controller
      * @Route("{_locale}/admin/show/", name="admin_show", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/admin/adminShow.html.twig")
      */
-    public function showPostAction()
+    public function showPostAction(Request $request)
     {
         $this->denyAccessUnlessGranted('ROLE_MODERATOR', null, 'Unable to access this page!');
 
@@ -162,12 +162,14 @@ class AdminController extends Controller
 
         $user = $this->getUser();
         $id = $user->getId();
+        $data = $request->request->get('srch-post');
+
         if (in_array('ROLE_ADMIN', $user->getRoles())) {
             $sql = $em->getRepository('AppBundle:Post')
-                ->showAllPostAdmin();
+                ->showAllPostAdmin($data);
         } else {
             $sql = $em->getRepository('AppBundle:Post')
-                ->showAllPost($id);
+                ->showAllPost($id, $data);
         }
 
         $paginator = $this->get('knp_paginator');
