@@ -21,13 +21,13 @@ class ProfileController extends Controller
      */
     public function showProfileAction()
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $profile = $em->getRepository('AppBundle:User')
             ->find($user);
-
-    //    $this->denyAccessUnlessGranted('edit', $profile);
 
         $posts = $em->getRepository('AppBundle:Post')
             ->findBy(array('author' => $user));
@@ -62,6 +62,8 @@ class ProfileController extends Controller
      */
     public function editProfileAction(Request $request)
     {
+        $this->denyAccessUnlessGranted('ROLE_USER', null, 'Unable to access this page!');
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 

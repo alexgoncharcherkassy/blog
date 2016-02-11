@@ -46,8 +46,7 @@
             <argument type="service" id="doctrine" />
         </service>
 
-        <service id="app.post_voter" class="AppBundle\Security\PostVoter" public="false">
-            <argument type="service" id="security.access.decision_manager" />
+        <service id="app.profile_voter" class="AppBundle\Security\ProfileVoter" public="false">
             <tag name="security.voter" />
         </service>
 

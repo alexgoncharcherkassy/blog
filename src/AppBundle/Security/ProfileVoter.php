@@ -12,6 +12,7 @@ namespace AppBundle\Security;
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProfileVoter extends Voter
 {
@@ -33,7 +34,7 @@ class ProfileVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
+        $user = $token->getUser() ? $token->getUser() : null;
 
         if (!$user instanceof User) {
 
@@ -52,7 +53,7 @@ class ProfileVoter extends Voter
         throw new \LogicException('This code should not be reached!');
     }
 
-    private function canView(User $profile, User $user)
+    private function canView($profile, $user)
     {
         // if they can edit, they can view
         if ($this->canEdit($profile, $user)) {
@@ -62,8 +63,13 @@ class ProfileVoter extends Voter
         return false;
     }
 
-    private function canEdit(User $profile, User $user)
+    private function canEdit($profile, $user)
     {
-        return $user == $profile;
+        if ($user == $profile) {
+
+            return true;
+        }
+
+        return new AccessDeniedException();
     }
 }
