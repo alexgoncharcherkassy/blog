@@ -32,6 +32,6 @@ class ProfileControllerTest extends TestBaseWeb
         ));
         $crawler = $client->request('GET', '/en/profile/edit');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
-        $this->assertContains('Username', $crawler->filter('form')->text());
+        $this->assertContains('Count', $crawler->filter('table')->text());
     }
 }
