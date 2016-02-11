@@ -9,7 +9,7 @@ class DefaultControllerTest extends TestBaseWeb
     public function testIndex()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/en');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Facerenam', $crawler->filter('h4')->text());
     }

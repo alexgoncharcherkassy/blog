@@ -63,8 +63,6 @@ class DefaultController extends Controller
     {
         $request->setLocale($_locale);
 
-    //    $parameter = $request->headers->get('referer');
-
         return $this->redirectToRoute('homepage');
     }
 }

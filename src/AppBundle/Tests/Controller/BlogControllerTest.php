@@ -16,7 +16,7 @@ class BlogControllerTest extends TestBaseWeb
     public function testShowPost()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/show/facerenam');
+        $crawler = $client->request('GET', 'en/show/facerenam');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Facerenam', $crawler->filter('h4')->text());
     }
@@ -24,7 +24,7 @@ class BlogControllerTest extends TestBaseWeb
     public function testShowCategory()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/show/category/ammet');
+        $crawler = $client->request('GET', 'en/show/category/ammet');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Facerenam', $crawler->filter('h4')->text());
     }
@@ -32,7 +32,7 @@ class BlogControllerTest extends TestBaseWeb
     public function testShowTags()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/show/tags/culpa');
+        $crawler = $client->request('GET', 'en/show/tags/culpa');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Facerenam', $crawler->filter('h4')->text());
     }
@@ -40,7 +40,7 @@ class BlogControllerTest extends TestBaseWeb
     public function testSearchAll()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/search/all');
+        $crawler = $client->request('GET', 'en/search/all');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('article(s)', $crawler->filter('h4')->text());
     }

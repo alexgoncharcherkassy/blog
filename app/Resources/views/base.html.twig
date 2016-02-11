@@ -33,11 +33,17 @@
 
                     </div>
                 </form>
-
+                {%  if app.request.locale == 'en' %}
+                    {% set color1 = 'background-color: rgba(0, 179, 238, 0.31)' %}
+                    {% set color2 = 'background-color: white' %}
+                {% else %}
+                    {% set color2 = 'background-color: rgba(0, 179, 238, 0.31)' %}
+                    {% set color1 = 'background-color: white' %}
+                {% endif %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="{{ path('set_locale', {'_locale': 'en'}) }}">
+                    <li><a href="{{ path('set_locale', {'_locale': 'en'}) }}" style="{{ color1 }}">
                             <img src="{{ asset('img/usa.png') }}" width="30" title="English"></a></li>
-                    <li><a href="{{ path('set_locale', {'_locale': 'ru'}) }}">
+                    <li><a href="{{ path('set_locale', {'_locale': 'ru'}) }}" style="{{ color2 }}">
                             <img src="{{ asset('img/rus.png') }}" width="30" title="Русский"></a></li>
                     <li><a href="http://geekhub.ck.ua/" target="_ext">GeekHub</a></li>
                     {% if app.user %}

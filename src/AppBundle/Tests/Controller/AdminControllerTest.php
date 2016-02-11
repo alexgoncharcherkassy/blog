@@ -18,7 +18,7 @@ class AdminControllerTest extends TestBaseWeb
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW'   => 'user',
         ));
-        $crawler = $client->request('GET', 'admin/insert/post');
+        $crawler = $client->request('GET', 'en/admin/insert/post');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Add', $crawler->filter('h4')->text());
     }
@@ -29,7 +29,7 @@ class AdminControllerTest extends TestBaseWeb
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW'   => 'user',
         ));
-        $crawler = $client->request('GET', 'admin/show/');
+        $crawler = $client->request('GET', 'en/admin/show/');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Admin', $crawler->filter('h4')->text());
     }
@@ -40,7 +40,7 @@ class AdminControllerTest extends TestBaseWeb
             'PHP_AUTH_USER' => 'admin',
             'PHP_AUTH_PW'   => 'user',
         ));
-        $crawler = $client->request('GET', 'admin/edit/post/Facerenam');
+        $crawler = $client->request('GET', 'en/admin/edit/post/Facerenam');
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertContains('Edit', $crawler->filter('h4')->text());
     }
