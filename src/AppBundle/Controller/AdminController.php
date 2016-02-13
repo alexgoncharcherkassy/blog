@@ -199,7 +199,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/remove/post/{slug}", name="remove_post")
+     * @Route("{_locale}/admin/remove/post/{slug}", name="remove_post", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Method("DELETE")
      */
     public function removePostAction($slug)
@@ -297,7 +297,7 @@ class AdminController extends Controller
 
     /**
      * @param $slug
-     * @Route("admin/remove/image/{slug}", name="remove_image")
+     * @Route("{_locale}/admin/remove/image/{slug}", name="remove_image", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Method("PUT")
      */
     public function removeImageAction($slug)

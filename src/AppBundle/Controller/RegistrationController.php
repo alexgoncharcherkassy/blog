@@ -52,7 +52,7 @@ class RegistrationController extends Controller
     }
 
     /**
- * @Route("/register/check_username", name="register_check_username")
+ * @Route("/{_locale}/register/check_username", name="register_check_username", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
  */
     public function checkUserName(Request $request)
     {
@@ -72,7 +72,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/register/check_useremail", name="register_check_email")
+     * @Route("/{_locale}/register/check_useremail", name="register_check_email", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      */
     public function checkUserEmail(Request $request)
     {
@@ -92,7 +92,7 @@ class RegistrationController extends Controller
     }
 
     /**
-     * @Route("/register/check_hash/{hash}", name="register_check_hash")
+     * @Route("/{_locale}/register/check_hash/{hash}", name="register_check_hash", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      */
     public function checkUserHash($hash)
     {

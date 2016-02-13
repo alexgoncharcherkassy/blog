@@ -149,7 +149,7 @@ class BlogController extends Controller
 
     /**
      * @param $slug
-     * @Route("/remove/comment/{id}/{slug}", name="remove_comment")
+     * @Route("/{_locale}/remove/comment/{id}/{slug}", name="remove_comment", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Method("DELETE")
      */
     public function removeCommentAction($id, $slug)
@@ -190,7 +190,7 @@ class BlogController extends Controller
     /**
      * @param Request $request
      * @return Response
-     * @Route("/search", name="search_show")
+     * @Route("/{_locale}/search", name="search_show", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      */
     public function searchShowAction(Request $request)
     {
@@ -206,7 +206,7 @@ class BlogController extends Controller
     }
 
     /**
-     * @Route("/search/ajax", name="search_ajax")
+     * @Route("/{_locale}/search/ajax", name="search_ajax", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/default/searchData.html.twig")
      */
     public function searchAction($data)

@@ -40,7 +40,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/show_ajax", name="show_ajax")
+     * @Route("/{_locale}/show_ajax", name="show_ajax", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      * @Template("@App/default/ajaxLoad.html.twig")
      */
     public function showAjaxAction($start, $limit)
