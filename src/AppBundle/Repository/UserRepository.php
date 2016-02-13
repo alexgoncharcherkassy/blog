@@ -37,9 +37,9 @@ class UserRepository extends EntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT u FROM AppBundle:User u
-                WHERE u.username = :users
+                WHERE u.username LIKE :users
                 ORDER BY u.createdAt DESC"
             )
-            ->setParameter('users', $users);
+            ->setParameter('users', '%'.$users.'%');
     }
 }

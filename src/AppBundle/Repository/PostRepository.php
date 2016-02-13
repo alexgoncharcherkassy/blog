@@ -194,17 +194,6 @@ class PostRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function searchPost($data)
-    {
-        return $this->getEntityManager()
-            ->createQuery(
-                "SELECT p FROM AppBundle:Post p
-               WHERE p.titlePost LIKE :srch
-               ORDER BY p.createdAt DESC"
-            )
-            ->setParameter('srch', '%'.$data.'%');
-    }
-
     public function getMaxRating($user)
     {
         return $this->createQueryBuilder('p')
