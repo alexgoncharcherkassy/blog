@@ -68,7 +68,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/users/setstatus/{isActive}/{slug}", name="set_is_active")
+     * @Route("{_locale}/admin/users/setstatus/{isActive}/{slug}", name="set_is_active", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      */
     public function setIsActiveAction($isActive, $slug)
     {
@@ -86,7 +86,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("admin/users/setrole/{role}/{slug}", name="set_role")
+     * @Route("{_locale}/admin/users/setrole/{role}/{slug}", name="set_role", requirements={"_locale" : "en|ru"}, defaults={"_locale" : "en"})
      */
     public function setModeratorAction($role, $slug)
     {
