@@ -38,6 +38,8 @@ class UserRepository extends EntityRepository
             ->createQuery(
                 "SELECT u FROM AppBundle:User u
                 WHERE u.username LIKE :users
+                OR u.firstName LIKE :users
+                OR u.lastName LIKE :users
                 ORDER BY u.createdAt DESC"
             )
             ->setParameter('users', '%'.$users.'%');
